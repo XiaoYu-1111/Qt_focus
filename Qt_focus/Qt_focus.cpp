@@ -40,13 +40,11 @@ widget_upper = new QWidget();//upper窗口
 
 //#include <QGraphicsDropShadowEffect>
 // 创建阴影效果
-QGraphicsDropShadowEffect* shadowEffect = new QGraphicsDropShadowEffect();
-shadowEffect->setBlurRadius(10); // 阴影模糊半径
-shadowEffect->setOffset(0, 0); // 阴影偏移
-shadowEffect->setColor(QColor(30,41,59, 255)); // 阴影颜色，带透明度
+//QGraphicsDropShadowEffect* shadowEffect = new QGraphicsDropShadowEffect();
+
 // 将阴影效果应用到上层窗口
 //widget_upper->setGraphicsEffect(shadowEffect);
-ui.centralWidget->setGraphicsEffect(shadowEffect);
+//ui.centralWidget->setGraphicsEffect(shadowEffect);
 
 if (is_borderless) {
 
@@ -135,7 +133,6 @@ else {
     Widget_page2 = new QWidget();
     Widget_page3 = new QWidget();
     Widget_page4 = new QWidget();
-
 
     //stackedWidget1->addTab(Widget_page0, QIcon(":/Qt_focus/ico/focus.png"), "&Rain Focus");//通过标签页的形式添加
     stackedWidget1->addTab(Widget_page_home, QIcon(":/Qt_focus/ico/homes.png"), "&");
@@ -1228,7 +1225,7 @@ void Qt_focus::closeAudioFile() {
     }
 }
 
-// 添加函数来暂停音频录制
+ //添加函数来暂停音频录制
 void Qt_focus::pauseAudio() {
 
     if (m_isRecording=true) {

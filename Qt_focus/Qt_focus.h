@@ -36,6 +36,7 @@
 #include <QKeyEvent>
 #include <QSet>
 #include <QProcess>
+#include<QLCDNumber>
 
 //QT-widgets
 #include<qcolordialog.h>
@@ -47,13 +48,18 @@
 #include <QString>
 
 //QT-audio
-#include <QtCharts>
-#include <QChartView>
-#include <QLineSeries>
+
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QXYSeries>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QValueAxis>
+
 #include <QFont>
 
-#include<QAudioDevice>
+#include <QAudioDevice>
 #include<qmediadevices.h>
+
 #include <QAudioInput>
 #include <QAudioSource>
 #include<QAudioSink>

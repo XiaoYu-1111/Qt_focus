@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/Qt_focus">
         <file>ico/focus.ico</file>
-        <file>ico/focus.jpg</file>
         <file>ico/links.png</file>
         <file>ico/probe.png</file>
         <file>ico/tasks.png</file>
         <file>ico/xiaoyu_base.png</file>
         <file>ico/homes.png</file>
+        <file>ico/focus.png</file>
     </qresource>
 </RCC>

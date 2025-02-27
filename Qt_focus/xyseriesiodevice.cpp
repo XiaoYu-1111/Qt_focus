@@ -3,8 +3,6 @@
 
 #include "xyseriesiodevice.h"
 
-#include <QXYSeries>
-
 XYSeriesIODevice::XYSeriesIODevice(QXYSeries* series, QObject* parent) :
     QIODevice(parent),
     m_series(series),

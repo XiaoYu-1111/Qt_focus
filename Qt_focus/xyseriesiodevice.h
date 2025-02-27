@@ -8,6 +8,7 @@
 #include <QList>
 #include <QPointF>
 #include<QFile>
+#include <QtCharts/QXYSeries>
 
 QT_FORWARD_DECLARE_CLASS(QXYSeries)
 
