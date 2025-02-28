@@ -1210,7 +1210,6 @@ void Qt_focus::writeAudioData() {
                 // 可以选择输出写入的字节数
                 qDebug() << "Wrote" << bytesWritten << "bytes to the audio file.";
                 //显示数据
-              
             }
         }
     }
@@ -1228,16 +1227,15 @@ void Qt_focus::closeAudioFile() {
  //添加函数来暂停音频录制
 void Qt_focus::pauseAudio() {
 
-    if (m_isRecording=true) {
-        m_audioSource->stop(); // 停止音频源
-        m_isRecording = false;  // 更新状态为暂停
-        ui.statusBar->showMessage("Audio recording paused", 1000);
-    }
-    else {
-        ui.statusBar->showMessage("audio is not recording!", 1000);
+    if (!m_isRecording) {
+        ui.statusBar->showMessage("音频未在录制中!", 1000);
         return;
     }
+    m_audioSource->stop(); // 停止音频源
+    m_isRecording = false;  // 更新录制状态为暂停
+    ui.statusBar->showMessage("音频录制已暂停", 1000);
 }
+
 // 添加函数来继续音频录制
 void Qt_focus::resumeAudio() {
 
