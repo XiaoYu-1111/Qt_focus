@@ -699,7 +699,6 @@ void Qt_focus::Main_page_Rmenu()
     QAction* pAc1 = new QAction("Hide TabBar");
     QAction* pAc2 = new QAction("initialSize");
     QAction* pAc3 = new QAction("Fouse Model");
-
     QAction* pAc5 = new QAction("Painter Window");
     QAction* pAc6 = new QAction("SandParticle");
     QAction* pAc_about = new QAction("About");
@@ -796,15 +795,71 @@ void Qt_focus::Main_page_Rmenu()
         widget->show();
         });
 
+    //about部分
     connect(pAc_about, &QAction::triggered, [=] {
-        QMessageBox::about(this, "软件信息",
-            "软件名称: FOCUS\n"
-            "版本: 1.0\n"
-            "开发者: XIAOYU\n"
-            "联系地址: 陕西西安\n"
-            "联系方式: 8888-8888\n"
-            "邮箱: 66666666@qq.com"
-        );
+
+        QMessageBox::StandardButton reply;
+        QMessageBox msgBox;
+        QPushButton* continueButton = msgBox.addButton("软件信息", QMessageBox::YesRole);
+        QPushButton* cancelButton = msgBox.addButton("关于 Qt", QMessageBox::NoRole);
+        QPushButton* cancelButton2 = msgBox.addButton("exit", QMessageBox::NoRole);
+        msgBox.setDefaultButton(continueButton);
+        // 显示消息框并获取用户选择
+        stylesheet_QT style;
+        msgBox.setStyleSheet(style.widget_gray1);
+        msgBox.setWindowIcon(QIcon(":/Qt_focus/ico/xiaoyu_base.png"));
+        msgBox.setMinimumSize(200, 40);
+        // 设置消息框的标题和内容
+        msgBox.setWindowTitle("询问");
+        msgBox.setText("软件信息/关于 Qt");
+        msgBox.exec();
+        //// 根据用户选择执行操作
+        //if (msgBox.clickedButton() == continueButton) {
+        //    // 用户点击了“继续”按钮
+        //    ui.statusBar->showMessage("关于");
+        //    QMessageBox::about(this, "软件信息",
+        //            "软件名称: FOCUS\n"
+        //            "版本: 1.0\n"
+        //            "开发者: XIAOYU\n"
+        //            "联系地址: 陕西西安\n"
+        //            "联系方式: 8888-8888\n"
+        //            "邮箱: 66666666@qq.com"
+        //        );
+        //}
+        //else if (msgBox.clickedButton() == cancelButton) {
+        //    // 用户点击了“取消”按钮
+        //    ui.statusBar->showMessage("关于 Qt");
+        //    QMessageBox::aboutQt(this, "关于 Qt");
+        //}
+        //else if (msgBox.clickedButton() == cancelButton2) {
+        //    // 用户点击了“取消”按钮
+        //    ui.statusBar->showMessage("return");
+        //    return;
+        //}
+        enum ButtonType { SoftwareInfo, AboutQt, Return };//使用枚举
+        ButtonType buttonType = (msgBox.clickedButton() == continueButton) ? SoftwareInfo :
+            (msgBox.clickedButton() == cancelButton) ? AboutQt :
+            Return;
+        switch (buttonType) {//使用switch
+        case SoftwareInfo:
+            ui.statusBar->showMessage("关于");
+            QMessageBox::about(this, "软件信息",
+                "软件名称: FOCUS\n"
+                "版本: 1.0\n"
+                "开发者: XIAOYU\n"
+                "联系地址: 陕西西安\n"
+                "联系方式: 8888-8888\n"
+                "邮箱: 66666666@qq.com"
+            );
+            break;
+        case AboutQt:
+            ui.statusBar->showMessage("关于 Qt");
+            QMessageBox::aboutQt(this, "关于 Qt");
+            break;
+        case Return:
+            ui.statusBar->showMessage("return");
+            return;
+        }
         });
     
     connect(option1Action1, &QAction::triggered, [=] {
