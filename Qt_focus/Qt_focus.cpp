@@ -4,6 +4,7 @@
 #pragma execution_character_set("utf-8")
 ///该指令仅支持VS环境;若在其他IDE环境下编译,请注释掉该行;设置中文编码可用;
 //文件高级保存选项中设置为utf-8编码,以便支持中文注释;
+
 Qt_focus::Qt_focus(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -15,9 +16,10 @@ this->setWindowIcon(QIcon(":/Qt_focus/ico/xiaoyu_base.png"));
 this->setStyleSheet(style.widget_uicenter);
 this->setContentsMargins(0,0,0,0);
 this->setContextMenuPolicy(Qt::DefaultContextMenu);
-
 initialSize = this->size();
 
+QIcon icon(":/Qt_focus/ico/xiaoyu_base.png");
+setAllWindowIcons(icon);
 #pragma endregion
 
 #pragma region //main window
@@ -700,6 +702,7 @@ void Qt_focus::Main_page_Rmenu()
 
     QAction* pAc5 = new QAction("Painter Window");
     QAction* pAc6 = new QAction("SandParticle");
+    QAction* pAc_about = new QAction("About");
 
     QAction* Menu_exe = new QAction("EXE");
 
@@ -709,6 +712,7 @@ void Qt_focus::Main_page_Rmenu()
 
     Rclick_Menu->addAction(pAc5);
     Rclick_Menu->addAction(pAc6);
+    Rclick_Menu->addAction(pAc_about);
     Rclick_Menu->addAction(Menu_exe);
 
     QMenu* myMenu = new QMenu(this);//一号菜单
@@ -739,7 +743,6 @@ void Qt_focus::Main_page_Rmenu()
     connect(pAc2, &QAction::triggered, [=] {
         //QMessageBox::information(this, "title", "ac2");
         //showNormal();  // 恢复窗口
-        
         QScreen* screen = QGuiApplication::primaryScreen();
         QRect screenGeometry = screen->geometry();
         int x = (screenGeometry.width() - this->width()) / 2;
@@ -750,10 +753,8 @@ void Qt_focus::Main_page_Rmenu()
         });
 
     connect(pAc3, &QAction::triggered, [=] {
-
         QList<QWidget*> widgets = Widget_page0->findChildren<QWidget*>(); // 找到所有子控件
         qDebug() << "Number of widgets found:" << widgets.size();
-
         // 根据 label_main_text_only 的状态设置控件的可见性
         for (QWidget* widget : widgets) {
             if (widget != label_text_time) {
@@ -761,22 +762,17 @@ void Qt_focus::Main_page_Rmenu()
             }
         }
         label_main_text_only = !label_main_text_only;
-
         });
 
-
     connect(pAc5, &QAction::triggered, [=] {
-        
         MySubWindow* widget = new MySubWindow();
         widget->setWindowIcon(QIcon(":/Qt_focus/ico/xiaoyu.png"));
         QString widget_style=ui.centralWidget->styleSheet();
         widget->setStyleSheet(widget_style);
-
         widget->show();
         });
 
     connect(pAc6, &QAction::triggered, [=] {
-
         SandSimulator* widget = new SandSimulator();
         widget->setContentsMargins(0, 0, 0, 0);
         QVBoxLayout* layout = new QVBoxLayout(widget);
@@ -800,13 +796,23 @@ void Qt_focus::Main_page_Rmenu()
         widget->show();
         });
 
+    connect(pAc_about, &QAction::triggered, [=] {
+        QMessageBox::about(this, "软件信息",
+            "软件名称: FOCUS\n"
+            "版本: 1.0\n"
+            "开发者: XIAOYU\n"
+            "联系地址: 陕西西安\n"
+            "联系方式: 8888-8888\n"
+            "邮箱: 66666666@qq.com"
+        );
+        });
+    
     connect(option1Action1, &QAction::triggered, [=] {
         QString appDir = QCoreApplication::applicationDirPath();//获取主程序目录
         QString program = appDir + "/Executable_program/Pysider6_timer.exe";//将exe文件放到主程序同级目录下
         /*QString path_osk = R"(C:\Windows\System32\osk.exe)";*/
         run_exe(program);
         });
-
     connect(option1Action2, &QAction::triggered, [=] {
         //QMessageBox::information(this, "title", "ac4");
         QString path_osk = R"(C:\Windows\System32\osk.exe)";
@@ -876,6 +882,7 @@ void  Qt_focus::closeEvent(QCloseEvent* event) {
     else {
         event->ignore();
     }
+    //stylesheet_QT style;
     this->setStyleSheet(style.widget_gray1);
 
 }
@@ -1255,10 +1262,8 @@ void Qt_focus::resumeAudio() {
 
 //启动外部程序
 void Qt_focus::run_exe(QString& program) {
-
     //QString appDir = QCoreApplication::applicationDirPath();
     //QString program = appDir + "/run_exe/Console_sph.exe";//将exe文件放到主程序同级目录下
-
     //QString path_osk = R"(C:\Windows\System32\osk.exe)";
     //QString program = program;
     // 检查文件是否存在
@@ -1267,24 +1272,31 @@ void Qt_focus::run_exe(QString& program) {
         ui.statusBar->showMessage(tr(" %1").arg(program), 3000);//5s
     }
     else {
-        QMessageBox::critical(nullptr, "Error", "Call error,Please check program!");
+		QMessageBox::warning(this, "Error", "Call error,Please check program!");
         return;
     }
+    stylesheet_QT style;
+    this->setStyleSheet(style.widget_gray1);
     //start process_exe1
     //QProcess process_exe1;
     process_exe1.start(program);
     process_exe1.waitForStarted();
     process_exe1.waitForFinished();
-
     //QString strResult = QString::fromLocal8Bit(process_exe1.readAllStandardOutput());
     //QMessageBox msgBox(this);
     //msgBox.setText(strResult);
     //msgBox.exec();
-
     if (!process_exe1.startDetached(program)) {
         qDebug() << "Failed to start process:" << process_exe1.errorString(); // 捕捉错误信息
     }
+}
 
+//修改创建的所有窗口的图标
+void Qt_focus::setAllWindowIcons(const QIcon& icon) {
+    QList<QWidget*> topLevelWidgets = QApplication::topLevelWidgets();
+    for (QWidget* widget : topLevelWidgets) {
+        widget->setWindowIcon(icon);
+    }
 }
 //////////////////参考分割线/////////////////////////
 #pragma region //Qt自带 qdialog

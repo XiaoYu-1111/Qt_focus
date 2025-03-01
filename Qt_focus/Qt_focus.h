@@ -177,19 +177,14 @@ public slots:
 
 QString getSystemTime();
 
-
 void set_lable_time();
-
 void start_lable_time();
 void reset_lable_time();
 void Pause_focus_time();
-
 void updateCountdown();  // 新增槽函数
-
 
 QString randonColor();
 void hexToRGB(const std::string& hex, double& r, double& g, double& b);
-
 //音频显示audio曲线
 void Draw_audio_sensor();
 void initializeAudioFile();
@@ -201,4 +196,5 @@ void resumeAudio();
 
 //启动外部exe
 void run_exe(QString& program);
+void setAllWindowIcons(const QIcon& icon);
 };
