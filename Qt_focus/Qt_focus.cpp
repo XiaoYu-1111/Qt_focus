@@ -36,7 +36,6 @@ QVBoxLayout* main_layout = new QVBoxLayout(ui.centralWidget);
 main_layout->setContentsMargins(0, 0, 0, 0);
 
 #pragma region//无边框设计显示upper window
-
 bool is_borderless = 1;
 widget_upper = new QWidget();//upper窗口
 
@@ -142,6 +141,7 @@ else {
     stackedWidget1->addTab(Widget_page1, QIcon(":/Qt_focus/ico/tasks.png"), "&");
     stackedWidget1->addTab(Widget_page2, QIcon(":/Qt_focus/ico/links.png"), "&");
     stackedWidget1->addTab(Widget_page3, QIcon(":/Qt_focus/ico/probe.png"), "&");
+    stackedWidget1->addTab(Widget_page4, QIcon(":/Qt_focus/ico/Dots.png"), "&");
     
     stackedWidget1->tabBar()->setIconSize(QSize(50,50)); // 设置图标大小为32x32
 #pragma endregion
@@ -305,10 +305,8 @@ else {
             QTextEdit* newTextEdit = new QTextEdit;
             stylesheet_QT style;
             newTextEdit->setReadOnly(false);
-
             // 创建随机颜色字符串
             QString color = randonColor();
-
             QString task_test = QString(R"(QTextEdit{color:%1;font-size:30px;font-style: italic; font-weight: bold;
                             background-color:#374357;border-radius:5px;}
                            QTextEdit:hover{color:#b6ccd8;})").arg(color);;//主标签
@@ -332,7 +330,6 @@ else {
         }
         });
     connect(clear_task, &QPushButton::clicked, this, [=]() {
-
         if (taskCount >= 1) {
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "prompt!", " Clear task!",
@@ -357,7 +354,6 @@ else {
                 return;
             }
         }});
-
 #pragma endregion
 
 #pragma region //page2Link list
@@ -387,7 +383,6 @@ else {
     line_frame->setFrameShadow(QFrame::Sunken);
 
     QTextEdit* TextEdit_search = new QTextEdit();
-    
     
     QString color = randonColor();
 
@@ -492,6 +487,127 @@ else {
     //    });
 
 #pragma endregion
+
+///Dots
+    page4_layout_grid = new QVBoxLayout(Widget_page4);
+    page4_layout_grid->setContentsMargins(0, 0, 0, 0);
+
+    QLabel* label_Dot_title = new QLabel;
+    //QString page0_String1 = "Focus Time<br>Rain";
+    QString label_Dot_title_text = "Dot";
+    label_Dot_title->setText(QString("<html>%1</html>").arg(label_Dot_title_text));
+    label_Dot_title->setMaximumHeight(100);
+    label_Dot_title->setStyleSheet(style.label_main);
+    page4_layout_grid->addWidget(label_Dot_title, 0, Qt::AlignTop | Qt::AlignCenter);
+
+
+    QFrame* frame_dot = new QFrame();
+	frame_dot->setMinimumSize(400, 200);
+    QHBoxLayout* dotLayout_frame = new QHBoxLayout(frame_dot);
+    page4_layout_grid->addWidget(frame_dot, 0, Qt::AlignCenter | Qt::AlignTop);
+
+    for (int i = 0; i < 5; i++) {
+        QLabel* label_dot = new QLabel;
+        label_dot->setStyleSheet(style.label_dot);
+        label_dot->setText("o");
+        label_dot->setMinimumSize(50, 50);
+        dotLayout_frame->addWidget(label_dot, 0, Qt::AlignCenter | Qt::AlignTop);
+        labels.append(label_dot);
+    }
+
+    QFrame* frame_dot_2 = new QFrame();
+    QHBoxLayout* dot2Layout_frame = new QHBoxLayout(frame_dot_2);
+    page4_layout_grid->addWidget(frame_dot_2, 0, Qt::AlignCenter | Qt::AlignBottom);
+    frame_dot_2->setStyleSheet(style.Tab_widget);
+
+	QSpinBox* spin_box_dot = new QSpinBox;
+	spin_box_dot->setRange(1, 20);
+	spin_box_dot->setValue(5);
+	spin_box_dot->setStyleSheet(style.style_spinbox);
+	spin_box_dot->setFixedSize(200, 40);   
+	spin_box_dot->setToolTip("Set the number of dots");
+	dot2Layout_frame->addWidget(spin_box_dot, 0, Qt::AlignCenter | Qt::AlignBottom);
+
+
+	QPushButton* button_dot = new QPushButton("Play");
+	button_dot->setStyleSheet(style.button_style_0);
+	button_dot->setFixedSize(200, 40);
+	dot2Layout_frame->addWidget(button_dot, 0, Qt::AlignCenter | Qt::AlignBottom);
+
+	QDoubleSpinBox* spin_box = new QDoubleSpinBox;
+	spin_box->setRange(1, 300);
+	spin_box->setValue(60);
+	spin_box->setStyleSheet(style.style_spinbox);
+	spin_box->setFixedSize(200, 40);
+	spin_box->setToolTip("Set the time interval of the dots");
+	dot2Layout_frame->addWidget(spin_box, 0, Qt::AlignCenter | Qt::AlignBottom);
+
+    connect(spin_box_dot, &QSpinBox::valueChanged, this, [=]() {
+        // 清除布局中的所有子控件
+        QLayoutItem* item;
+        while ((item = dotLayout_frame->takeAt(0)) != nullptr) {
+            delete item->widget();  // 删除控件
+            delete item;            // 删除布局项
+        }
+        // 清空 labels 列表
+        labels.clear();
+		for (int i = 0; i < spin_box_dot->value(); i++) {
+			QLabel* label_dot = new QLabel;
+			label_dot->setStyleSheet(style.label_dot);
+			label_dot->setMinimumSize(50, 50);
+            label_dot->setText("o");
+			dotLayout_frame->addWidget(label_dot, 0, Qt::AlignCenter | Qt::AlignTop);
+            labels.append(label_dot);
+		}
+        });
+    connect(button_dot, &QPushButton::clicked, this, [=]() {
+       
+        if (timer_dot == nullptr) {
+            timer_dot = new QTimer(this);
+            int currentIndex = 0; // 用于记录当前要改变颜色的 label 的索引
+
+            connect(timer_dot, &QTimer::timeout, this, [=]() mutable {
+                if (currentIndex >= labels.size()) {
+                    currentIndex = 0; // 如果超出范围，重置索引
+                    for (auto label : labels) {
+                        label->setStyleSheet("QLabel{color:#c2402a;font-size:80px;font-style: normal; font-weight: bold;}");
+                    }
+                }
+                // 获取当前要改变颜色的 label
+                QLabel* label = labels[currentIndex];
+                // 生成随机颜色
+                auto generator = QRandomGenerator::global();
+                int red = generator->bounded(200, 256);    // 生成 0-255 之间的随机红色值
+                int green = generator->bounded(200, 256);  // 生成 0-255 之间的随机绿色值
+                int blue = generator->bounded(255, 256);   // 生成 0-255 之间的随机蓝色值
+
+                // 创建随机颜色字符串
+                QString color = QString("rgb(%1, %2, %3)").arg(red).arg(green).arg(blue);
+
+                // 设置 label 的样式
+                label->setStyleSheet(QString("QLabel{color:%1;font-size:80px;font-style: normal; font-weight: bold;}").arg(color));
+
+                // 更新索引，指向下一个 label
+                currentIndex++;
+                //系统蜂鸣声
+				QApplication::beep();
+                });
+
+            timer_dot->start((60/spin_box->value())*1000); // 每秒更新一次
+            button_dot->setText("Stop");
+        }
+
+		else {
+			timer_dot->stop();
+			delete timer_dot;
+			timer_dot = nullptr;
+			button_dot->setText("Play");
+            for (auto label : labels) {
+                label->setStyleSheet("QLabel{color:#c2402a;font-size:80px;font-style: normal; font-weight: bold;}");
+            }
+		}
+        });
+
 }
 
 Qt_focus::~Qt_focus()//析构函数

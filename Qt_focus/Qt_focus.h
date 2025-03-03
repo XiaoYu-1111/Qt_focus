@@ -126,8 +126,12 @@ public:
     QVBoxLayout* page1_layout_grid;
 
     QVBoxLayout* page2_layout_grid;//页面2
-    QVBoxLayout* page3_layout_grid;//页面2
+    QVBoxLayout* page3_layout_grid;//页面3
+    QVBoxLayout* page4_layout_grid;//页面3
 
+    QList<QLabel*> labels;
+    private:
+        QTimer* timer_dot = nullptr;
 
     QLabel* label_text_time;
     bool label_main_text_only = false;

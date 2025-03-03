@@ -90,4 +90,7 @@ public:
         "border-radius: 10px;"
         "width: 1px;" // 设置进度条块的宽度
         "}";
+
+    QString label_dot = R"(QLabel{color:#c2402a;font-size:80px;font-style: normal; font-weight: bold;}
+                            QLabel:hover{color:#e6fbe3;})";//主标签
 };
