@@ -142,9 +142,31 @@ else {
     stackedWidget1->addTab(Widget_page2, QIcon(":/Qt_focus/ico/links.png"), "&");
     stackedWidget1->addTab(Widget_page3, QIcon(":/Qt_focus/ico/probe.png"), "&");
     stackedWidget1->addTab(Widget_page4, QIcon(":/Qt_focus/ico/Dots.png"), "&");
-    
     stackedWidget1->tabBar()->setIconSize(QSize(50,50)); // 设置图标大小为32x32
+
 #pragma endregion
+
+    QWidget* widget_bottom = new QWidget();//底部窗口
+    QHBoxLayout* layout_bottom = new QHBoxLayout(widget_bottom);
+	layout_bottom->setContentsMargins(0, 0, 0, 0);
+    main_layout->addWidget(widget_bottom);
+    // 添加左弹簧
+    layout_bottom->addSpacerItem(new QSpacerItem(40, 10, QSizePolicy::Expanding, QSizePolicy::Minimum));
+	widget_bottom->setStyleSheet(style.dock_widget);
+    label_tab.clear();
+	int tab_count = stackedWidget1->count();
+	qDebug() << "tab_count" << tab_count;
+
+    for (int i = 0; i < tab_count; i++) {
+        HoverLabel* label_dot = new HoverLabel(i, stackedWidget1);
+        label_dot->setStyleSheet(style.label_tab);
+        label_dot->setText(" o ");
+        label_dot->setMaximumSize(40, 40);
+        layout_bottom->addWidget(label_dot, 0, Qt::AlignCenter | Qt::AlignVCenter);
+        label_tab.append(label_dot);
+    }
+    // 添加右弹簧
+    layout_bottom->addSpacerItem(new QSpacerItem(40, 10, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
 #pragma region //page_home
 
@@ -417,7 +439,6 @@ else {
     connect(label_link2, &QPushButton::clicked, this, [=]() {
         QDesktopServices::openUrl(QUrl(label_link2->text()));
         });
-
     connect(button_search, &QPushButton::clicked, this, [=]() {
         QDesktopServices::openUrl(QUrl("https://www.baidu.com/s?wd="+TextEdit_search->toPlainText()));
         });
@@ -488,7 +509,7 @@ else {
 
 #pragma endregion
 
-///Dots
+#pragma region ///Dots
     page4_layout_grid = new QVBoxLayout(Widget_page4);
     page4_layout_grid->setContentsMargins(0, 0, 0, 0);
 
@@ -565,12 +586,11 @@ else {
         if (timer_dot == nullptr) {
             timer_dot = new QTimer(this);
             int currentIndex = 0; // 用于记录当前要改变颜色的 label 的索引
-
             connect(timer_dot, &QTimer::timeout, this, [=]() mutable {
                 if (currentIndex >= labels.size()) {
                     currentIndex = 0; // 如果超出范围，重置索引
                     for (auto label : labels) {
-                        label->setStyleSheet("QLabel{color:#c2402a;font-size:80px;font-style: normal; font-weight: bold;}");
+                        label->setStyleSheet("QLabel{color:rgb(255, 128, 0);font-size:80px;font-style: normal; font-weight: bold;}");
                     }
                 }
                 // 获取当前要改变颜色的 label
@@ -580,10 +600,8 @@ else {
                 int red = generator->bounded(200, 256);    // 生成 0-255 之间的随机红色值
                 int green = generator->bounded(200, 256);  // 生成 0-255 之间的随机绿色值
                 int blue = generator->bounded(255, 256);   // 生成 0-255 之间的随机蓝色值
-
                 // 创建随机颜色字符串
                 QString color = QString("rgb(%1, %2, %3)").arg(red).arg(green).arg(blue);
-
                 // 设置 label 的样式
                 label->setStyleSheet(QString("QLabel{color:%1;font-size:80px;font-style: normal; font-weight: bold;}").arg(color));
 
@@ -592,11 +610,9 @@ else {
                 //系统蜂鸣声
 				QApplication::beep();
                 });
-
             timer_dot->start((60/spin_box->value())*1000); // 每秒更新一次
             button_dot->setText("Stop");
         }
-
 		else {
 			timer_dot->stop();
 			delete timer_dot;
@@ -609,7 +625,7 @@ else {
         });
 
 }
-
+#pragma endregion
 Qt_focus::~Qt_focus()//析构函数
 {}
 
@@ -878,7 +894,6 @@ void Qt_focus::Main_page_Rmenu()
         }
         label_main_text_only = !label_main_text_only;
         });
-
     connect(pAc5, &QAction::triggered, [=] {
         MySubWindow* widget = new MySubWindow();
         widget->setWindowIcon(QIcon(":/Qt_focus/ico/xiaoyu.png"));
@@ -886,7 +901,6 @@ void Qt_focus::Main_page_Rmenu()
         widget->setStyleSheet(widget_style);
         widget->show();
         });
-
     connect(pAc6, &QAction::triggered, [=] {
         SandSimulator* widget = new SandSimulator();
         widget->setContentsMargins(0, 0, 0, 0);
@@ -977,12 +991,12 @@ void Qt_focus::Main_page_Rmenu()
             return;
         }
         });
-    
+
     connect(option1Action1, &QAction::triggered, [=] {
         QString appDir = QCoreApplication::applicationDirPath();//获取主程序目录
         QString program = appDir + "/Executable_program/Pysider6_timer.exe";//将exe文件放到主程序同级目录下
-        /*QString path_osk = R"(C:\Windows\System32\osk.exe)";*/
-        run_exe(program);
+        //QString path_osk = R"(C:\Windows\System32\at.exe)";
+		run_exe(program);
         });
     connect(option1Action2, &QAction::triggered, [=] {
         //QMessageBox::information(this, "title", "ac4");
@@ -1132,7 +1146,7 @@ void Qt_focus::widget_customMove(int x, int y) {
     //QRect screenGeometry = screen->geometry();
     //const int margin = 50; // 吸附的边距
 
-    const int margin = 50; // 吸附的边距
+    const int margin = 0; // 吸附的边距
 
     // 吸附到屏幕边缘
     if (x < screenGeometry.left() + margin) {

@@ -91,6 +91,8 @@ public:
         "width: 1px;" // 设置进度条块的宽度
         "}";
 
-    QString label_dot = R"(QLabel{color:#c2402a;font-size:80px;font-style: normal; font-weight: bold;}
+    QString label_dot = R"(QLabel{color:rgb(255, 128, 0);font-size:80px;font-style: normal; font-weight: bold;}
                             QLabel:hover{color:#e6fbe3;})";//主标签
+    QString label_tab = R"(QLabel{color:#cee8ff;font-size:25px;font-style: normal; font-weight: bold;}
+                            QLabel:hover{color:rgb(255, 128, 0);})";//主标签
 };

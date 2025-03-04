@@ -116,6 +116,7 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="style.h" />
+    <QtMoc Include="tabhover.h" />
     <QtMoc Include="xyseriesiodevice.h" />
     <QtMoc Include="SandSimulator.h" />
     <QtMoc Include="roundprogressbar.h" />

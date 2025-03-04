@@ -2,13 +2,13 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_Qt_focus.h"
-// 自定义头文件
+/// 自定义头文件
 #include "my_button_class.h"
 #include"mywindows_class.h"
 #include"xyseriesiodevice.h"
 #include "roundprogressbar.h"
-
 #include"SandSimulator.h"//
+#include"tabhover.h"
 
 ///QT-header
 #include <QGuiApplication>
@@ -129,6 +129,7 @@ public:
     QVBoxLayout* page3_layout_grid;//页面3
     QVBoxLayout* page4_layout_grid;//页面3
 
+    QList<QLabel*> label_tab;
     QList<QLabel*> labels;
     private:
         QTimer* timer_dot = nullptr;
