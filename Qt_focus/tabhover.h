@@ -3,28 +3,30 @@
 #include <QLabel>
 #include <QTabWidget>
 #include <QVBoxLayout>
+///建立一个标签类，用于悬停切换tab
 
 class HoverLabel : public QLabel {
     Q_OBJECT
-
 public:
+	// 构造函数
     HoverLabel(int index, QTabWidget* tabWidget, QWidget* parent = nullptr)
         : QLabel(parent), m_index(index)  ,m_tabWidget(tabWidget) {
-        // 设置默认样式
-        setStyleSheet("QLabel { color: black; }");
+    // 设置标签样式
+    setStyleSheet(label_tab);
     }
 protected:
     bool event(QEvent* event) override {
         if (event->type() == QEvent::HoverEnter) {
             // 鼠标悬停时切换 tab
-            out_index();
-            // 可以在这里更改悬停时的样式
+            out_index(); 
+            // 设置标签样式
             setStyleSheet(label_tab);
         }
         else if (event->type() == QEvent::HoverLeave) {
-            // 鼠标离开时恢复默认样式
+            // 设置标签样式
             setStyleSheet(label_tab);
         }
+		
         return QLabel::event(event);
     }
 private:
@@ -39,5 +41,4 @@ private:
        }
        return m_index;
     }
-
 };

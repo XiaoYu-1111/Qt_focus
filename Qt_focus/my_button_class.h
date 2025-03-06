@@ -7,11 +7,9 @@ class MyQPushButton : public QPushButton {
 
 public:
     MyQPushButton(QPushButton* parent = nullptr) : QPushButton(parent) {
-        
         setFixedSize(200, 40);
         setStyleSheet(style_mybutton);
     }
-
     QString style_mybutton = R"(QPushButton{font-size:20px;color:#0F1C2E;
                                 background-color:#cee8ff;border-radius:5px;}
                                 QPushButton:hover{background-color:#e0e0e0;}

@@ -72,6 +72,9 @@
     <QtMoc Include="tabhover.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="CameraBackend.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">

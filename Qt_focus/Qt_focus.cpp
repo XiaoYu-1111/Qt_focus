@@ -17,7 +17,7 @@ this->setStyleSheet(style.widget_uicenter);
 this->setContentsMargins(0,0,0,0);
 this->setContextMenuPolicy(Qt::DefaultContextMenu);
 initialSize = this->size();
-
+qDebug() << "initialSize" << initialSize;
 QIcon icon(":/Qt_focus/ico/xiaoyu_base.png");
 setAllWindowIcons(icon);
 #pragma endregion
@@ -39,11 +39,9 @@ main_layout->setContentsMargins(0, 0, 0, 0);
 bool is_borderless = 1;
 widget_upper = new QWidget();//upper窗口
 
-//#include <QGraphicsDropShadowEffect>
-// 创建阴影效果
+//#include <QGraphicsDropShadowEffect>//创建阴影效果
 //QGraphicsDropShadowEffect* shadowEffect = new QGraphicsDropShadowEffect();
-
-// 将阴影效果应用到上层窗口
+//将阴影效果应用到上层窗口
 //widget_upper->setGraphicsEffect(shadowEffect);
 //ui.centralWidget->setGraphicsEffect(shadowEffect);
 
@@ -109,14 +107,15 @@ else {
 }
 #pragma endregion
 
+#pragma region//middle window
     QWidget* widget_mid = new QWidget();//中窗口
-    QHBoxLayout* layout_mid = new QHBoxLayout(widget_mid);
-    layout_mid->setContentsMargins(0, 0, 0, 0);
+    QHBoxLayout* Hlayout_midwidget = new QHBoxLayout(widget_mid);
+    Hlayout_midwidget->setContentsMargins(0, 0, 0, 0);
     main_layout->addWidget(widget_mid);
 
-    stackedWidget1 = new QTabWidget();//tab窗口
-    stackedWidget1->setStyleSheet(style.Tab_widget);
-    stackedWidget1->setContentsMargins(0, 0, 0, 0);
+    TabWidget_Main = new QTabWidget();//tab窗口
+    TabWidget_Main->setStyleSheet(style.Tab_widget);
+    TabWidget_Main->setContentsMargins(0, 0, 0, 0);
 
     QWidget* widget_left = new QWidget();
     widget_left->setMinimumWidth(20);
@@ -124,9 +123,9 @@ else {
     QWidget* widget_right = new QWidget();
     widget_right->setMinimumWidth(20);
 
-    layout_mid->addWidget(widget_left, Qt::AlignLeft);
-    layout_mid->addWidget(stackedWidget1,Qt::AlignCenter);//中间窗口添加tab窗口
-    layout_mid->addWidget(widget_right, Qt::AlignRight);
+    Hlayout_midwidget->addWidget(widget_left, Qt::AlignLeft);
+    Hlayout_midwidget->addWidget(TabWidget_Main,Qt::AlignCenter);//中间窗口添加tab窗口
+    Hlayout_midwidget->addWidget(widget_right, Qt::AlignRight);
 
     Widget_page_home = new QWidget();
     Widget_page0 = new QWidget();//添加新页面
@@ -134,18 +133,21 @@ else {
     Widget_page2 = new QWidget();
     Widget_page3 = new QWidget();
     Widget_page4 = new QWidget();
+    Widget_page5 = new QWidget();
 
-    //stackedWidget1->addTab(Widget_page0, QIcon(":/Qt_focus/ico/focus.png"), "&Rain Focus");//通过标签页的形式添加
-    stackedWidget1->addTab(Widget_page_home, QIcon(":/Qt_focus/ico/homes.png"), "&");
-    stackedWidget1->addTab(Widget_page0, QIcon(":/Qt_focus/ico/focus.png"), "&");//通过标签页的形式添加
-    stackedWidget1->addTab(Widget_page1, QIcon(":/Qt_focus/ico/tasks.png"), "&");
-    stackedWidget1->addTab(Widget_page2, QIcon(":/Qt_focus/ico/links.png"), "&");
-    stackedWidget1->addTab(Widget_page3, QIcon(":/Qt_focus/ico/probe.png"), "&");
-    stackedWidget1->addTab(Widget_page4, QIcon(":/Qt_focus/ico/Dots.png"), "&");
-    stackedWidget1->tabBar()->setIconSize(QSize(50,50)); // 设置图标大小为32x32
+    //TabWidget_Main->addTab(Widget_page0, QIcon(":/Qt_focus/ico/focus.png"), "&Rain Focus");//通过标签页的形式添加
+    TabWidget_Main->addTab(Widget_page_home, QIcon(":/Qt_focus/ico/homes.png"), "&");
+    TabWidget_Main->addTab(Widget_page0, QIcon(":/Qt_focus/ico/focus.png"), "&");//通过标签页的形式添加
+    TabWidget_Main->addTab(Widget_page1, QIcon(":/Qt_focus/ico/tasks.png"), "&");
+    TabWidget_Main->addTab(Widget_page2, QIcon(":/Qt_focus/ico/links.png"), "&");
+    TabWidget_Main->addTab(Widget_page3, QIcon(":/Qt_focus/ico/probe.png"), "&");
+    TabWidget_Main->addTab(Widget_page4, QIcon(":/Qt_focus/ico/Dots.png"), "&");
+    TabWidget_Main->addTab(Widget_page5, QIcon(":/Qt_focus/ico/cam2.png"), "&");
+    TabWidget_Main->tabBar()->setIconSize(QSize(50,50)); // 设置图标大小为32x32
 
 #pragma endregion
 
+#pragma region//bottom window
     QWidget* widget_bottom = new QWidget();//底部窗口
     QHBoxLayout* layout_bottom = new QHBoxLayout(widget_bottom);
 	layout_bottom->setContentsMargins(0, 0, 0, 0);
@@ -154,11 +156,11 @@ else {
     layout_bottom->addSpacerItem(new QSpacerItem(40, 10, QSizePolicy::Expanding, QSizePolicy::Minimum));
 	widget_bottom->setStyleSheet(style.dock_widget);
     label_tab.clear();
-	int tab_count = stackedWidget1->count();
+	int tab_count = TabWidget_Main->count();
 	qDebug() << "tab_count" << tab_count;
 
     for (int i = 0; i < tab_count; i++) {
-        HoverLabel* label_dot = new HoverLabel(i, stackedWidget1);
+        HoverLabel* label_dot = new HoverLabel(i, TabWidget_Main);
         label_dot->setStyleSheet(style.label_tab);
         label_dot->setText(" o ");
         label_dot->setMaximumSize(40, 40);
@@ -167,6 +169,8 @@ else {
     }
     // 添加右弹簧
     layout_bottom->addSpacerItem(new QSpacerItem(40, 10, QSizePolicy::Expanding, QSizePolicy::Minimum));
+#pragma endregion
+
 
 #pragma region //page_home
 
@@ -215,7 +219,7 @@ else {
 
 #pragma endregion
 
-#pragma region //page0_Focus
+#pragma region //page0 Focus
     page0_layout_grid = new QGridLayout(Widget_page0);
     Widget_page0->setContentsMargins(0, 0, 0, 0);
     page0_layout_grid->setContentsMargins(0, 0, 0, 0);
@@ -238,7 +242,7 @@ else {
 
     RoundProgressBar* round_progress_bar = new RoundProgressBar();//设置圆形进度条
     round_progress_bar->setValue(20);
-    round_progress_bar->setFixedSize(100, 100);
+    //round_progress_bar->setFixedSize(100, 100);
     round_progress_bar->setOutlinePenWidth(0);
     round_progress_bar->setBaseCircleVisible(true);
     //round_progress_bar->setBarStyle(RoundProgressBar::BarStyle::StyleLine);
@@ -280,7 +284,7 @@ else {
 
 #pragma endregion
 
-#pragma region //page1Task list
+#pragma region //page1 Task list
 
     page1_layout_grid = new QVBoxLayout(Widget_page1);
     page1_layout_grid->setContentsMargins(0, 0, 0, 0);
@@ -378,7 +382,7 @@ else {
         }});
 #pragma endregion
 
-#pragma region //page2Link list
+#pragma region //page2 Link list
 
     page2_layout_grid = new QVBoxLayout(Widget_page2);
     page2_layout_grid->setContentsMargins(0, 0, 0, 0);
@@ -445,7 +449,7 @@ else {
 
 #pragma endregion
 
-#pragma region //page3Probe
+#pragma region //page3 Probe
 
     page3_layout_grid = new QVBoxLayout(Widget_page3);
     page3_layout_grid->setContentsMargins(0, 0, 0, 0);
@@ -509,7 +513,8 @@ else {
 
 #pragma endregion
 
-#pragma region ///Dots
+#pragma region //page4 Dots
+
     page4_layout_grid = new QVBoxLayout(Widget_page4);
     page4_layout_grid->setContentsMargins(0, 0, 0, 0);
 
@@ -548,7 +553,6 @@ else {
 	spin_box_dot->setFixedSize(200, 40);   
 	spin_box_dot->setToolTip("Set the number of dots");
 	dot2Layout_frame->addWidget(spin_box_dot, 0, Qt::AlignCenter | Qt::AlignBottom);
-
 
 	QPushButton* button_dot = new QPushButton("Play");
 	button_dot->setStyleSheet(style.button_style_0);
@@ -623,9 +627,119 @@ else {
             }
 		}
         });
+#pragma endregion
+
+#pragma region///page5 Multimedia_camera
+    //相机部分
+    page5_layout_grid = new QVBoxLayout(Widget_page5);
+    page5_layout_grid->setContentsMargins(0, 0, 0, 0);
+
+	QWidget* Widget_camera = new QWidget();
+    Widget_camera->setMinimumSize(400, 400);
+    Widget_camera->setStyleSheet(style.widget_gray1);
+	QGridLayout* layout_camera = new QGridLayout(Widget_camera);
+    page5_layout_grid->addWidget(Widget_camera, 0, Qt::AlignCenter);
+
+    QWidget* Widget_camera_button = new QWidget();
+    Widget_camera_button->setMaximumHeight(100);
+    Widget_camera_button->setStyleSheet(style.widget_gray1);
+    QHBoxLayout* Hlayout_camera_button = new QHBoxLayout(Widget_camera_button);
+    page5_layout_grid->addWidget(Widget_camera_button, 0, Qt::AlignCenter | Qt::AlignBottom);
+
+    QPushButton* button_camera = new QPushButton("Info");
+    button_camera->setStyleSheet(style.button_style_0);
+    button_camera->setFixedSize(100, 40);
+    Hlayout_camera_button->addWidget(button_camera);
+
+    QPushButton* button_camera2 = new QPushButton("Cap");
+    button_camera2->setStyleSheet(style.button_style_0);
+    button_camera2->setFixedSize(100, 40);
+    Hlayout_camera_button->addWidget(button_camera2);
+
+    QPushButton* button_camera3 = new QPushButton("Turn");
+    button_camera3->setStyleSheet(style.button_style_0);
+    button_camera3->setFixedSize(100, 40);
+    Hlayout_camera_button->addWidget(button_camera3);
+
+    QPushButton* button_camera4 = new QPushButton("Get");
+    button_camera4->setStyleSheet(style.button_style_0);
+    button_camera4->setFixedSize(100, 40);
+    Hlayout_camera_button->addWidget(button_camera4);
+
+    QCamera* camera = new QCamera();
+    QImageCapture* imageCapture2 = new QImageCapture();
+    camera->start();
+	QVideoWidget* videoWidget = new QVideoWidget;//视频窗口
+	QMediaCaptureSession* captureSession = new QMediaCaptureSession();//媒体捕获会话
+	captureSession->setImageCapture(imageCapture2);//设置图像捕获
+
+    const QList<QCameraDevice> cameras = QMediaDevices::videoInputs();
+
+    connect(button_camera, &QPushButton::clicked, this, [=]() {
+        const QList<QCameraDevice> cameras = QMediaDevices::videoInputs();
+        QString camerasInfo;
+        for (const QCameraDevice& cameraDevice : cameras) {
+            qDebug() << cameraDevice.description();
+            //qDebug() << "Camera Position:" << cameraDevice.position();
+            camerasInfo += "Camera Name: " + cameraDevice.description() + "  ";
+        }
+        qDebug() << camerasInfo;
+        ui.statusBar->showMessage(camerasInfo, 1000);
+
+        });
+    connect(button_camera2, &QPushButton::clicked, this, [=]() {
+        // 创建相机对象
+        captureSession->setVideoOutput(videoWidget);
+        captureSession->setCamera(camera);
+        //videoWidget->show();
+        //videoWidget->update();
+        layout_camera->addWidget(videoWidget, 0, Qt::AlignCenter);
+        Widget_camera->show();
+        // 更新状态栏消息
+        ui.statusBar->showMessage("button_camera2 clicked", 1000);
+        });
+    // 假设cameras[0]是后置摄像头，cameras[1]是前置摄像头
+    connect(button_camera3, &QPushButton::clicked, this, [=]() {
+        if (isFrontCamera && cameras.size() > 1) {
+            // 如果当前是前置摄像头，切换到后置摄像头
+            camera->stop();
+            camera->setCameraDevice(cameras[0]);
+            camera->start();
+            isFrontCamera = false;
+			qDebug() << "Camera 0" ;
+        }
+        else if (!isFrontCamera && cameras.size() > 1) {
+            // 如果当前是后置摄像头，切换到前置摄像头
+            camera->stop();
+            camera->setCameraDevice(cameras[1]);
+            camera->start();
+            isFrontCamera = true;
+            qDebug() << "Camera 1";
+		}
+        else {
+			qDebug() << "No  other camera found!";
+        }
+		});
+    // 拍照按钮点击事件
+    connect(button_camera4, &QPushButton::clicked, this, [=]() {
+        // 设置保存路径
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png *.jpg *.bmp)"));
+        if (!fileName.isEmpty()) {
+            // 捕获图像并保存
+            captureSession->setCamera(camera);
+            imageCapture2->captureToFile(fileName);
+			ui.statusBar->showMessage("Image saved to " + fileName, 5000);
+        }
+        });
+    // 处理图像捕获错误信号
+    connect(imageCapture2, &QImageCapture::errorOccurred, this, [=](int id, QImageCapture::Error error, const QString& errorString) {
+        // 处理捕获错误
+        qDebug() << "Error capturing image:" << errorString;
+        });
+#pragma endregion
 
 }
-#pragma endregion
+
 Qt_focus::~Qt_focus()//析构函数
 {}
 
@@ -783,10 +897,10 @@ void Qt_focus::reset_lable_time() {
         remainingTime = Focus_time;
         start_lable_time();
         button_focus_reset->setText("Reset");
-        //stackedWidget1->tabBar()->hide();
+        //TabWidget_Main->tabBar()->hide();
     }
     /*else {
-        stackedWidget1->tabBar()->show();
+        TabWidget_Main->tabBar()->show();
     }*/
    
     /*is_focus_start = !is_focus_start;*/
@@ -857,8 +971,8 @@ void Qt_focus::Main_page_Rmenu()
     Menu_exe->setMenu(myMenu);
 
     connect(pAc1, &QAction::triggered, [=] {
-        if (stackedWidget1->tabBar()->isVisible()) {
-            stackedWidget1->tabBar()->hide();
+        if (TabWidget_Main->tabBar()->isVisible()) {
+            TabWidget_Main->tabBar()->hide();
             pAc1->setText("Show TabBar");
             //this->setWindowFlags(Qt::FramelessWindowHint);//无边框
             //this->show(); // 确保窗口更新
@@ -866,7 +980,7 @@ void Qt_focus::Main_page_Rmenu()
         else {
             //this->setWindowFlags(Qt::Window | Qt::WindowTitleHint); // 恢复为带边框
             //this->show(); // 确保窗口更新
-            stackedWidget1->tabBar()->show();
+            TabWidget_Main->tabBar()->show();
             pAc1->setText("Hide TabBar");
         }
         });
@@ -1054,24 +1168,6 @@ void Qt_focus::contextMenuEvent(QContextMenuEvent* event)
 
 #pragma endregion
 
-//主页关闭事件提示
-void  Qt_focus::closeEvent(QCloseEvent* event) {
-    stylesheet_QT style;
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "prompt !", " Are you sure to quit!",
-        QMessageBox::Yes | QMessageBox::No);
-
-    if (reply == QMessageBox::Yes) {
-        event->accept();
-    }
-    else {
-        event->ignore();
-    }
-    //stylesheet_QT style;
-    this->setStyleSheet(style.widget_gray1);
-
-}
-
 #pragma region //无边框实现//override
 //实现鼠标控制窗口移动
 void Qt_focus::maximizeRestore() {  // 定义最大化和恢复
@@ -1230,6 +1326,24 @@ bool Qt_focus::eventFilter(QObject* obj, QEvent* event) {
     return QWidget::eventFilter(obj, event); // 调用基类事件过滤器
 }
 #pragma endregion
+
+//主页关闭事件提示
+void  Qt_focus::closeEvent(QCloseEvent* event) {
+    stylesheet_QT style;
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "prompt !", " Are you sure to quit!",
+        QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        event->accept();
+    }
+    else {
+        event->ignore();
+    }
+    //stylesheet_QT style;
+    this->setStyleSheet(style.widget_gray1);
+
+}
 
 QString Qt_focus::randonColor() {
     auto generator = QRandomGenerator::global();
@@ -1484,7 +1598,8 @@ void Qt_focus::setAllWindowIcons(const QIcon& icon) {
     }
 }
 //////////////////参考分割线/////////////////////////
-#pragma region //Qt自带 qdialog
+
+#pragma region //Qt自带 qdialog example
 //Qdialog
     //颜色选择器
     //QColorDialog* m_pColor = new QColorDialog(this);

@@ -8,5 +8,7 @@
         <file>ico/homes.png</file>
         <file>ico/focus.png</file>
         <file>ico/Dots.png</file>
+        <file>ico/cam.png</file>
+        <file>ico/cam2.png</file>
     </qresource>
 </RCC>

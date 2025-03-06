@@ -9,6 +9,7 @@
 #include "roundprogressbar.h"
 #include"SandSimulator.h"//
 #include"tabhover.h"
+#include"CameraBackend.h"
 
 ///QT-header
 #include <QGuiApplication>
@@ -108,7 +109,7 @@ public:
 
     QWidget* widget_upper;
     QTextEdit* textEdit_history;
-    QTabWidget* stackedWidget1;
+    QTabWidget* TabWidget_Main;
     QGridLayout* widget_mid_layout;
 
     QWidget* Widget_page_home;
@@ -122,12 +123,12 @@ public:
     QWidget* widget_settime;
     bool widget_settime_show = true;
 
-    QGridLayout* page0_layout_grid;
-    QVBoxLayout* page1_layout_grid;
-
+    QGridLayout* page0_layout_grid;//页面0
+    QVBoxLayout* page1_layout_grid;//页面1
     QVBoxLayout* page2_layout_grid;//页面2
     QVBoxLayout* page3_layout_grid;//页面3
-    QVBoxLayout* page4_layout_grid;//页面3
+    QVBoxLayout* page4_layout_grid;//页面4
+    QVBoxLayout* page5_layout_grid;//页面5
 
     QList<QLabel*> label_tab;
     QList<QLabel*> labels;
@@ -173,6 +174,9 @@ public:
     bool audio_isPause = false;
 
     QProcess process_exe1;//exe进程
+
+    bool isFrontCamera = false;
+
 public slots:
 
     // 自定义函数

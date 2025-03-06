@@ -114,6 +114,7 @@
     <QtMoc Include="mywindows_class.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="CameraBackend.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="style.h" />
     <QtMoc Include="tabhover.h" />
