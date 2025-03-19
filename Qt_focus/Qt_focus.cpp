@@ -7,10 +7,12 @@
 
 Qt_focus::Qt_focus(QWidget *parent)
     : QMainWindow(parent)
+	
 {
 #pragma region //start ui
-    ui.setupUi(this);
-    stylesheet_QT style;
+
+ui.setupUi(this);
+stylesheet_QT style;
 this->setWindowTitle("RAIN_Focus_1.0");
 this->setWindowIcon(QIcon(":/Qt_focus/ico/xiaoyu_base.png"));
 this->setStyleSheet(style.widget_uicenter);
@@ -20,10 +22,13 @@ initialSize = this->size();
 qDebug() << "initialSize" << initialSize;
 QIcon icon(":/Qt_focus/ico/xiaoyu_base.png");
 setAllWindowIcons(icon);
+
+
+
 #pragma endregion
 
 #pragma region //main window
-//ui.centralWidget->setMinimumSize(800, 500);
+ui.centralWidget->setMinimumSize(800, 500);
 ui.centralWidget->setStyleSheet(style.widget_gray1);
     ui.mainToolBar->setMinimumHeight(30);
     ui.mainToolBar->setMaximumHeight(50);
@@ -171,18 +176,19 @@ else {
     layout_bottom->addSpacerItem(new QSpacerItem(40, 10, QSizePolicy::Expanding, QSizePolicy::Minimum));
 #pragma endregion
 
-
 #pragma region //page_home
 
     page3_layout_grid = new QVBoxLayout(Widget_page_home);
     page3_layout_grid->setContentsMargins(0, 0, 0, 0);
 
     QLabel* label_main = new QLabel();
+    label_main->setOpenExternalLinks(true);
     //QString page0_String1 = "Focus Time<br>Rain";
     QString widget_gray0 = "Home";
     QString widget_gray00 = "<span style='color:#94a3b8;font-size: 15pt;font-weight: normal;font-style:normal'>"
         "Software Developer<br>"
-        "Based on Qt&Cpp Designed by Rain!"
+        "Based on Qt&Cpp Designed by Rain!<br>"
+        "<a href='https://github.com/XiaoYu-1111/Qt_focus' style='color: #b6ccd8;'>About Focus</a>"
         "</span>";
     QString combinedText0 = widget_gray0 + "<br>" + widget_gray00;
     label_main->setStyleSheet(style.label_main);
@@ -217,6 +223,46 @@ else {
         });
     timer_main->start(1000); // 每秒更新一次
 
+#pragma region
+    //fontawesome测试
+	QFrame* line = new QFrame();
+	QHBoxLayout* page3_layout_grid_h = new QHBoxLayout(line);
+    page3_layout_grid_h->setSpacing(20);
+	
+    QLabel* label1 = new QLabel;
+	FontAwesomeIcons& fontIcon = FontAwesomeIcons::Instance();
+	label1->setStyleSheet(style.label_fontawesome);
+	QChar iconChar1 = fontIcon.getIconChar(FontAwesomeIcons::IconIdentity::icon_envelope_alt);
+	label1->setFont(fontIcon.getFont());
+    label1->setText(QString(iconChar1));
+
+	QLabel* label2 = new QLabel;
+	label2->setStyleSheet(style.label_fontawesome);
+	QChar iconChar2 = fontIcon.getIconChar(FontAwesomeIcons::IconIdentity::icon_heart);
+    label2->setFont(fontIcon.getFont());
+    label2->setText(QString(iconChar2));
+
+    QLabel* label3 = new QLabel;
+    label3->setStyleSheet(style.label_fontawesome);
+    QChar iconChar3 = fontIcon.getIconChar(FontAwesomeIcons::IconIdentity::icon_github);
+    label3->setFont(fontIcon.getFont());
+    label3->setToolTip("Github！");
+    label3->setText(QString(iconChar3));
+
+	//QPushButton* button1 = new QPushButton("Send Email");
+	//button1->setStyleSheet(style.button_fontawesome);
+	//button1->setToolTip("Send Email");
+    //button1->setFont(fontIcon.getFont());
+    //button1->setText(QString(iconChar3));
+
+	page3_layout_grid_h->addWidget(label1, 0);
+    page3_layout_grid_h->addWidget(label2, 0);
+    page3_layout_grid_h->addWidget(label3, 0);
+    //page3_layout_grid_h->addWidget(button1, 0, Qt::AlignVCenter | Qt::AlignHCenter);
+
+    page3_layout_grid->addWidget(line,1, Qt::AlignVCenter | Qt::AlignHCenter);
+
+#pragma endregion
 #pragma endregion
 
 #pragma region //page0 Focus
@@ -472,19 +518,55 @@ else {
     /*QPushButton* resumeButton = new MyQPushButton();
     resumeButton->setText("resume");*/
 
+    QPushButton* button_exit = new MyQPushButton();
+    button_exit->setText("exit monitor");
+    button_exit->setEnabled(false);
+
     QFrame* frame_audio = new QFrame();
     QHBoxLayout* lineLayout_frame = new QHBoxLayout(frame_audio);
     lineLayout_frame->addWidget(button_probe);
     lineLayout_frame->addWidget(pauseButton);
     //lineLayout_frame->addWidget(resumeButton);
+    lineLayout_frame->addWidget(button_exit);
 
     page3_layout_grid->addWidget(label_probe_title, 0, Qt::AlignTop | Qt::AlignCenter);
     page3_layout_grid->addWidget(frame_audio, 0, Qt::AlignCenter | Qt::AlignTop);
 
     connect(button_probe, &QPushButton::clicked, this, [=]() {
-        Draw_audio_sensor();
-        page3_layout_grid->addWidget(widget_audio,0,  Qt::AlignTop);
+            Draw_audio_sensor();
+			widget_bool == true;
+            page3_layout_grid->addWidget(widget_audio, 0, Qt::AlignTop);
+            //设置按钮可点击
+			button_exit->setEnabled(true);
         });
+
+    connect(button_exit, &QPushButton::clicked, this, [=]() {
+   //     if (m_chart != nullptr) {
+   //         //、、清空
+			//m_chart->removeAllSeries();
+			//QLayoutItem* item;
+   //         while ((item = widget_audio->layout()->takeAt(0)) != nullptr) {
+   //             delete item->widget();  // 删除控件
+   //             delete item;            // 删除布局项
+   //         }
+			////page3_layout_grid->removeWidget(widget_audio);
+   //         //widget_audio=nullptr;
+			//qDebug() << "widget_audio deleted!";
+   //     }
+   //     else {
+			//qDebug() << "widget_audio is null!,creat widget first!";
+   //     }
+        
+        if (widget_audio != nullptr&& widget_bool==true) {
+			widget_audio->hide();
+        }
+        else
+        {
+			widget_audio->show();
+        }
+		widget_bool = !widget_bool;
+        });
+
 
     connect(pauseButton, &QPushButton::clicked, this, [=]() {
 
@@ -1093,7 +1175,7 @@ void Qt_focus::Main_page_Rmenu()
                 "开发者: XIAOYU\n"
                 "联系地址: 陕西西安\n"
                 "联系方式: 8888-8888\n"
-                "邮箱: 66666666@qq.com"
+                "邮箱: 66666666@qq.com\n" 
             );
             break;
         case AboutQt:
@@ -1370,7 +1452,6 @@ void Qt_focus::hexToRGB(const std::string& hex, double& r, double& g, double& b)
 void Qt_focus::Draw_audio_sensor() {
 
     if (m_chart == nullptr) {
-
         const QAudioDevice inputDevice = QMediaDevices::defaultAudioInput();//检查设备是否可以使用
         if (inputDevice.isNull()) {
             QMessageBox::warning(nullptr, "audio",
@@ -1380,7 +1461,6 @@ void Qt_focus::Draw_audio_sensor() {
         else {
             ui.statusBar->showMessage("ok");
         }
-
         m_chart = new QChart();
         // 设置背景颜色
         double r, g, b;
@@ -1468,10 +1548,7 @@ void Qt_focus::Draw_audio_sensor() {
         
         m_device = new XYSeriesIODevice(m_series);
         m_device->open(QIODevice::WriteOnly);
-      
-
         m_audioSource->start(m_device);
-       
         m_isRecording=true;
         ui.statusBar->showMessage("audio is recording!", 1000);
         //

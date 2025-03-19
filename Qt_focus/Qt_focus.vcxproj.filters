@@ -52,6 +52,9 @@
     <ClCompile Include="xyseriesiodevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fontawesomeicons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="my_button_class.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="style.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fontawesomeicons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

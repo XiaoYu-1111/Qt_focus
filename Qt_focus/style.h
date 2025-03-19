@@ -95,4 +95,12 @@ public:
                             QLabel:hover{color:#e6fbe3;})";//主标签
     QString label_tab = R"(QLabel{color:#cee8ff;font-size:25px;font-style: normal; font-weight: bold;}
                             QLabel:hover{color:rgb(255, 128, 0);})";//主标签
+
+    QString label_fontawesome = R"(QLabel{color:#cee8ff;font-size:30px;font-style: normal; font-weight: bold;}
+                            QLabel:hover{color:rgb(255, 128, 0);})";//fontawesomeicons.h
+
+    QString button_fontawesome = R"(QPushButton{font-size:20px;color:#0F1C2E;
+                                background-color:#cee8ff;border-radius:5px;}
+                                QPushButton:hover{background-color:#e0e0e0;}
+                                QPushButton:pressed{padding-top:3px;padding-left:3px;})";
 };

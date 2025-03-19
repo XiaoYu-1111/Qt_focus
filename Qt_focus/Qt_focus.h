@@ -11,6 +11,8 @@
 #include"tabhover.h"
 #include"CameraBackend.h"
 
+#include"fontawesomeicons.h"
+
 ///QT-header
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -79,6 +81,9 @@ public:
 
 private:
     Ui::Qt_focusClass ui;
+
+private:
+    QFont fontAwesomeFont;
 protected:
     //关闭窗口提示！
     void closeEvent(QCloseEvent* event) override;
@@ -93,6 +98,8 @@ private:
     void contextMenuEvent(QContextMenuEvent* event) override;
     void Main_page_Rmenu();
     void color_select_RMenu();
+
+
 
 private:
     QSize initialSize;
@@ -172,6 +179,7 @@ public:
     QWidget* widget_audio;
     bool m_isRecording=false;
     bool audio_isPause = false;
+    bool widget_bool = false;
 
     QProcess process_exe1;//exe进程
 

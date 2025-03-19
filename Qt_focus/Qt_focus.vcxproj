@@ -97,6 +97,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="fontawesomeicons.cpp" />
     <ClCompile Include="round.cpp" />
     <ClCompile Include="SandSimulator.cpp" />
     <ClCompile Include="xyseriesiodevice.cpp" />
@@ -115,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CameraBackend.h" />
+    <ClInclude Include="fontawesomeicons.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="style.h" />
     <QtMoc Include="tabhover.h" />

@@ -10,5 +10,6 @@
         <file>ico/Dots.png</file>
         <file>ico/cam.png</file>
         <file>ico/cam2.png</file>
+        <file>ico/fontawesome-webfont.ttf</file>
     </qresource>
 </RCC>
