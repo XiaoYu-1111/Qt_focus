@@ -22,9 +22,6 @@ initialSize = this->size();
 qDebug() << "initialSize" << initialSize;
 QIcon icon(":/Qt_focus/ico/xiaoyu_base.png");
 setAllWindowIcons(icon);
-
-
-
 #pragma endregion
 
 #pragma region //main window
@@ -44,12 +41,6 @@ main_layout->setContentsMargins(0, 0, 0, 0);
 bool is_borderless = 1;
 widget_upper = new QWidget();//upper窗口
 
-//#include <QGraphicsDropShadowEffect>//创建阴影效果
-//QGraphicsDropShadowEffect* shadowEffect = new QGraphicsDropShadowEffect();
-//将阴影效果应用到上层窗口
-//widget_upper->setGraphicsEffect(shadowEffect);
-//ui.centralWidget->setGraphicsEffect(shadowEffect);
-
 if (is_borderless) {
 
 this->setWindowFlags(Qt::FramelessWindowHint);//无边框
@@ -64,7 +55,7 @@ this->setAttribute(Qt::WA_TranslucentBackground);//背景透明
     widget_upper->installEventFilter(this);
     ui.statusBar->installEventFilter(this);
 
-    QLabel* label_title = new QLabel("    RAIN Focus 1.0");
+    QLabel* label_title = new QLabel("    RAIN Focus V1.0");
     label_title->setStyleSheet(style.label_title);
     label_title->setAlignment(Qt::AlignVCenter | Qt::AlignLeft); // 设置文本上下居中，左对齐
     layout_upper->addWidget(label_title);
@@ -1033,6 +1024,8 @@ void Qt_focus::Main_page_Rmenu()
 
     QAction* Menu_exe = new QAction("EXE");
 
+    QAction* Menu_exe2 = new QAction("Fontawesome");
+
     Rclick_Menu->addAction(pAc1);
     Rclick_Menu->addAction(pAc2);
     Rclick_Menu->addAction(pAc3);
@@ -1041,6 +1034,7 @@ void Qt_focus::Main_page_Rmenu()
     Rclick_Menu->addAction(pAc6);
     Rclick_Menu->addAction(pAc_about);
     Rclick_Menu->addAction(Menu_exe);
+    Rclick_Menu->addAction(Menu_exe2);
 
     QMenu* myMenu = new QMenu(this);//一号菜单
     QAction* option1Action1 = new QAction("Pysider6_timer", this);//一号菜单action
@@ -1051,6 +1045,18 @@ void Qt_focus::Main_page_Rmenu()
     myMenu->addAction(option1Action3);
 
     Menu_exe->setMenu(myMenu);
+
+
+    QMenu* myMenu2 = new QMenu(this);//一号菜单
+    QAction* option1Action_Font = new QAction("font_win_example", this);//一号菜单action
+    QAction* option1Action_Font1 = new QAction("c2", this);//一号菜单action
+    QAction* option1Action_Font2 = new QAction("c3", this);//一号菜单action
+    myMenu2->addAction(option1Action_Font);
+    myMenu2->addAction(option1Action_Font1);
+    myMenu2->addAction(option1Action_Font2);
+
+    Menu_exe2->setMenu(myMenu2);
+
 
     connect(pAc1, &QAction::triggered, [=] {
         if (TabWidget_Main->tabBar()->isVisible()) {
@@ -1199,6 +1205,13 @@ void Qt_focus::Main_page_Rmenu()
         QString path_osk = R"(C:\Windows\System32\osk.exe)";
         run_exe(path_osk);
         });
+
+    connect(option1Action_Font, &QAction::triggered, [=] {
+        //QMessageBox::information(this, "title", "ac4");
+        Creat_fontawesomewin();
+        });
+
+
 }
 
 void Qt_focus::color_select_RMenu()
@@ -1673,6 +1686,52 @@ void Qt_focus::setAllWindowIcons(const QIcon& icon) {
     for (QWidget* widget : topLevelWidgets) {
         widget->setWindowIcon(icon);
     }
+}
+
+void Qt_focus::Creat_fontawesomewin()
+{
+    stylesheet_QT style;
+    FontAwesomeIcons& fontIcon = FontAwesomeIcons::Instance();
+    //fontawesome测试
+    QWidget* widget_fontawesome = new QWidget();
+	widget_fontawesome->setStyleSheet(style.widget_gray1);
+    widget_fontawesome->setMinimumSize(600, 400);
+    QHBoxLayout* widget_fontawesome_layout = new QHBoxLayout(widget_fontawesome);
+    widget_fontawesome_layout->setSpacing(20);
+
+    QPushButton* Button_1 = new QPushButton();
+    Button_1->setStyleSheet(style.button_fontawesome);
+    Button_1->setMaximumSize(200, 50);
+    QChar iconChar11 = fontIcon.getIconChar(FontAwesomeIcons::IconIdentity::icon_user);
+    Button_1->setFont(fontIcon.getFont());
+    Button_1->setToolTip("icon_user！");
+    Button_1->setText(QString(iconChar11));
+
+    QPushButton* Button_2 = new QPushButton();
+    Button_2->setStyleSheet(style.button_fontawesome);
+    Button_2->setMaximumSize(200, 50);
+    QChar iconChar12 = fontIcon.getIconChar(FontAwesomeIcons::IconIdentity::icon_gear);
+    Button_2->setFont(fontIcon.getFont());
+    Button_2->setToolTip("icon_gear！");
+    Button_2->setText(QString(iconChar12));
+
+    QPushButton* Button_3 = new QPushButton();
+    Button_3->setStyleSheet(style.button_fontawesome);
+    Button_3->setMaximumSize(200, 50);
+    QChar iconChar13 = fontIcon.getIconChar(FontAwesomeIcons::IconIdentity::icon_internet_explorer);
+    Button_3->setFont(fontIcon.getFont());
+    Button_3->setToolTip("icon_internet_explorer！");
+    Button_3->setText(QString(iconChar13));
+
+    widget_fontawesome_layout->addWidget(Button_1);
+    widget_fontawesome_layout->addWidget(Button_2);
+    widget_fontawesome_layout->addWidget(Button_3);
+
+    widget_fontawesome->show();
+
+	connect(Button_1, &QPushButton::clicked, [=] {
+		QMessageBox::information(this, "title", "icon_user");
+		});
 }
 //////////////////参考分割线/////////////////////////
 

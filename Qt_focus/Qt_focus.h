@@ -214,4 +214,6 @@ void resumeAudio();
 //Æô¶¯Íâ²¿exe
 void run_exe(QString& program);
 void setAllWindowIcons(const QIcon& icon);
+void Creat_fontawesomewin();
+
 };
