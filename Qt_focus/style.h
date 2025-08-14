@@ -73,6 +73,7 @@ public:
         "QTabBar::tab { background: lightgray; padding: 8px;font-size: 20px;margin: 0px;border-radius:5px;}" // 标签的背景, 内边距和外边距
         "QTabBar::tab:selected { background: none; color: white; }" // 选中标签的背景和字体颜色
         "QTabBar::tab:hover { background: rgba(255, 255, 255, 0.2); }" // 鼠标悬停时标签的背景颜色
+        //"QTabBar::tab:selected{background - color: rgb(252, 239, 235);border - bottom - color: rgb(226, 95, 50);}"
         "QTabBar::tab:!selected { background: none; color: black; }"; // 未选中标签的背景和字体颜色
 
     /// <ok

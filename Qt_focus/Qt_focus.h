@@ -185,6 +185,8 @@ public:
 
     bool isFrontCamera = false;
 
+    QStatusBar* My_statusBar;
+
 public slots:
 
     // 自定义函数
@@ -215,5 +217,6 @@ void resumeAudio();
 void run_exe(QString& program);
 void setAllWindowIcons(const QIcon& icon);
 void Creat_fontawesomewin();
+void win_label_url();
 
 };

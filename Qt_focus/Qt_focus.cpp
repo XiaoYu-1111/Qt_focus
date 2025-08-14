@@ -1,6 +1,9 @@
 ﻿#include "Qt_focus.h"
 #include "style.h"
 
+#include <iostream> // Add this include for std::cout and std::endl
+using namespace std; // Add this to use cout and endl without std:: prefix
+
 #pragma execution_character_set("utf-8")
 ///该指令仅支持VS环境;若在其他IDE环境下编译,请注释掉该行;设置中文编码可用;
 //文件高级保存选项中设置为utf-8编码,以便支持中文注释;
@@ -36,7 +39,6 @@ ui.centralWidget->setStyleSheet(style.widget_gray1);
         //ui.statusBar->hide();
 QVBoxLayout* main_layout = new QVBoxLayout(ui.centralWidget);
 main_layout->setContentsMargins(0, 0, 0, 0);
-
 #pragma region//无边框设计显示upper window
 bool is_borderless = 1;
 widget_upper = new QWidget();//upper窗口
@@ -109,9 +111,12 @@ else {
     Hlayout_midwidget->setContentsMargins(0, 0, 0, 0);
     main_layout->addWidget(widget_mid);
 
-    TabWidget_Main = new QTabWidget();//tab窗口
+    TabWidget_Main = new QTabWidget();//采用tab窗口
     TabWidget_Main->setStyleSheet(style.Tab_widget);
     TabWidget_Main->setContentsMargins(0, 0, 0, 0);
+	//TabWidget_Main->setTabsClosable(true);//设置tab窗口可关闭
+	TabWidget_Main->setMovable(true);//设置tab窗口可拖动
+	TabWidget_Main->setUsesScrollButtons(true);//设置tab窗口可滚动
 
     QWidget* widget_left = new QWidget();
     widget_left->setMinimumWidth(20);
@@ -719,36 +724,36 @@ else {
     QHBoxLayout* Hlayout_camera_button = new QHBoxLayout(Widget_camera_button);
     page5_layout_grid->addWidget(Widget_camera_button, 0, Qt::AlignCenter | Qt::AlignBottom);
 
-    QPushButton* button_camera = new QPushButton("Info");
-    button_camera->setStyleSheet(style.button_style_0);
-    button_camera->setFixedSize(100, 40);
-    Hlayout_camera_button->addWidget(button_camera);
+    QPushButton* camera_info = new QPushButton("Info");
+    camera_info->setStyleSheet(style.button_style_0);
+    camera_info->setFixedSize(100, 40);
+    Hlayout_camera_button->addWidget(camera_info);
 
-    QPushButton* button_camera2 = new QPushButton("Cap");
-    button_camera2->setStyleSheet(style.button_style_0);
-    button_camera2->setFixedSize(100, 40);
-    Hlayout_camera_button->addWidget(button_camera2);
+    QPushButton* camera_capturesession = new QPushButton("Cap");
+    camera_capturesession->setStyleSheet(style.button_style_0);
+    camera_capturesession->setFixedSize(100, 40);
+    Hlayout_camera_button->addWidget(camera_capturesession);
 
-    QPushButton* button_camera3 = new QPushButton("Turn");
-    button_camera3->setStyleSheet(style.button_style_0);
-    button_camera3->setFixedSize(100, 40);
-    Hlayout_camera_button->addWidget(button_camera3);
+    QPushButton* camera_turn = new QPushButton("Turn");
+    camera_turn->setStyleSheet(style.button_style_0);
+    camera_turn->setFixedSize(100, 40);
+    Hlayout_camera_button->addWidget(camera_turn);
 
-    QPushButton* button_camera4 = new QPushButton("Get");
-    button_camera4->setStyleSheet(style.button_style_0);
-    button_camera4->setFixedSize(100, 40);
-    Hlayout_camera_button->addWidget(button_camera4);
+    QPushButton* camera_capture = new QPushButton("Get");
+    camera_capture->setStyleSheet(style.button_style_0);
+    camera_capture->setFixedSize(100, 40);
+    Hlayout_camera_button->addWidget(camera_capture);
 
     QCamera* camera = new QCamera();
     QImageCapture* imageCapture2 = new QImageCapture();
-    camera->start();
+    
 	QVideoWidget* videoWidget = new QVideoWidget;//视频窗口
 	QMediaCaptureSession* captureSession = new QMediaCaptureSession();//媒体捕获会话
 	captureSession->setImageCapture(imageCapture2);//设置图像捕获
 
     const QList<QCameraDevice> cameras = QMediaDevices::videoInputs();
 
-    connect(button_camera, &QPushButton::clicked, this, [=]() {
+    connect(camera_info, &QPushButton::clicked, this, [=]() {
         const QList<QCameraDevice> cameras = QMediaDevices::videoInputs();
         QString camerasInfo;
         for (const QCameraDevice& cameraDevice : cameras) {
@@ -760,7 +765,7 @@ else {
         ui.statusBar->showMessage(camerasInfo, 1000);
 
         });
-    connect(button_camera2, &QPushButton::clicked, this, [=]() {
+    connect(camera_capturesession, &QPushButton::clicked, this, [=]() {
         // 创建相机对象
         captureSession->setVideoOutput(videoWidget);
         captureSession->setCamera(camera);
@@ -772,7 +777,8 @@ else {
         ui.statusBar->showMessage("button_camera2 clicked", 1000);
         });
     // 假设cameras[0]是后置摄像头，cameras[1]是前置摄像头
-    connect(button_camera3, &QPushButton::clicked, this, [=]() {
+    connect(camera_turn, &QPushButton::clicked, this, [=]() {
+        camera->start();
         if (isFrontCamera && cameras.size() > 1) {
             // 如果当前是前置摄像头，切换到后置摄像头
             camera->stop();
@@ -794,7 +800,7 @@ else {
         }
 		});
     // 拍照按钮点击事件
-    connect(button_camera4, &QPushButton::clicked, this, [=]() {
+    connect(camera_capture, &QPushButton::clicked, this, [=]() {
         // 设置保存路径
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png *.jpg *.bmp)"));
         if (!fileName.isEmpty()) {
@@ -1049,7 +1055,7 @@ void Qt_focus::Main_page_Rmenu()
 
     QMenu* myMenu2 = new QMenu(this);//一号菜单
     QAction* option1Action_Font = new QAction("font_win_example", this);//一号菜单action
-    QAction* option1Action_Font1 = new QAction("c2", this);//一号菜单action
+    QAction* option1Action_Font1 = new QAction("test action", this);//一号菜单action
     QAction* option1Action_Font2 = new QAction("c3", this);//一号菜单action
     myMenu2->addAction(option1Action_Font);
     myMenu2->addAction(option1Action_Font1);
@@ -1209,6 +1215,11 @@ void Qt_focus::Main_page_Rmenu()
     connect(option1Action_Font, &QAction::triggered, [=] {
         //QMessageBox::information(this, "title", "ac4");
         Creat_fontawesomewin();
+        });
+
+    connect(option1Action_Font1, &QAction::triggered, [=] {
+        
+        win_label_url();
         });
 
 
@@ -1372,7 +1383,7 @@ void Qt_focus::keyPressEvent(QKeyEvent* event)
     //}
     // 检测 Q+A 键是否被按下
     if (pressedKeys.contains(Qt::Key_Q) && pressedKeys.contains(Qt::Key_A)) {
-        ui.statusBar->showMessage("Q+A key is pressed.", 100);
+        ui.statusBar->showMessage("Q+A key is pressed.", 1000);
     }
     if (event->key() == Qt::Key_Escape) {
         // 处理 E 键相关逻辑，比如更新状态栏消息
@@ -1733,6 +1744,82 @@ void Qt_focus::Creat_fontawesomewin()
 		QMessageBox::information(this, "title", "icon_user");
 		});
 }
+
+void Qt_focus::win_label_url()
+
+{
+    //QMessageBox::information(this, "title", "ac4");
+    ui.statusBar->showMessage("test action trigged~");
+    stylesheet_QT style;
+    QWidget* widget = new QWidget();
+    widget->setMinimumSize(600, 400);
+    widget->setStyleSheet(style.widget_gray1);
+
+    //设置垂直布局
+	QVBoxLayout* layout = new QVBoxLayout(widget);
+	layout->setContentsMargins(0, 0, 0, 0); // 设置布局边距为0
+    //创建文字链接
+	QLabel* label = new QLabel("<a href='https://github.com/XiaoYu-1111/Qt_focus'style='color: #b6ccd8;'>About Focus</a>");
+	label->setAlignment(Qt::AlignCenter); // 设置文字居中
+
+	//设置字体
+	FontAwesomeIcons& fontIcon = FontAwesomeIcons::Instance();
+	QChar iconChar = fontIcon.getIconChar(FontAwesomeIcons::IconIdentity::icon_user);
+	QFont font = fontIcon.getFont();
+	label->setFont(font);
+    label->setText(QString("%1 %2").arg(iconChar).arg(label->text()));
+	//设置文字颜色
+	QString color = randonColor();
+    QString label_main = R"(QLabel{color:%1;font-size:20px;font-style: normal; font-weight: bold;text-decoration: underline;}
+                            QLabel:hover{color:#e0e0e0;})";//主标签
+	label->setStyleSheet(label_main.arg(color));
+
+    layout->addWidget(label, 0, Qt::AlignLeft);
+
+	
+	//添加文字链接到布局
+    for (int i = 0; i < 5; ++i) {
+        QLabel* subLabel = new QLabel(QString("<a href='https://github.com/'style='color: %1;'>subLabel</a> %2").arg(randonColor()).arg(i + 1));
+        subLabel->setAlignment(Qt::AlignCenter);
+        subLabel->setStyleSheet(label_main.arg(randonColor()));
+        layout->addWidget(subLabel);
+        connect(subLabel, &QLabel::linkActivated, this, [this, i] {
+            My_statusBar->showMessage(QString("Sub Label %1 clicked").arg(i + 1), 1000);
+            });
+    }
+	connect(label, &QLabel::linkActivated, [=](const QString& link) {
+		// 处理链接点击事件
+        My_statusBar->showMessage(QString("Link clicked: %1").arg(link));
+		// 打开默认浏览器
+		//QDesktopServices::openUrl(QUrl(link));
+
+        if (QDesktopServices::openUrl(link)) {
+            qDebug() << "Default browser opened successfully.";
+        }
+        else {
+            qDebug() << "Failed to open the default browser.";
+        }
+		});
+    //窗口添加stateusbar
+    //QStatusBar* My_statusBar = new QStatusBar();
+    My_statusBar = new QStatusBar();
+    My_statusBar->setMaximumHeight(20);
+    My_statusBar->setSizeGripEnabled(false);
+    layout->addWidget(My_statusBar, Qt::AlignBottom);
+    // 设置状态栏样式
+    QString widget_statusbar = "font-size: 18px;background-color:#374357;"
+        "color: #cee8ff;"
+        "border-top-left-radius: 0px;"
+        "border-top-right-radius: 0px;"
+        "border-bottom-left-radius: 5px;"
+        "border-bottom-right-radius:5px;"; // 深色
+    My_statusBar->setStyleSheet(widget_statusbar);
+    My_statusBar->showMessage("Status Bar!");
+
+	widget->setWindowTitle("Test Window");
+    widget->show();
+
+    }
 //////////////////参考分割线/////////////////////////
 
 #pragma region //Qt自带 qdialog example
