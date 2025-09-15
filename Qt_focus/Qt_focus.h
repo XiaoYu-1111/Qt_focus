@@ -40,6 +40,7 @@
 #include <QSet>
 #include <QProcess>
 #include<QLCDNumber>
+#include <QSlider>
 
 //QT-widgets
 #include<qcolordialog.h>

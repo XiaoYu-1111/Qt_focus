@@ -7,7 +7,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     Qt_focus w;
     w.show();
-
     //WavesWidget w2;
     //w2.show();
 

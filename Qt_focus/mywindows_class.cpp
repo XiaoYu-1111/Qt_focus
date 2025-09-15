@@ -59,6 +59,8 @@ void MySubWindow::paintEvent(QPaintEvent* event) {
     if (drawCircle) {
         painter_mc(painter);
     }
+    
+	painter_user(painter); // 绘制用户自定义内容
 }
 
 void MySubWindow::mouseDoubleClickEvent(QMouseEvent* event) {
@@ -67,6 +69,7 @@ void MySubWindow::mouseDoubleClickEvent(QMouseEvent* event) {
     drawCircle = true; // 标记需要绘制圆圈
     update(); // 请求重新绘制窗口
 }
+
 void MySubWindow::mouseMoveEvent(QMouseEvent* event) {
 
     // 鼠标移动时，如果需要绘制圆圈，则更新圆的位置
@@ -150,7 +153,7 @@ void MySubWindow::painter_text(QPainter& painter) {
     int centerY = height() / 2;
     // 绘制文字
     QFont font;
-    int fontSize = 25;
+    int fontSize = 16;
     font.setPointSize(fontSize); // 设置字体大小
     painter.setFont(font); // 将字体应用到 QPainter
     painter.setPen(QPen(QColor(255, 100, 70), 2)); // 设置画笔颜色和宽度
@@ -202,3 +205,55 @@ void MySubWindow::painter_grid(QPainter& painter) {
 
 }
 
+void MySubWindow::painter_user(QPainter& painter) {
+	
+	// 绘制用户自定义内容
+	painter.setRenderHint(QPainter::Antialiasing); // 启用反走样
+	painter.setFont(QFont("Arial", 20)); // 设置字体和大小
+	painter.setPen(QPen(Qt::green, 5)); // 设置画笔颜色和宽度
+    painter.drawText(user_x, user_y, QString("$").repeated(2)); // 绘制用户定义的文本
+	//不可以超过窗口边界
+	int offset = 10; // 边界偏移量
+	if (user_x < 0) user_x = offset;
+	if (user_y < 0) user_y = offset;
+	if (user_x > width()) user_x = width()- offset;
+	if (user_y > height()) user_y = height()- offset;
+
+}
+
+void MySubWindow::keyPressEvent(QKeyEvent* event)
+{
+	float move_speed = 10.0f; // 移动速度
+
+    if (event->key() == Qt::Key_A) {
+        // 处理 E 键相关逻辑，比如更新状态栏消息
+        user_x -= move_speed;
+        
+    }
+	else if (event->key() == Qt::Key_D) {
+		// 处理 E 键相关逻辑，比如更新状态栏消息
+		user_x += move_speed;
+
+	}
+	else if (event->key() == Qt::Key_W) {
+		// 处理 E 键相关逻辑，比如更新状态栏消息
+		user_y -= move_speed;
+
+	}
+	else if (event->key() == Qt::Key_S) {
+		// 处理 E 键相关逻辑，比如更新状态栏消息
+		user_y += move_speed;
+
+	}
+    else if (event->key() == Qt::Key_S && Qt::Key_D) {
+		user_x += move_speed;
+		user_y += move_speed;
+	}
+    else if (event->key() == Qt::Key_Space) {
+		user_x = width() / 2;
+		user_y = height() / 2;
+    }
+
+	
+	My_statusBar->showMessage(QString("User position: (%1, %2)").arg(user_x).arg(user_y));
+}

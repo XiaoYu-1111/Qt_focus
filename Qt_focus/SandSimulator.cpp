@@ -1,6 +1,9 @@
 #include "SandSimulator.h"
 #include <QPainter>
 #include <cstdlib>
+#include<chrono>
+#include <thread>
+#include<qpushbutton.h>
 
 SandSimulator::SandSimulator(QWidget* parent) : QWidget(parent) {
 
@@ -23,9 +26,27 @@ SandSimulator::SandSimulator(QWidget* parent) : QWidget(parent) {
         "border-bottom-right-radius:5px;"; // 深色
     Sand_statusBar->setStyleSheet(widget_statusbar);
     Sand_statusBar->showMessage("init statusbar", 5000);
+
+    QPushButton* button_clear = new QPushButton("Clear",this);
+    //设置按钮位置100,100
+    button_clear->setGeometry(100, 100, 100, 20);
+    button_clear->setStyleSheet(widget_statusbar);
+    //layout->addWidget(button_clear, 1, Qt::AlignBottom);
+
+    connect(button_clear, &QPushButton::clicked, [=] {
+		particles.clear();
+        int number = particles.size();
+        Sand_statusBar->showMessage(QString("all particles %1, Added 10 particles.").arg(number), 2000);
+		update(); // 触发绘图事件
+        });
 }
 
 void SandSimulator::paintEvent(QPaintEvent* event) {
+
+	std::chrono::milliseconds now = std::chrono::duration_cast<std::chrono::milliseconds>(
+		std::chrono::system_clock::now().time_since_epoch()
+	);
+
     QPainter painter(this);
     QColor backgroundColor =Qt::green; // 新增颜色属性
     // 可以设置画笔颜色和宽度
@@ -41,6 +62,7 @@ void SandSimulator::paintEvent(QPaintEvent* event) {
     // 设置画刷为无填充
     painter.setBrush(Qt::NoBrush);
     painter.setPen(Qt::NoPen);
+	// 绘制粒子
     for (const auto& particle : particles) {
         painter.setBrush(particle.color); // 设置画刷为随机颜色
         //painter.setBrush(Qt::transparent); // 设置填充为透明以绘制空心
@@ -51,12 +73,29 @@ void SandSimulator::paintEvent(QPaintEvent* event) {
             particle.position_y-particle.radius ,
             particle.radius*2,
             particle.radius*2);
-
     }
     int number = particles.size();
-    QString text = QString("Number of Particles: %1").arg(number);
+    QString text = QString("Number of Particles: %1  FPS:%2 deltaTime:%3").arg(number).arg(FPS).arg(deltaTime);
     SandSimulator::painter_text(painter, text);
     Sand_statusBar->showMessage(QString("all particles %1, Added 10 particles.").arg(number), 2000);
+
+	std::chrono::milliseconds current = std::chrono::duration_cast<std::chrono::milliseconds>(
+		std::chrono::system_clock::now().time_since_epoch()
+	);
+
+
+	qDebug() << "paintEvent time:" << current.count() - now.count() << "ms";
+	auto diff_time = current.count() - now.count();
+
+    if (diff_time < frameTime) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(frameTime - diff_time));
+		deltaTime = frameTime;
+    }
+    else {
+		deltaTime = diff_time;
+		qDebug() << "Warning: paintEvent took longer than the interval!"<<deltaTime;
+    }
+
 }
 
 void SandSimulator::showEvent(QShowEvent* event) {
@@ -69,7 +108,7 @@ void SandSimulator::generateParticles() {
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &SandSimulator::updateParticles);
-    timer->start(interval);  // 每100毫秒更新一次
+    timer->start(frameTime);  // 每100毫秒更新一次
 }
 //鼠标双击位置增加小球
 void SandSimulator::mouseDoubleClickEvent(QMouseEvent* event) {
@@ -164,8 +203,8 @@ void SandSimulator::updateParticles() {
         particles.back().mass = SandSimulator::pi * particles.back().radius * particles.back().radius; // 质量
 
         // 设置初始速度
-        particles.back().velocityX = 40; // 速度为1
-        particles.back().velocityY = 10; // 速度为2
+        particles.back().velocityX = 1000; // 速度为1
+        particles.back().velocityY = 200; // 速度为2
     }
     // 更新粒子位置和速度
     for (auto& particle : particles) {
@@ -182,11 +221,11 @@ void SandSimulator::applyGravityAndDrag(SandParticle& particle) {
     const float applied_drag = DRAG; // 合适的阻力值
 
     // 施加重力，通常以负值来表示向下
-    particle.velocityY += applied_gravity;
+	particle.velocityY += applied_gravity; // 应用重力
 
     // 更新位置
-    particle.position_x += particle.velocityX;
-    particle.position_y += particle.velocityY;
+    particle.position_x += particle.velocityX* frameTime/1000;
+    particle.position_y += particle.velocityY* frameTime/1000;
 
     // 施加阻力
     particle.velocityX = particle.velocityX * (1 - applied_drag); // 应用阻力

@@ -38,7 +38,11 @@ ui.centralWidget->setStyleSheet(style.widget_gray1);
         ui.statusBar->setStyleSheet(style.widget_statusbar);
         //ui.statusBar->hide();
 QVBoxLayout* main_layout = new QVBoxLayout(ui.centralWidget);
-main_layout->setContentsMargins(0, 0, 0, 0);
+int margins = 0;
+main_layout->setContentsMargins(margins, margins, margins, margins);
+
+#pragma endregion
+
 #pragma region//无边框设计显示upper window
 bool is_borderless = 1;
 widget_upper = new QWidget();//upper窗口
@@ -47,6 +51,7 @@ if (is_borderless) {
 
 this->setWindowFlags(Qt::FramelessWindowHint);//无边框
 this->setAttribute(Qt::WA_TranslucentBackground);//背景透明
+//border: 12px solid rgba(0, 0, 0, 100);
 
     //widget_upper = new QWidget();//upper窗口
     QHBoxLayout* layout_upper = new QHBoxLayout(widget_upper);
@@ -99,6 +104,7 @@ this->setAttribute(Qt::WA_TranslucentBackground);//背景透明
     connect(button_max, SIGNAL(clicked()), this, SLOT(maximizeRestore()));
     connect(button_min, SIGNAL(clicked()), this, SLOT(showMinimized()));
     connect(button_close, SIGNAL(clicked()), this, SLOT(close()));
+
 }
 else {
     widget_upper->hide();
@@ -141,9 +147,9 @@ else {
     TabWidget_Main->addTab(Widget_page0, QIcon(":/Qt_focus/ico/focus.png"), "&");//通过标签页的形式添加
     TabWidget_Main->addTab(Widget_page1, QIcon(":/Qt_focus/ico/tasks.png"), "&");
     TabWidget_Main->addTab(Widget_page2, QIcon(":/Qt_focus/ico/links.png"), "&");
-    TabWidget_Main->addTab(Widget_page3, QIcon(":/Qt_focus/ico/probe.png"), "&");
-    TabWidget_Main->addTab(Widget_page4, QIcon(":/Qt_focus/ico/Dots.png"), "&");
-    TabWidget_Main->addTab(Widget_page5, QIcon(":/Qt_focus/ico/cam2.png"), "&");
+    //TabWidget_Main->addTab(Widget_page3, QIcon(":/Qt_focus/ico/probe.png"), "&");
+    //TabWidget_Main->addTab(Widget_page4, QIcon(":/Qt_focus/ico/Dots.png"), "&");
+    //TabWidget_Main->addTab(Widget_page5, QIcon(":/Qt_focus/ico/cam2.png"), "&");
     TabWidget_Main->tabBar()->setIconSize(QSize(50,50)); // 设置图标大小为32x32
 
 #pragma endregion
@@ -201,6 +207,14 @@ else {
     
     page3_layout_grid->addWidget(lcd_number, 1, Qt::AlignBottom | Qt::AlignRight);
 
+    QSlider* slider = new QSlider(Qt::Horizontal);
+    slider->setMinimum(0);
+    slider->setMaximum(100);
+    slider->setValue(25);
+    slider->setMinimumHeight(20);
+    slider->setStyleSheet(style.sliderStyle);
+
+    page3_layout_grid->addWidget(slider);
     // 初始化定时器
     QTimer* timer_main = new QTimer(this);
     connect(timer_main, &QTimer::timeout, this, [=]() {
@@ -216,6 +230,16 @@ else {
         QString color = QString("rgb(%1, %2, %3)").arg(red).arg(green).arg(blue);
         QString styleSheet = QString("color: %1 ").arg(color);
         //lcd_number->setStyleSheet(styleSheet);
+
+        int currentSeconds = currentTime.hour() * 3600 + currentTime.minute() * 60 + currentTime.second();
+        int totalSecondsInDay = 24 * 3600;
+        // 计算百分比
+        double percentage = (static_cast<double>(currentSeconds) / totalSecondsInDay) * 100;
+        slider->setValue(percentage);
+
+        lcd_number->display(currentTime.toString("hh:mm:ss")); // 显示小时和分钟});
+        // 将 percentage.tostring() 替换为 QString::number(percentage)
+        ui.statusBar->showMessage(QString::number(percentage));
         });
     timer_main->start(1000); // 每秒更新一次
 
@@ -818,7 +842,6 @@ else {
 #pragma endregion
 
 }
-
 Qt_focus::~Qt_focus()//析构函数
 {}
 
@@ -1114,22 +1137,12 @@ void Qt_focus::Main_page_Rmenu()
         widget->setContentsMargins(0, 0, 0, 0);
         QVBoxLayout* layout = new QVBoxLayout(widget);
         layout->setContentsMargins(0, 0, 0, 0);
-        widget->setMinimumSize(800, 500);
-        //SandSimulator simulator;
-        // 初始化状态栏
-        //QStatusBar*My_statusBar = new QStatusBar();
-        //My_statusBar->setMaximumHeight(20);
-        //My_statusBar->setSizeGripEnabled(false);
-        //layout->addWidget(My_statusBar, 0, Qt::AlignBottom );
-        //// 设置状态栏样式
-        //QString widget_statusbar = "font-size: 18px;background-color:#374357;"
-        //    "color: #cee8ff;"
-        //    "border-top-left-radius: 0px;"
-        //    "border-top-right-radius: 0px;"
-        //    "border-bottom-left-radius: 5px;"
-        //    "border-bottom-right-radius:5px;"; // 深色
-        //My_statusBar->setStyleSheet(widget_statusbar);
-        //My_statusBar->showMessage("SandParticle Simulator!");
+		widget->setMinimumSize(600, 400);
+
+		
+
+
+
         widget->show();
         });
 
@@ -1293,7 +1306,7 @@ void Qt_focus::maximizeRestore() {  // 定义最大化和恢复
         resize(width() + 2, height() + 2);  // 微调大小以触发布局更新
         // 恢复布局边距等
         /*drapShadowLayout->setContentsMargins(10, 10, 10, 10);*/
-        // 更新按钮文本或提示
+         //更新按钮文本或提示
         //button_max->setText("Maximize");
 
         ui.statusBar->showMessage("Window has been restored!", 1000);
@@ -1423,7 +1436,6 @@ bool Qt_focus::eventFilter(QObject* obj, QEvent* event) {
         }
     }
     if (obj == label_text_time) {
-        
         if (event->type() == QEvent::MouseButtonDblClick) { // 检测双击事件
             maximizeRestore(); // 调用 maximizeRestore 方法
             return true; // 事件被处理

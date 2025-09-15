@@ -12,8 +12,6 @@
 #include <QVector2D>
 #include <QMouseEvent>
 
-
-
 // 表示沙粒的类
 class SandParticle {
 public:
@@ -56,11 +54,12 @@ public:
     const float pi = 3.1415926; // 圆周率
     int border_width = 50; // 边界宽度
 
-    int particleCount = 50; // 粒子数量
-    int paricleRadius = 20; // 粒子半径
+    int particleCount = 200; // 粒子数量
+    int paricleRadius = 10; // 粒子半径
 
-    int frame_rate = 50;  // 帧率
-    int interval = 1000 / frame_rate;  // 间隔时间
+    int FPS = 50;  // 帧率
+    int frameTime = 1000 / FPS;  // 间隔时间
+	int deltaTime = 0; // 上次更新时间
 
 protected:
     // 绘图事件处理
@@ -73,7 +72,6 @@ protected:
 private:
     QStatusBar* Sand_statusBar;
 private:
-
     std::vector<SandParticle> particles; // 存储沙粒
     QTimer* timer; // 定时器
     void updateParticles(); // 更新粒子状态
@@ -87,6 +85,10 @@ private:
     void applyDamping(SandParticle& particle, float damping);
     void limitSpeed(SandParticle& particle, float maxSpeed);
     void painter_text(QPainter& painter, QString& text);
+
+    void clearParticles() {
+        particles.clear(); update();
+	} // 清除所有粒子
 
 };
 

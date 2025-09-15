@@ -104,4 +104,25 @@ public:
                                 background-color:#0F1C2E;border-radius:5px;}
                                 QPushButton:hover{background-color:#e0e0e0;}
                                 QPushButton:pressed{padding-top:3px;padding-left:3px;})";
+
+        QString sliderStyle = R"(
+    QSlider::groove:horizontal {
+        background: #334155;
+        height: 8px;
+        border-radius: 4px;
+    }
+    QSlider::handle:horizontal {
+        background: white;
+        width: 18px;
+        height: 18px;
+        margin: -5px 0;
+        border-radius: 9px;
+    }
+    QSlider::sub-page:horizontal {
+        background: #60A5FA;
+        height: 8px;
+        border-radius: 4px;
+    }
+    )";
+
 };
