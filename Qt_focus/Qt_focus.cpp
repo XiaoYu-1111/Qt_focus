@@ -45,13 +45,10 @@ main_layout->setContentsMargins(margins, margins, margins, margins);
 
 #pragma region//无边框设计显示upper window
 bool is_borderless = 1;
-widget_upper = new QWidget();//upper窗口
-
+widget_upper = new QWidget();//upper窗口,自定义关闭按钮,最大化按钮,最小化按钮
 if (is_borderless) {
-
 this->setWindowFlags(Qt::FramelessWindowHint);//无边框
-this->setAttribute(Qt::WA_TranslucentBackground);//背景透明
-//border: 12px solid rgba(0, 0, 0, 100);
+//this->setAttribute(Qt::WA_TranslucentBackground);//背景透明
 
     //widget_upper = new QWidget();//upper窗口
     QHBoxLayout* layout_upper = new QHBoxLayout(widget_upper);
@@ -304,7 +301,6 @@ else {
     label_text_time->setText(QString("<html>%1</html>").arg(combinedText));
     label_text_time->setMinimumSize(400, 300);
     label_text_time->setAlignment(Qt::AlignCenter);
-
 
     RoundProgressBar* round_progress_bar = new RoundProgressBar();//设置圆形进度条
     round_progress_bar->setValue(20);
@@ -1052,7 +1048,6 @@ void Qt_focus::Main_page_Rmenu()
     QAction* pAc_about = new QAction("About");
 
     QAction* Menu_exe = new QAction("EXE");
-
     QAction* Menu_exe2 = new QAction("Fontawesome");
 
     Rclick_Menu->addAction(pAc1);
@@ -1074,7 +1069,6 @@ void Qt_focus::Main_page_Rmenu()
     myMenu->addAction(option1Action3);
 
     Menu_exe->setMenu(myMenu);
-
 
     QMenu* myMenu2 = new QMenu(this);//一号菜单
     QAction* option1Action_Font = new QAction("font_win_example", this);//一号菜单action
@@ -1326,7 +1320,7 @@ void Qt_focus::mouseMoveEvent(QMouseEvent* event) {
         // 移动窗口到新的位置
         move(event->globalPosition().toPoint() - dragStartPosition);
         QPoint newPos = event->globalPosition().toPoint() - dragStartPosition;
-        widget_customMove(newPos.x(), newPos.y());
+        //widget_customMove(newPos.x(), newPos.y());//有问题
         update();  // 更新窗口
     }
 }
@@ -1361,7 +1355,7 @@ void Qt_focus::widget_customMove(int x, int y) {
     //QRect screenGeometry = screen->geometry();
     //const int margin = 50; // 吸附的边距
 
-    const int margin = 0; // 吸附的边距
+    const int margin = 20; // 吸附的边距
 
     // 吸附到屏幕边缘
     if (x < screenGeometry.left() + margin) {
@@ -1451,7 +1445,6 @@ void  Qt_focus::closeEvent(QCloseEvent* event) {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "prompt !", " Are you sure to quit!",
         QMessageBox::Yes | QMessageBox::No);
-
     if (reply == QMessageBox::Yes) {
         event->accept();
     }
@@ -1642,7 +1635,6 @@ void Qt_focus::closeAudioFile() {
         m_device->getAudioFile()->close();
     }
 }
-
  //添加函数来暂停音频录制
 void Qt_focus::pauseAudio() {
 
@@ -1654,7 +1646,6 @@ void Qt_focus::pauseAudio() {
     m_isRecording = false;  // 更新录制状态为暂停
     ui.statusBar->showMessage("音频录制已暂停", 1000);
 }
-
 // 添加函数来继续音频录制
 void Qt_focus::resumeAudio() {
 
@@ -1671,7 +1662,6 @@ void Qt_focus::resumeAudio() {
     }
     
 }
-
 //启动外部程序
 void Qt_focus::run_exe(QString& program) {
     //QString appDir = QCoreApplication::applicationDirPath();
@@ -1702,7 +1692,6 @@ void Qt_focus::run_exe(QString& program) {
         qDebug() << "Failed to start process:" << process_exe1.errorString(); // 捕捉错误信息
     }
 }
-
 //修改创建的所有窗口的图标
 void Qt_focus::setAllWindowIcons(const QIcon& icon) {
     QList<QWidget*> topLevelWidgets = QApplication::topLevelWidgets();
@@ -1710,7 +1699,7 @@ void Qt_focus::setAllWindowIcons(const QIcon& icon) {
         widget->setWindowIcon(icon);
     }
 }
-
+//
 void Qt_focus::Creat_fontawesomewin()
 {
     stylesheet_QT style;

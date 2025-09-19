@@ -100,8 +100,6 @@ private:
     void Main_page_Rmenu();
     void color_select_RMenu();
 
-
-
 private:
     QSize initialSize;
     QMenu* Rclick_Menu = nullptr;
