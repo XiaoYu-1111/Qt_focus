@@ -148,7 +148,7 @@ public:
     int Focus_time2;
     int remainingTime;      // 剩余时间，以秒为单位
     int progress_Value;
-    QTimer* timer;          // 声明一个 QTimer 指针
+    QTimer* timer=nullptr;          // 声明一个 QTimer 指针
 
     QPushButton* button_set_focus;
     QPushButton* button_focus_reset;

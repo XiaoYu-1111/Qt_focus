@@ -1,4 +1,4 @@
-#ifndef FONTAWESOMEICONS_H
+ï»¿#ifndef FONTAWESOMEICONS_H
 #define FONTAWESOMEICONS_H
 
 #include <QFont>
@@ -9,7 +9,7 @@ class FontAwesomeIcons
 public:
     /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
        readers do not read off random characters that represent icons */
-    //¹ÙÍøÁ´½Ó
+    //å®˜ç½‘é“¾æŽ¥
     //https://fontawesome.com.cn/v4/icons/
     enum class IconIdentity : int {
         icon_glass = 0xf000,

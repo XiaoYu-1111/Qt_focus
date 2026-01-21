@@ -1,6 +1,5 @@
 ﻿#include "Qt_focus.h"
 #include "style.h"
-
 #include <iostream> // Add this include for std::cout and std::endl
 using namespace std; // Add this to use cout and endl without std:: prefix
 
@@ -27,7 +26,7 @@ QIcon icon(":/Qt_focus/ico/xiaoyu_base.png");
 setAllWindowIcons(icon);
 #pragma endregion
 
-#pragma region //main window
+#pragma region ///main window
 ui.centralWidget->setMinimumSize(800, 500);
 ui.centralWidget->setStyleSheet(style.widget_gray1);
     ui.mainToolBar->setMinimumHeight(30);
@@ -309,7 +308,7 @@ else {
     round_progress_bar->setBaseCircleVisible(true);
     //round_progress_bar->setBarStyle(RoundProgressBar::BarStyle::StyleLine);
     round_progress_bar->setBarStyle(RoundProgressBar::BarStyle::StyleDonut);
-   
+
     progress_bar = new QProgressBar();//设置进度条
     progress_bar->setMinimumSize(800, 50);
     progress_bar->setWindowTitle("Qt_segy_process::myst progress");
@@ -320,7 +319,7 @@ else {
     button_set_focus->setStyleSheet(style.button_style_0);
     button_set_focus->setFixedSize(200, 40);
     //button_set_focus->move(200, 200);//设置按钮位置
-   
+
     button_focus_reset = new QPushButton("Start");//重置按钮
     button_focus_reset->setStyleSheet(style.button_style_0);
     button_focus_reset->setFixedSize(200, 40);
@@ -844,7 +843,6 @@ Qt_focus::~Qt_focus()//析构函数
 #pragma region//计时部分
 
 void Qt_focus::set_lable_time() {
-
     if (widget_settime_show == true) {
         if (!widget_settime) {
             stylesheet_QT style;
@@ -992,6 +990,8 @@ void Qt_focus::reset_lable_time() {
         if (timer) {
             timer->stop();
         }
+        //判断timer已经开始
+
         remainingTime = Focus_time;
         start_lable_time();
         button_focus_reset->setText("Reset");
@@ -1453,16 +1453,13 @@ void  Qt_focus::closeEvent(QCloseEvent* event) {
     }
     //stylesheet_QT style;
     this->setStyleSheet(style.widget_gray1);
-
 }
-
 QString Qt_focus::randonColor() {
     auto generator = QRandomGenerator::global();
     int low_bound = 100;
     int red = generator->bounded(low_bound, 256);    // 生成 0-255 之间的随机红色值
     int green = generator->bounded(low_bound, 256);  // 生成 0-255 之间的随机绿色值
     int blue = generator->bounded(low_bound, 256);   // 生成 0-255 之间的随机蓝色值
-
     // 创建随机颜色字符串
     QString color = QString("rgb(%1, %2, %3)").arg(red).arg(green).arg(blue);
     return color;
@@ -1597,7 +1594,6 @@ void Qt_focus::Draw_audio_sensor() {
 void Qt_focus::initializeAudioFile() {
     QFile* audioFile = new QFile("recorded_audio.raw");
     m_device->setAudioFile(audioFile); // 假定 m_device 是你已创建的设备实例
-
     // 尝试打开音频文件
     if (!m_device->getAudioFile()->open(QIODevice::WriteOnly)) {
         QMessageBox::warning(nullptr, "audio", "Unable to open file for writing.");
