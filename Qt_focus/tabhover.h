@@ -1,39 +1,39 @@
-#pragma once
+ï»¿#pragma once
 #include <QEvent>
 #include <QLabel>
 #include <QTabWidget>
 #include <QVBoxLayout>
-///½¨Á¢Ò»¸ö±êÇ©Àà£¬ÓÃÓÚĞüÍ£ÇĞ»»tab
+///å»ºç«‹ä¸€ä¸ªæ ‡ç­¾ç±»ï¼Œç”¨äºæ‚¬åœåˆ‡æ¢tab
 
 class HoverLabel : public QLabel {
     Q_OBJECT
 public:
-	// ¹¹Ôìº¯Êı
+	// æ„é€ å‡½æ•°
     HoverLabel(int index, QTabWidget* tabWidget, QWidget* parent = nullptr)
         : QLabel(parent), m_index(index)  ,m_tabWidget(tabWidget) {
-    // ÉèÖÃ±êÇ©ÑùÊ½
+    // è®¾ç½®æ ‡ç­¾æ ·å¼
     setStyleSheet(label_tab);
     }
 protected:
     bool event(QEvent* event) override {
         if (event->type() == QEvent::HoverEnter) {
-            // Êó±êĞüÍ£Ê±ÇĞ»» tab
+            // é¼ æ ‡æ‚¬åœæ—¶åˆ‡æ¢ tab
             out_index(); 
-            // ÉèÖÃ±êÇ©ÑùÊ½
+            // è®¾ç½®æ ‡ç­¾æ ·å¼
             setStyleSheet(label_tab);
         }
         else if (event->type() == QEvent::HoverLeave) {
-            // ÉèÖÃ±êÇ©ÑùÊ½
+            // è®¾ç½®æ ‡ç­¾æ ·å¼
             setStyleSheet(label_tab);
         }
 		
         return QLabel::event(event);
     }
 private:
-    int m_index; // ¶ÔÓ¦µÄ tab Ë÷Òı
-    QTabWidget* m_tabWidget; // ´«ÈëµÄ QTabWidget
+    int m_index; // å¯¹åº”çš„ tab ç´¢å¼•
+    QTabWidget* m_tabWidget; // ä¼ å…¥çš„ QTabWidget
     QString label_tab = R"(QLabel{color:#cee8ff;font-size:25px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:rgb(255, 128, 0);})";//Ö÷±êÇ©
+                            QLabel:hover{color:rgb(255, 128, 0);})";//ä¸»æ ‡ç­¾
    int out_index() {
 	   qDebug() << "out_index" << m_index;
        if (m_tabWidget) {

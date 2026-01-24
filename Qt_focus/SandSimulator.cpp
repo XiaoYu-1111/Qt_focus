@@ -1,4 +1,4 @@
-#include "SandSimulator.h"
+ï»¿#include "SandSimulator.h"
 #include <QPainter>
 #include <cstdlib>
 #include<chrono>
@@ -9,26 +9,26 @@ SandSimulator::SandSimulator(QWidget* parent) : QWidget(parent) {
 
     QString styleSheet = "QWidget{background-color: #1e293b;}";
     setStyleSheet(styleSheet);
-    // ´´½¨²¼¾Ö
+    // åˆ›å»ºå¸ƒå±€
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
-    // ³õÊ¼»¯×´Ì¬À¸
+    // åˆå§‹åŒ–çŠ¶æ€æ 
     Sand_statusBar = new QStatusBar(this);
     Sand_statusBar->setMaximumHeight(20);
     Sand_statusBar->setSizeGripEnabled(false);
     layout->addWidget(Sand_statusBar, 0, Qt::AlignBottom);
-    // ÉèÖÃ×´Ì¬À¸ÑùÊ½
+    // è®¾ç½®çŠ¶æ€æ æ ·å¼
     QString widget_statusbar = "font-size: 18px;background-color:#374357;"
         "color: #cee8ff;"
         "border-top-left-radius: 0px;"
         "border-top-right-radius: 0px;"
         "border-bottom-left-radius: 5px;"
-        "border-bottom-right-radius:5px;"; // ÉîÉ«
+        "border-bottom-right-radius:5px;"; // æ·±è‰²
     Sand_statusBar->setStyleSheet(widget_statusbar);
     Sand_statusBar->showMessage("init statusbar", 5000);
 
     QPushButton* button_clear = new QPushButton("Clear",this);
-    //ÉèÖÃ°´Å¥Î»ÖÃ100,100
+    //è®¾ç½®æŒ‰é’®ä½ç½®100,100
     button_clear->setGeometry(100, 100, 100, 20);
     button_clear->setStyleSheet(widget_statusbar);
     //layout->addWidget(button_clear, 1, Qt::AlignBottom);
@@ -37,7 +37,7 @@ SandSimulator::SandSimulator(QWidget* parent) : QWidget(parent) {
 		particles.clear();
         int number = particles.size();
         Sand_statusBar->showMessage(QString("all particles %1, Added 10 particles.").arg(number), 2000);
-		update(); // ´¥·¢»æÍ¼ÊÂ¼ş
+		update(); // è§¦å‘ç»˜å›¾äº‹ä»¶
         });
 }
 
@@ -48,27 +48,27 @@ void SandSimulator::paintEvent(QPaintEvent* event) {
 	);
 
     QPainter painter(this);
-    QColor backgroundColor =Qt::green; // ĞÂÔöÑÕÉ«ÊôĞÔ
-    // ¿ÉÒÔÉèÖÃ»­±ÊÑÕÉ«ºÍ¿í¶È
-    QPen pen(backgroundColor, 2); // ÉèÖÃ»­±ÊÑÕÉ«ºÍ¿í¶È
+    QColor backgroundColor =Qt::green; // æ–°å¢é¢œè‰²å±æ€§
+    // å¯ä»¥è®¾ç½®ç”»ç¬”é¢œè‰²å’Œå®½åº¦
+    QPen pen(backgroundColor, 2); // è®¾ç½®ç”»ç¬”é¢œè‰²å’Œå®½åº¦
     painter.setPen(pen);
 
-    // »æÖÆ¾ØĞÎµÄ±ß¿ò
-    int border = border_width; // ±ß½ç¿í¶È
+    // ç»˜åˆ¶çŸ©å½¢çš„è¾¹æ¡†
+    int border = border_width; // è¾¹ç•Œå®½åº¦
     painter.drawRect(border, border, width() - 2 * border, height() - 2 * border);
-    // »æÖÆÔ²
-    int circle1_radious = 20; // Ô²µÄ°ë¾¶
+    // ç»˜åˆ¶åœ†
+    int circle1_radious = 20; // åœ†çš„åŠå¾„
     painter.drawEllipse(border - circle1_radious, border - circle1_radious, circle1_radious*2, circle1_radious * 2);
-    // ÉèÖÃ»­Ë¢ÎªÎŞÌî³ä
+    // è®¾ç½®ç”»åˆ·ä¸ºæ— å¡«å……
     painter.setBrush(Qt::NoBrush);
     painter.setPen(Qt::NoPen);
-	// »æÖÆÁ£×Ó
+	// ç»˜åˆ¶ç²’å­
     for (const auto& particle : particles) {
-        painter.setBrush(particle.color); // ÉèÖÃ»­Ë¢ÎªËæ»úÑÕÉ«
-        //painter.setBrush(Qt::transparent); // ÉèÖÃÌî³äÎªÍ¸Ã÷ÒÔ»æÖÆ¿ÕĞÄ
-        //painter.setPen(particle.color); // ÉèÖÃ»­±ÊÎªËæ»úÑÕÉ«µÄ±ß¿ò
+        painter.setBrush(particle.color); // è®¾ç½®ç”»åˆ·ä¸ºéšæœºé¢œè‰²
+        //painter.setBrush(Qt::transparent); // è®¾ç½®å¡«å……ä¸ºé€æ˜ä»¥ç»˜åˆ¶ç©ºå¿ƒ
+        //painter.setPen(particle.color); // è®¾ç½®ç”»ç¬”ä¸ºéšæœºé¢œè‰²çš„è¾¹æ¡†
         
-        //ÖĞĞÄÎ»ÖÃĞèÒª¼õÈ¥°ë¾¶µÄÒ»°ë
+        //ä¸­å¿ƒä½ç½®éœ€è¦å‡å»åŠå¾„çš„ä¸€åŠ
         painter.drawEllipse(particle.position_x-particle.radius,
             particle.position_y-particle.radius ,
             particle.radius*2,
@@ -99,48 +99,48 @@ void SandSimulator::paintEvent(QPaintEvent* event) {
 }
 
 void SandSimulator::showEvent(QShowEvent* event) {
-    showMaximized(); // ×î´ó»¯´°¿Ú
+    showMaximized(); // æœ€å¤§åŒ–çª—å£
     QWidget::showEvent(event);
-    generateParticles();  // ÔÚ´°¿ÚÏÔÊ¾Ê±Éú³ÉÁ£×Ó
+    generateParticles();  // åœ¨çª—å£æ˜¾ç¤ºæ—¶ç”Ÿæˆç²’å­
 }
 
 void SandSimulator::generateParticles() {
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &SandSimulator::updateParticles);
-    timer->start(frameTime);  // Ã¿100ºÁÃë¸üĞÂÒ»´Î
+    timer->start(frameTime);  // æ¯100æ¯«ç§’æ›´æ–°ä¸€æ¬¡
 }
-//Êó±êË«»÷Î»ÖÃÔö¼ÓĞ¡Çò
+//é¼ æ ‡åŒå‡»ä½ç½®å¢åŠ å°çƒ
 void SandSimulator::mouseDoubleClickEvent(QMouseEvent* event) {
-    int border = border_width; // ±ß½ç¿í¶È
-    int circleRadius = paricleRadius; // Ô²µÄ°ë¾¶
-    QPoint position = event->pos(); // »ñÈ¡Êó±êµã»÷Î»ÖÃ
+    int border = border_width; // è¾¹ç•Œå®½åº¦
+    int circleRadius = paricleRadius; // åœ†çš„åŠå¾„
+    QPoint position = event->pos(); // è·å–é¼ æ ‡ç‚¹å‡»ä½ç½®
     int mouseX = position.x();
     int mouseY = position.y();
 
-    // Ëæ»úÎ»ÖÃ£¬·¶Î§[-10, 10]
+    // éšæœºä½ç½®ï¼ŒèŒƒå›´[-10, 10]
     float randomX = mouseX + (rand() % 21 - 10);
     float particleY = mouseY + (rand() % 21 - 10);
     
-    // ¼ì²éÊó±êµã»÷Î»ÖÃÊÇ·ñÔÚ±ß½çÄÚ
+    // æ£€æŸ¥é¼ æ ‡ç‚¹å‡»ä½ç½®æ˜¯å¦åœ¨è¾¹ç•Œå†…
     if (mouseX > border && mouseX < width() - border &&
         mouseY > border && mouseY < height() - border) {
 
-        for (int i = 0; i < 10; ++i) { // Ìí¼Ó10¸öĞ¡Çò
-            // Ëæ»úÎ»ÖÃÆ«ÒÆ
-            //float randomX = mouseX + (rand() % 21 - 10);  // Ëæ»ú·¶Î§[-10, 10]
-            //float particleY = mouseY + (rand() % 21 - 10); // Ëæ»ú·¶Î§[-10, 10]
+        for (int i = 0; i < 10; ++i) { // æ·»åŠ 10ä¸ªå°çƒ
+            // éšæœºä½ç½®åç§»
+            //float randomX = mouseX + (rand() % 21 - 10);  // éšæœºèŒƒå›´[-10, 10]
+            //float particleY = mouseY + (rand() % 21 - 10); // éšæœºèŒƒå›´[-10, 10]
 
-            float randomX = mouseX ;  // Ëæ»ú·¶Î§[-10, 10]
-            float particleY = mouseY ; // Ëæ»ú·¶Î§[-10, 10]
+            float randomX = mouseX ;  // éšæœºèŒƒå›´[-10, 10]
+            float particleY = mouseY ; // éšæœºèŒƒå›´[-10, 10]
 
-            particles.emplace_back(randomX, particleY); // Ìí¼ÓÁ£×Óµ½ÁĞ±í
-            particles.back().radius = circleRadius; // ÉèÖÃ°ë¾¶
-            particles.back().mass = SandSimulator::pi * particles.back().radius * particles.back().radius; // ÖÊÁ¿
+            particles.emplace_back(randomX, particleY); // æ·»åŠ ç²’å­åˆ°åˆ—è¡¨
+            particles.back().radius = circleRadius; // è®¾ç½®åŠå¾„
+            particles.back().mass = SandSimulator::pi * particles.back().radius * particles.back().radius; // è´¨é‡
 
-            // ÉèÖÃ³õÊ¼ËÙ¶È
-            particles.back().velocityX = rand() % 21-10 ; // Ëæ»úË®Æ½ËÙ¶È[-10, 10]
-            particles.back().velocityY = rand() % 21 - 10; // Ëæ»ú´¹Ö±ËÙ¶È[-10, 10]
+            // è®¾ç½®åˆå§‹é€Ÿåº¦
+            particles.back().velocityX = rand() % 21-10 ; // éšæœºæ°´å¹³é€Ÿåº¦[-10, 10]
+            particles.back().velocityY = rand() % 21 - 10; // éšæœºå‚ç›´é€Ÿåº¦[-10, 10]
         }
         
         qDebug() << "Added 10 particles.";
@@ -151,88 +151,88 @@ void SandSimulator::mouseDoubleClickEvent(QMouseEvent* event) {
     else {
         qDebug() << "mouseDoubleClickEvent out of border";
     }
-    update(); // ´¥·¢»æÍ¼ÊÂ¼ş
+    update(); // è§¦å‘ç»˜å›¾äº‹ä»¶
 
 }
 
 void SandSimulator::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Space) {
         
-        for (int i = 0; i < 10; ++i) { // Ìí¼Ó10¸öĞ¡Çò
-            // Ëæ»úÎ»ÖÃÆ«ÒÆ
-            //float randomX = mouseX + (rand() % 21 - 10);  // Ëæ»ú·¶Î§[-10, 10]
-            //float particleY = mouseY + (rand() % 21 - 10); // Ëæ»ú·¶Î§[-10, 10]
-            float randomX =width() / 2 + (rand() % 21 - 10);  // Ëæ»ú·¶Î§[-10, 10]
-            float particleY = height() / 2 + (rand() % 21 - 10); // Ëæ»ú·¶Î§[-10, 10]
+        for (int i = 0; i < 10; ++i) { // æ·»åŠ 10ä¸ªå°çƒ
+            // éšæœºä½ç½®åç§»
+            //float randomX = mouseX + (rand() % 21 - 10);  // éšæœºèŒƒå›´[-10, 10]
+            //float particleY = mouseY + (rand() % 21 - 10); // éšæœºèŒƒå›´[-10, 10]
+            float randomX =width() / 2 + (rand() % 21 - 10);  // éšæœºèŒƒå›´[-10, 10]
+            float particleY = height() / 2 + (rand() % 21 - 10); // éšæœºèŒƒå›´[-10, 10]
 
-            particles.emplace_back(randomX, particleY); // Ìí¼ÓÁ£×Óµ½ÁĞ±í
-            particles.back().radius = paricleRadius; // ÉèÖÃ°ë¾¶
-            particles.back().mass = SandSimulator::pi * particles.back().radius * particles.back().radius; // ÖÊÁ¿
+            particles.emplace_back(randomX, particleY); // æ·»åŠ ç²’å­åˆ°åˆ—è¡¨
+            particles.back().radius = paricleRadius; // è®¾ç½®åŠå¾„
+            particles.back().mass = SandSimulator::pi * particles.back().radius * particles.back().radius; // è´¨é‡
 
-            // ÉèÖÃ³õÊ¼ËÙ¶È
-            particles.back().velocityX = rand() % 21 - 10; // Ëæ»úË®Æ½ËÙ¶È[-10, 10]
-            particles.back().velocityY = rand() % 21 - 10; // Ëæ»ú´¹Ö±ËÙ¶È[-10, 10]
+            // è®¾ç½®åˆå§‹é€Ÿåº¦
+            particles.back().velocityX = rand() % 21 - 10; // éšæœºæ°´å¹³é€Ÿåº¦[-10, 10]
+            particles.back().velocityY = rand() % 21 - 10; // éšæœºå‚ç›´é€Ÿåº¦[-10, 10]
         }
 
         qDebug() << "Added 10 particles.";
         int number = particles.size();
         QString text = QString("Number of Particles: %1").arg(number);
         Sand_statusBar->showMessage(QString("all particles %1, Added 10 particles.").arg(number), 2000);
-        update(); // ´¥·¢»æÍ¼ÊÂ¼ş
+        update(); // è§¦å‘ç»˜å›¾äº‹ä»¶
 
        
     }
 
     if (event->key() == Qt::Key_Escape) {
-    //Çå³ıËùÓĞÁ£×Ó
+    //æ¸…é™¤æ‰€æœ‰ç²’å­
     particles.clear();
-    update(); // ´¥·¢»æÍ¼ÊÂ¼ş
+    update(); // è§¦å‘ç»˜å›¾äº‹ä»¶
         }
 
 };
 
 void SandSimulator::updateParticles() {
-    int border = border_width; // ±ß½ç¿í¶È
+    int border = border_width; // è¾¹ç•Œå®½åº¦
 
-    // Ö»Éú³ÉĞÂÁ£×ÓÈç¹ûµ±Ç°Á£×ÓÊıÁ¿ÉÙÓÚ×î´óÊıÁ¿
+    // åªç”Ÿæˆæ–°ç²’å­å¦‚æœå½“å‰ç²’å­æ•°é‡å°‘äºæœ€å¤§æ•°é‡
     if (particles.size() < particleCount) {
-        float x = width() / 8 + rand() % 100;  // ¹Ì¶¨ÔÚÖĞ¼äÎ»ÖÃ
-        float y = border + 50; // Á£×ÓÉú³ÉÔÚÉÏ²¿
-        particles.emplace_back(x, y); // Ìí¼ÓÁ£×Óµ½ÁĞ±í
-        particles.back().radius = paricleRadius; // ÉèÖÃ°ë¾¶
-        particles.back().mass = SandSimulator::pi * particles.back().radius * particles.back().radius; // ÖÊÁ¿
+        float x = width() / 8 + rand() % 100;  // å›ºå®šåœ¨ä¸­é—´ä½ç½®
+        float y = border + 50; // ç²’å­ç”Ÿæˆåœ¨ä¸Šéƒ¨
+        particles.emplace_back(x, y); // æ·»åŠ ç²’å­åˆ°åˆ—è¡¨
+        particles.back().radius = paricleRadius; // è®¾ç½®åŠå¾„
+        particles.back().mass = SandSimulator::pi * particles.back().radius * particles.back().radius; // è´¨é‡
 
-        // ÉèÖÃ³õÊ¼ËÙ¶È
-        particles.back().velocityX = 1000; // ËÙ¶ÈÎª1
-        particles.back().velocityY = 200; // ËÙ¶ÈÎª2
+        // è®¾ç½®åˆå§‹é€Ÿåº¦
+        particles.back().velocityX = 1000; // é€Ÿåº¦ä¸º1
+        particles.back().velocityY = 200; // é€Ÿåº¦ä¸º2
     }
-    // ¸üĞÂÁ£×ÓÎ»ÖÃºÍËÙ¶È
+    // æ›´æ–°ç²’å­ä½ç½®å’Œé€Ÿåº¦
     for (auto& particle : particles) {
         applyGravityAndDrag(particle);
         applyBoundaryCollision(particle, border);
     }
-    // ¼ì²éÁ£×ÓÖ®¼äµÄÅö×²
+    // æ£€æŸ¥ç²’å­ä¹‹é—´çš„ç¢°æ’
     checkP_PCollisions();
-    update(); // ´¥·¢»æÍ¼ÊÂ¼ş
+    update(); // è§¦å‘ç»˜å›¾äº‹ä»¶
 }
 
 void SandSimulator::applyGravityAndDrag(SandParticle& particle) {
-    const float applied_gravity = GRAVITY; // ¼ÙÉèÖØÁ¦ÎªÕıÏòÏÂ
-    const float applied_drag = DRAG; // ºÏÊÊµÄ×èÁ¦Öµ
+    const float applied_gravity = GRAVITY; // å‡è®¾é‡åŠ›ä¸ºæ­£å‘ä¸‹
+    const float applied_drag = DRAG; // åˆé€‚çš„é˜»åŠ›å€¼
 
-    // Ê©¼ÓÖØÁ¦£¬Í¨³£ÒÔ¸ºÖµÀ´±íÊ¾ÏòÏÂ
-	particle.velocityY += applied_gravity; // Ó¦ÓÃÖØÁ¦
+    // æ–½åŠ é‡åŠ›ï¼Œé€šå¸¸ä»¥è´Ÿå€¼æ¥è¡¨ç¤ºå‘ä¸‹
+	particle.velocityY += applied_gravity; // åº”ç”¨é‡åŠ›
 
-    // ¸üĞÂÎ»ÖÃ
+    // æ›´æ–°ä½ç½®
     particle.position_x += particle.velocityX* frameTime/1000;
     particle.position_y += particle.velocityY* frameTime/1000;
 
-    // Ê©¼Ó×èÁ¦
-    particle.velocityX = particle.velocityX * (1 - applied_drag); // Ó¦ÓÃ×èÁ¦
-    particle.velocityY = particle.velocityY * (1 - applied_drag); // Ó¦ÓÃ×èÁ¦
+    // æ–½åŠ é˜»åŠ›
+    particle.velocityX = particle.velocityX * (1 - applied_drag); // åº”ç”¨é˜»åŠ›
+    particle.velocityY = particle.velocityY * (1 - applied_drag); // åº”ç”¨é˜»åŠ›
 
-    // ÏŞÖÆËÙ¶È
-    //limitSpeed(particle, MAX_SPEED); // ÏŞÖÆ×î´óËÙ¶È
+    // é™åˆ¶é€Ÿåº¦
+    //limitSpeed(particle, MAX_SPEED); // é™åˆ¶æœ€å¤§é€Ÿåº¦
 }
 
 void SandSimulator::checkP_PCollisions() {
@@ -243,46 +243,46 @@ void SandSimulator::checkP_PCollisions() {
             float distanceSquared = dx * dx + dy * dy;
             float radiusSum = particles[i].radius + particles[j].radius;
 
-            if (distanceSquared < radiusSum * radiusSum) { // ¼ì²âµ½Åö×²
+            if (distanceSquared < radiusSum * radiusSum) { // æ£€æµ‹åˆ°ç¢°æ’
                 float distance = std::sqrt(distanceSquared);
-                float overlap = radiusSum - distance; // ¼ÆËãÖØµşÁ¿
+                float overlap = radiusSum - distance; // è®¡ç®—é‡å é‡
 
-                // ¼ÆËã·¨ÏòÁ¿
-                float nx = dx / distance; // ·¨ÏòÁ¿x
-                float ny = dy / distance; // ·¨ÏòÁ¿y
+                // è®¡ç®—æ³•å‘é‡
+                float nx = dx / distance; // æ³•å‘é‡x
+                float ny = dy / distance; // æ³•å‘é‡y
 
-                // ¼ÆËãÏà¶ÔËÙ¶È²¢¸üĞÂËÙ¶È
+                // è®¡ç®—ç›¸å¯¹é€Ÿåº¦å¹¶æ›´æ–°é€Ÿåº¦
                 float relativeVelocityX = particles[i].velocityX - particles[j].velocityX;
                 float relativeVelocityY = particles[i].velocityY - particles[j].velocityY;
 
-                float coeffRestitution = 0.9f; // »Ö¸´ÏµÊı
+                float coeffRestitution = 0.9f; // æ¢å¤ç³»æ•°
                 float impulse = 2 * (relativeVelocityX * nx + relativeVelocityY * ny) / (particles[i].mass + particles[j].mass);
 
-                particles[i].velocityX -= impulse * particles[j].mass * nx * coeffRestitution; // ¸üĞÂÁ£×ÓiËÙ¶È
-                particles[i].velocityY -= impulse * particles[j].mass * ny * coeffRestitution; // ¸üĞÂÁ£×ÓiËÙ¶È
-                particles[j].velocityX += impulse * particles[i].mass * nx * coeffRestitution; // ¸üĞÂÁ£×ÓjËÙ¶È
-                particles[j].velocityY += impulse * particles[i].mass * ny * coeffRestitution; // ¸üĞÂÁ£×ÓjËÙ¶È
+                particles[i].velocityX -= impulse * particles[j].mass * nx * coeffRestitution; // æ›´æ–°ç²’å­ié€Ÿåº¦
+                particles[i].velocityY -= impulse * particles[j].mass * ny * coeffRestitution; // æ›´æ–°ç²’å­ié€Ÿåº¦
+                particles[j].velocityX += impulse * particles[i].mass * nx * coeffRestitution; // æ›´æ–°ç²’å­jé€Ÿåº¦
+                particles[j].velocityY += impulse * particles[i].mass * ny * coeffRestitution; // æ›´æ–°ç²’å­jé€Ÿåº¦
 
-                // ¸üĞÂÎ»ÖÃµÄĞŞÕı·½Ê½
+                // æ›´æ–°ä½ç½®çš„ä¿®æ­£æ–¹å¼
                 float massSum = particles[i].mass + particles[j].mass;
-                float correctionI = (overlap * (particles[j].mass / massSum)); // Ö»ĞèĞŞÕıÒ»±ß
-                float correctionJ = overlap - correctionI; // ÁíÒ»±ßµÄĞŞÕıÁ¿
+                float correctionI = (overlap * (particles[j].mass / massSum)); // åªéœ€ä¿®æ­£ä¸€è¾¹
+                float correctionJ = overlap - correctionI; // å¦ä¸€è¾¹çš„ä¿®æ­£é‡
 
 
-                //particles[i].position_x -= correctionI * nx; // Á£×ÓiµÄÎ»ÖÃĞŞÕı
+                //particles[i].position_x -= correctionI * nx; // ç²’å­içš„ä½ç½®ä¿®æ­£
                 //particles[i].position_y -= correctionI * ny;
 
-                //particles[j].position_x += correctionJ * nx; // Á£×ÓjµÄÎ»ÖÃĞŞÕı
+                //particles[j].position_x += correctionJ * nx; // ç²’å­jçš„ä½ç½®ä¿®æ­£
                 //particles[j].position_y += correctionJ * ny;
 
-                // Ö»¶Ô²»ÔÚ±ß½çµÄÁ£×Ó½øĞĞÎ»ÖÃĞŞÕı
+                // åªå¯¹ä¸åœ¨è¾¹ç•Œçš„ç²’å­è¿›è¡Œä½ç½®ä¿®æ­£
                 if (!isParticleAtBoundary(i)) {
-                    particles[i].position_x -= correctionI * nx; // Á£×ÓiµÄÎ»ÖÃĞŞÕı
+                    particles[i].position_x -= correctionI * nx; // ç²’å­içš„ä½ç½®ä¿®æ­£
                     particles[i].position_y -= correctionI * ny;
                 }
 
                 if (!isParticleAtBoundary(j)) {
-                    particles[j].position_x += correctionJ * nx; // Á£×ÓjµÄÎ»ÖÃĞŞÕı
+                    particles[j].position_x += correctionJ * nx; // ç²’å­jçš„ä½ç½®ä¿®æ­£
                     particles[j].position_y += correctionJ * ny;
                 }
             }
@@ -291,41 +291,41 @@ void SandSimulator::checkP_PCollisions() {
 }
 
 bool SandSimulator::isParticleAtBoundary(size_t index) {
-    int border = border_width; // ±ß½ç¿í¶È
+    int border = border_width; // è¾¹ç•Œå®½åº¦
     return (particles[index].position_x - particles[index].radius <= border ||
         particles[index].position_x + particles[index].radius >= width() - border ||
         particles[index].position_y - particles[index].radius <= border ||
         particles[index].position_y + particles[index].radius >= height() - border);
 }
-//Ó¦ÓÃ±ß½çÅö×²
+//åº”ç”¨è¾¹ç•Œç¢°æ’
 void SandSimulator::applyBoundaryCollision(SandParticle& particle, int border) {
-    // ×ó±ß½ç
+    // å·¦è¾¹ç•Œ
     if (particle.position_x - particle.radius < border) {
-        particle.position_x = border + particle.radius; // ĞŞÕıÎ»ÖÃ
-        particle.velocityX *= -1; // ·´µ¯
+        particle.position_x = border + particle.radius; // ä¿®æ­£ä½ç½®
+        particle.velocityX *= -1; // åå¼¹
     }
-    // ÓÒ±ß½ç
+    // å³è¾¹ç•Œ
     if (particle.position_x + particle.radius > width() - border) {
-        particle.position_x = width() - border - particle.radius; // ĞŞÕıÎ»ÖÃ
-        particle.velocityX *= -1; // ·´µ¯
+        particle.position_x = width() - border - particle.radius; // ä¿®æ­£ä½ç½®
+        particle.velocityX *= -1; // åå¼¹
     }
-    // ÉÏ±ß½ç
+    // ä¸Šè¾¹ç•Œ
     if (particle.position_y - particle.radius < border) {
-        particle.position_y = border + particle.radius; // ĞŞÕıÎ»ÖÃ
-        particle.velocityY *= -1; // ·´µ¯
+        particle.position_y = border + particle.radius; // ä¿®æ­£ä½ç½®
+        particle.velocityY *= -1; // åå¼¹
     }
-    // ÏÂ±ß½ç
+    // ä¸‹è¾¹ç•Œ
     if (particle.position_y + particle.radius > height() - border) {
-        particle.position_y = height() - border - particle.radius; // ĞŞÕıÎ»ÖÃ
-        particle.velocityY *= -1; // ·´µ¯
+        particle.position_y = height() - border - particle.radius; // ä¿®æ­£ä½ç½®
+        particle.velocityY *= -1; // åå¼¹
     }
 }
-// Ó¦ÓÃ×èÄá
+// åº”ç”¨é˜»å°¼
 void SandSimulator::applyDamping(SandParticle& particle, float damping) {
     particle.velocityX *= damping;
     particle.velocityY *= damping;
 }
-// ÏŞÖÆËÙ¶È
+// é™åˆ¶é€Ÿåº¦
 void SandSimulator::limitSpeed(SandParticle& particle, float maxSpeed) {
     float speedSquared = particle.velocityX * particle.velocityX + particle.velocityY * particle.velocityY;
     if (speedSquared > maxSpeed * maxSpeed) {
@@ -336,19 +336,19 @@ void SandSimulator::limitSpeed(SandParticle& particle, float maxSpeed) {
 }
 
 void SandSimulator::painter_text(QPainter& painter,QString& text) {
-    // »ñÈ¡´°¿ÚµÄÖĞĞÄ×ø±ê
+    // è·å–çª—å£çš„ä¸­å¿ƒåæ ‡
     int centerX = width() / 2;
     int centerY = height() / 2;
-    // »æÖÆÎÄ×Ö
+    // ç»˜åˆ¶æ–‡å­—
     QFont font;
     int fontSize = 25;
-    font.setPointSize(fontSize); // ÉèÖÃ×ÖÌå´óĞ¡
-    painter.setFont(font); // ½«×ÖÌåÓ¦ÓÃµ½ QPainter
-    painter.setPen(QPen(QColor(255, 100, 70), 2)); // ÉèÖÃ»­±ÊÑÕÉ«ºÍ¿í¶È
+    font.setPointSize(fontSize); // è®¾ç½®å­—ä½“å¤§å°
+    painter.setFont(font); // å°†å­—ä½“åº”ç”¨åˆ° QPainter
+    painter.setPen(QPen(QColor(255, 100, 70), 2)); // è®¾ç½®ç”»ç¬”é¢œè‰²å’Œå®½åº¦
    
     QRect textRect = painter.boundingRect(0, 0, 0, 0, Qt::AlignCenter, text);
-    // ¼ÆËãÎÄ±¾ÖĞĞÄÎ»ÖÃ
-    int x = centerX - textRect.width() / 2; // x ×ø±ê
-    int y = fontSize * 2 - textRect.height() / 2; // y ×ø±ê
-    painter.drawText(x - width() / 2 + textRect.width() / 2, y, text); // »æÖÆÎÄ×Ö
+    // è®¡ç®—æ–‡æœ¬ä¸­å¿ƒä½ç½®
+    int x = centerX - textRect.width() / 2; // x åæ ‡
+    int y = fontSize * 2 - textRect.height() / 2; // y åæ ‡
+    painter.drawText(x - width() / 2 + textRect.width() / 2, y, text); // ç»˜åˆ¶æ–‡å­—
 }

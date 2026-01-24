@@ -1,4 +1,4 @@
-
+ï»¿
 //organized by: <Rain>
 //date: 2024.12.6
 #include "mywindows_class.h"
@@ -11,22 +11,22 @@ MySubWindow::MySubWindow(QWidget* parent) : QWidget(parent)
     QString styleSheet = "QWidget{background-color: #1e293b;}";
     setStyleSheet(styleSheet);
 
-    // ´´½¨²¼¾Ö
+    // åˆ›å»ºå¸ƒå±€
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    // ³õÊ¼»¯×´Ì¬À¸
+    // åˆå§‹åŒ–çŠ¶æ€æ 
     My_statusBar = new QStatusBar(this);
     My_statusBar->setMaximumHeight(20);
     My_statusBar->setSizeGripEnabled(false);
     layout->addWidget(My_statusBar, 0, Qt::AlignBottom);
-    // ÉèÖÃ×´Ì¬À¸ÑùÊ½
+    // è®¾ç½®çŠ¶æ€æ æ ·å¼
     QString widget_statusbar = "font-size: 18px;background-color:#374357;"
         "color: #cee8ff;"
         "border-top-left-radius: 0px;"
         "border-top-right-radius: 0px;"
         "border-bottom-left-radius: 5px;"
-        "border-bottom-right-radius:5px;"; // ÉîÉ«
+        "border-bottom-right-radius:5px;"; // æ·±è‰²
     My_statusBar->setStyleSheet(widget_statusbar);
     My_statusBar->showMessage("init status bar", 5000);
 
@@ -45,9 +45,9 @@ void MySubWindow::closeEvent(QCloseEvent* event) {
 }
 
 void MySubWindow::paintEvent(QPaintEvent* event) {
-    Q_UNUSED(event); // ±ÜÃâÎ´Ê¹ÓÃ²ÎÊı¾¯¸æ
+    Q_UNUSED(event); // é¿å…æœªä½¿ç”¨å‚æ•°è­¦å‘Š
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing); // ÆôÓÃ·´×ßÑù
+    painter.setRenderHint(QPainter::Antialiasing); // å¯ç”¨åèµ°æ ·
 
     painter_grid(painter);
     painter_axis(painter);
@@ -55,165 +55,165 @@ void MySubWindow::paintEvent(QPaintEvent* event) {
     painter_text(painter);
     //painter_bezier(painter);
     //painter_mc(painter);
-    // Èç¹ûĞèÒª»æÖÆÔ²È¦
+    // å¦‚æœéœ€è¦ç»˜åˆ¶åœ†åœˆ
     if (drawCircle) {
         painter_mc(painter);
     }
     
-	painter_user(painter); // »æÖÆÓÃ»§×Ô¶¨ÒåÄÚÈİ
+	painter_user(painter); // ç»˜åˆ¶ç”¨æˆ·è‡ªå®šä¹‰å†…å®¹
 }
 
 void MySubWindow::mouseDoubleClickEvent(QMouseEvent* event) {
-    // ¼ÇÂ¼Êó±êË«»÷µÄÎ»ÖÃ²¢ÉèÖÃ»æÖÆ±êÖ¾Îª true
+    // è®°å½•é¼ æ ‡åŒå‡»çš„ä½ç½®å¹¶è®¾ç½®ç»˜åˆ¶æ ‡å¿—ä¸º true
     doubleClickPosition = event->pos();
-    drawCircle = true; // ±ê¼ÇĞèÒª»æÖÆÔ²È¦
-    update(); // ÇëÇóÖØĞÂ»æÖÆ´°¿Ú
+    drawCircle = true; // æ ‡è®°éœ€è¦ç»˜åˆ¶åœ†åœˆ
+    update(); // è¯·æ±‚é‡æ–°ç»˜åˆ¶çª—å£
 }
 
 void MySubWindow::mouseMoveEvent(QMouseEvent* event) {
 
-    // Êó±êÒÆ¶¯Ê±£¬Èç¹ûĞèÒª»æÖÆÔ²È¦£¬Ôò¸üĞÂÔ²µÄÎ»ÖÃ
+    // é¼ æ ‡ç§»åŠ¨æ—¶ï¼Œå¦‚æœéœ€è¦ç»˜åˆ¶åœ†åœˆï¼Œåˆ™æ›´æ–°åœ†çš„ä½ç½®
     if (drawCircle) {
         doubleClickPosition = event->pos();
-        update(); // ÇëÇóÖØĞÂ»æÖÆ´°¿Ú
+        update(); // è¯·æ±‚é‡æ–°ç»˜åˆ¶çª—å£
     }
 }
 
 void MySubWindow::painter_mc(QPainter& painter) {
 
-    int radius = 50;  // Ô²µÄ°ë¾¶
-    painter.setPen(QPen(Qt::white, 2)); // Ô²µÄÑÕÉ«
+    int radius = 50;  // åœ†çš„åŠå¾„
+    painter.setPen(QPen(Qt::white, 2)); // åœ†çš„é¢œè‰²
     painter.drawEllipse(doubleClickPosition.x() - radius,
         doubleClickPosition.y() - radius,
-        radius * 2, radius * 2); // »æÖÆÔ²È¦
-    //ÏÔÊ¾Ô²ĞÄ×ø±ê,Ïà¶Ô´°¿ÚÖĞĞÄ×ø±ê
+        radius * 2, radius * 2); // ç»˜åˆ¶åœ†åœˆ
+    //æ˜¾ç¤ºåœ†å¿ƒåæ ‡,ç›¸å¯¹çª—å£ä¸­å¿ƒåæ ‡
 
     QString text = "(" + QString::number(doubleClickPosition.x() - width() / 2) + "," + QString::number(-(doubleClickPosition.y() - height() / 2)) + ")";
     QFont font;
-    font.setPointSize(15); // ÉèÖÃ×ÖÌå´óĞ¡
-    painter.setFont(font); // ½«×ÖÌåÓ¦ÓÃµ½ QPainter
-    painter.setPen(QPen(Qt::white, 2)); // ÉèÖÃ»­±ÊÑÕÉ«ºÍ¿í¶È
-    painter.drawText(doubleClickPosition.x() + 10, doubleClickPosition.y() + 10, text); // »æÖÆÎÄ×Ö
-    //drawCircle = false; // ±ê¼Ç²»ĞèÒª»æÖÆÔ²È¦
+    font.setPointSize(15); // è®¾ç½®å­—ä½“å¤§å°
+    painter.setFont(font); // å°†å­—ä½“åº”ç”¨åˆ° QPainter
+    painter.setPen(QPen(Qt::white, 2)); // è®¾ç½®ç”»ç¬”é¢œè‰²å’Œå®½åº¦
+    painter.drawText(doubleClickPosition.x() + 10, doubleClickPosition.y() + 10, text); // ç»˜åˆ¶æ–‡å­—
+    //drawCircle = false; // æ ‡è®°ä¸éœ€è¦ç»˜åˆ¶åœ†åœˆ
     My_statusBar->showMessage("R position: " + text, 5000);
 
 }
-//»æÖÆÆäÓàÍ¼ĞÎ
+//ç»˜åˆ¶å…¶ä½™å›¾å½¢
 void MySubWindow::painter_bezier(QPainter& painter) {
 
-    painter.setRenderHint(QPainter::Antialiasing); // ÆôÓÃ·´×ßÑù
+    painter.setRenderHint(QPainter::Antialiasing); // å¯ç”¨åèµ°æ ·
 
-    // »ñÈ¡´°¿ÚµÄÖĞĞÄ×ø±ê
+    // è·å–çª—å£çš„ä¸­å¿ƒåæ ‡
     int centerX = width() / 2;
     int centerY = height() / 2;
 
-    // ¶¨Òå±´Èû¶ûÇúÏßµÄ¿ØÖÆµã
-    QPointF p1(centerX - 200, centerY - 200);   // Æğµã
-    QPointF p2(centerX + 0, centerY - (-100));   // ¿ØÖÆµã
-    QPointF p3(centerX + 200, centerY - 200);  // ÖÕµã
+    // å®šä¹‰è´å¡å°”æ›²çº¿çš„æ§åˆ¶ç‚¹
+    QPointF p1(centerX - 200, centerY - 200);   // èµ·ç‚¹
+    QPointF p2(centerX + 0, centerY - (-100));   // æ§åˆ¶ç‚¹
+    QPointF p3(centerX + 200, centerY - 200);  // ç»ˆç‚¹
 
-    // ´´½¨ QPainterPath ¶ÔÏó
+    // åˆ›å»º QPainterPath å¯¹è±¡
     QPainterPath path;
-    path.moveTo(p1); // ÒÆ¶¯µ½Æğµã
-    path.quadTo(p2, p3); // »æÖÆ¶ş´Î±´Èû¶ûÇúÏß
+    path.moveTo(p1); // ç§»åŠ¨åˆ°èµ·ç‚¹
+    path.quadTo(p2, p3); // ç»˜åˆ¶äºŒæ¬¡è´å¡å°”æ›²çº¿
 
-    // »æÖÆ±´Èû¶ûÇúÏß
-    painter.setPen(QPen(Qt::red, 2)); // ÉèÖÃ»­±ÊÑÕÉ«ºÍ¿í¶È
-    painter.drawPath(path); // Ê¹ÓÃ drawPath À´»æÖÆ
+    // ç»˜åˆ¶è´å¡å°”æ›²çº¿
+    painter.setPen(QPen(Qt::red, 2)); // è®¾ç½®ç”»ç¬”é¢œè‰²å’Œå®½åº¦
+    painter.drawPath(path); // ä½¿ç”¨ drawPath æ¥ç»˜åˆ¶
 }
 
 void MySubWindow::painter_axis(QPainter& painter) {
 
-    painter.setRenderHint(QPainter::Antialiasing); // ÆôÓÃ·´×ßÑù
-    // »ñÈ¡´°¿ÚµÄÖĞĞÄ×ø±ê
+    painter.setRenderHint(QPainter::Antialiasing); // å¯ç”¨åèµ°æ ·
+    // è·å–çª—å£çš„ä¸­å¿ƒåæ ‡
     int centerX = width() / 2;
     int centerY = height() / 2;
 
-    // ÉèÖÃÏßÌõ¿í¶ÈºÍÑÕÉ«
-    painter.setPen(QPen(Qt::white, 2)); // °×É«»­±Ê£¬¿í¶ÈÎª2
+    // è®¾ç½®çº¿æ¡å®½åº¦å’Œé¢œè‰²
+    painter.setPen(QPen(Qt::white, 2)); // ç™½è‰²ç”»ç¬”ï¼Œå®½åº¦ä¸º2
 
-    // »æÖÆË®Æ½×ø±êÖá£¨ÕıÏòÓÒ£©
-    int offset = 0; // ×ø±êÖá¼ıÍ·µÄÆ«ÒÆÁ¿
-    painter.drawLine(0 + offset, centerY, width() - offset, centerY); // Ë®Æ½×ø±êÖá
+    // ç»˜åˆ¶æ°´å¹³åæ ‡è½´ï¼ˆæ­£å‘å³ï¼‰
+    int offset = 0; // åæ ‡è½´ç®­å¤´çš„åç§»é‡
+    painter.drawLine(0 + offset, centerY, width() - offset, centerY); // æ°´å¹³åæ ‡è½´
 
-    // »æÖÆ´¹Ö±×ø±êÖá£¨ÕıÏòÉÏ£©
-    painter.drawLine(centerX, 0 + offset, centerX, height() - offset); // ´¹Ö±×ø±êÖá
+    // ç»˜åˆ¶å‚ç›´åæ ‡è½´ï¼ˆæ­£å‘ä¸Šï¼‰
+    painter.drawLine(centerX, 0 + offset, centerX, height() - offset); // å‚ç›´åæ ‡è½´
 
-    // »æÖÆ×ø±êÖá¼ıÍ·£¨¿ÉÑ¡£©
-    painter.drawLine(width() - 10, centerY - 5, width(), centerY); // Ë®Æ½¼ıÍ·
+    // ç»˜åˆ¶åæ ‡è½´ç®­å¤´ï¼ˆå¯é€‰ï¼‰
+    painter.drawLine(width() - 10, centerY - 5, width(), centerY); // æ°´å¹³ç®­å¤´
     painter.drawLine(width() - 10, centerY + 5, width(), centerY);
-    painter.drawLine(centerX - 5, 10, centerX, 0); // ´¹Ö±¼ıÍ·
+    painter.drawLine(centerX - 5, 10, centerX, 0); // å‚ç›´ç®­å¤´
     painter.drawLine(centerX + 5, 10, centerX, 0);
 
 }
 
 void MySubWindow::painter_text(QPainter& painter) {
-    // »ñÈ¡´°¿ÚµÄÖĞĞÄ×ø±ê
+    // è·å–çª—å£çš„ä¸­å¿ƒåæ ‡
     int centerX = width() / 2;
     int centerY = height() / 2;
-    // »æÖÆÎÄ×Ö
+    // ç»˜åˆ¶æ–‡å­—
     QFont font;
     int fontSize = 16;
-    font.setPointSize(fontSize); // ÉèÖÃ×ÖÌå´óĞ¡
-    painter.setFont(font); // ½«×ÖÌåÓ¦ÓÃµ½ QPainter
-    painter.setPen(QPen(QColor(255, 100, 70), 2)); // ÉèÖÃ»­±ÊÑÕÉ«ºÍ¿í¶È
+    font.setPointSize(fontSize); // è®¾ç½®å­—ä½“å¤§å°
+    painter.setFont(font); // å°†å­—ä½“åº”ç”¨åˆ° QPainter
+    painter.setPen(QPen(QColor(255, 100, 70), 2)); // è®¾ç½®ç”»ç¬”é¢œè‰²å’Œå®½åº¦
     QString text = "Drawing Table";
     QRect textRect = painter.boundingRect(0, 0, 0, 0, Qt::AlignCenter, text);
-    // ¼ÆËãÎÄ±¾ÖĞĞÄÎ»ÖÃ
-    int x = centerX - textRect.width() / 2; // x ×ø±ê
-    int y = fontSize * 2 - textRect.height() / 2; // y ×ø±ê
-    painter.drawText(x-width()/2+textRect.width()/2,  y, text); // »æÖÆÎÄ×Ö
+    // è®¡ç®—æ–‡æœ¬ä¸­å¿ƒä½ç½®
+    int x = centerX - textRect.width() / 2; // x åæ ‡
+    int y = fontSize * 2 - textRect.height() / 2; // y åæ ‡
+    painter.drawText(x-width()/2+textRect.width()/2,  y, text); // ç»˜åˆ¶æ–‡å­—
 }
 
 void MySubWindow::painter_circle(QPainter& painter) {
 
 
-    // »ñÈ¡´°¿ÚµÄÖĞĞÄ×ø±ê
+    // è·å–çª—å£çš„ä¸­å¿ƒåæ ‡
     int centerX = width() / 2;
     int centerY = height() / 2;
-    // »æÖÆÔ²È¦
-    int radius = 100; // Ô²µÄ°ë¾¶
-    painter.setPen(QPen(QColor(255, 100, 70), 5)); // ÉèÖÃ»­±ÊÑÕÉ«ºÍ¿í¶È
-    painter.drawEllipse(centerX - radius, centerY - radius, radius * 2, radius * 2); // »æÖÆÔ²È¦
+    // ç»˜åˆ¶åœ†åœˆ
+    int radius = 100; // åœ†çš„åŠå¾„
+    painter.setPen(QPen(QColor(255, 100, 70), 5)); // è®¾ç½®ç”»ç¬”é¢œè‰²å’Œå®½åº¦
+    painter.drawEllipse(centerX - radius, centerY - radius, radius * 2, radius * 2); // ç»˜åˆ¶åœ†åœˆ
     
     update();
     return;
 };
 
 void MySubWindow::painter_grid(QPainter& painter) {
-// »ñÈ¡´°¿ÚµÄÖĞĞÄ×ø±ê
+// è·å–çª—å£çš„ä¸­å¿ƒåæ ‡
     int centerX = width() / 2;
     int centerY = height() / 2;
-    // »æÖÆÍø¸ñ
-    int gridSize = 50; // Íø¸ñµÄ´óĞ¡
-    int gridCount = 10; // Íø¸ñµÄÊıÁ¿
-    // »æÖÆÍø¸ñÏß
-    painter.setPen(QPen(Qt::gray, 1)); // ÉèÖÃÍø¸ñÏßÑÕÉ«ºÍ¿í¶È
+    // ç»˜åˆ¶ç½‘æ ¼
+    int gridSize = 50; // ç½‘æ ¼çš„å¤§å°
+    int gridCount = 10; // ç½‘æ ¼çš„æ•°é‡
+    // ç»˜åˆ¶ç½‘æ ¼çº¿
+    painter.setPen(QPen(Qt::gray, 1)); // è®¾ç½®ç½‘æ ¼çº¿é¢œè‰²å’Œå®½åº¦
     for (int i = -gridCount / 2; i <= gridCount / 2; i++) {
-        int x = centerX + i * gridSize; // ¼ÆËãµ±Ç°Íø¸ñÏßµÄ x ×ø±ê
-        painter.drawLine(x, 0, x, height()); // »æÖÆ´¹Ö±Íø¸ñÏß
+        int x = centerX + i * gridSize; // è®¡ç®—å½“å‰ç½‘æ ¼çº¿çš„ x åæ ‡
+        painter.drawLine(x, 0, x, height()); // ç»˜åˆ¶å‚ç›´ç½‘æ ¼çº¿
 
-        int y = centerY + i * gridSize; // ¼ÆËãµ±Ç°Íø¸ñÏßµÄ y ×ø±ê
-        painter.drawLine(0, y, width(), y); // »æÖÆË®Æ½Íø¸ñÏß
+        int y = centerY + i * gridSize; // è®¡ç®—å½“å‰ç½‘æ ¼çº¿çš„ y åæ ‡
+        painter.drawLine(0, y, width(), y); // ç»˜åˆ¶æ°´å¹³ç½‘æ ¼çº¿
     }
 
-    // »æÖÆ±ß½ç¾ØĞÎ
-    painter.setPen(QPen(QColor(255, 100, 70), 2)); // ÉèÖÃ±ß½çµÄÑÕÉ«ºÍ¿í¶È
-    int boundaryOffset = (gridCount / 2) * gridSize; // ±ß½çµÄÆ«ÒÆÁ¿
+    // ç»˜åˆ¶è¾¹ç•ŒçŸ©å½¢
+    painter.setPen(QPen(QColor(255, 100, 70), 2)); // è®¾ç½®è¾¹ç•Œçš„é¢œè‰²å’Œå®½åº¦
+    int boundaryOffset = (gridCount / 2) * gridSize; // è¾¹ç•Œçš„åç§»é‡
     painter.drawRect(centerX - boundaryOffset, centerY - boundaryOffset,
-        boundaryOffset * 2, boundaryOffset * 2); // »æÖÆ±ß½ç¾ØĞÎ
+        boundaryOffset * 2, boundaryOffset * 2); // ç»˜åˆ¶è¾¹ç•ŒçŸ©å½¢
 
 }
 
 void MySubWindow::painter_user(QPainter& painter) {
 	
-	// »æÖÆÓÃ»§×Ô¶¨ÒåÄÚÈİ
-	painter.setRenderHint(QPainter::Antialiasing); // ÆôÓÃ·´×ßÑù
-	painter.setFont(QFont("Arial", 20)); // ÉèÖÃ×ÖÌåºÍ´óĞ¡
-	painter.setPen(QPen(Qt::green, 5)); // ÉèÖÃ»­±ÊÑÕÉ«ºÍ¿í¶È
-    painter.drawText(user_x, user_y, QString("$").repeated(2)); // »æÖÆÓÃ»§¶¨ÒåµÄÎÄ±¾
-	//²»¿ÉÒÔ³¬¹ı´°¿Ú±ß½ç
-	int offset = 10; // ±ß½çÆ«ÒÆÁ¿
+	// ç»˜åˆ¶ç”¨æˆ·è‡ªå®šä¹‰å†…å®¹
+	painter.setRenderHint(QPainter::Antialiasing); // å¯ç”¨åèµ°æ ·
+	painter.setFont(QFont("Arial", 20)); // è®¾ç½®å­—ä½“å’Œå¤§å°
+	painter.setPen(QPen(Qt::green, 5)); // è®¾ç½®ç”»ç¬”é¢œè‰²å’Œå®½åº¦
+    painter.drawText(user_x, user_y, QString("$").repeated(2)); // ç»˜åˆ¶ç”¨æˆ·å®šä¹‰çš„æ–‡æœ¬
+	//ä¸å¯ä»¥è¶…è¿‡çª—å£è¾¹ç•Œ
+	int offset = 10; // è¾¹ç•Œåç§»é‡
 	if (user_x < 0) user_x = offset;
 	if (user_y < 0) user_y = offset;
 	if (user_x > width()) user_x = width()- offset;
@@ -223,25 +223,25 @@ void MySubWindow::painter_user(QPainter& painter) {
 
 void MySubWindow::keyPressEvent(QKeyEvent* event)
 {
-	float move_speed = 10.0f; // ÒÆ¶¯ËÙ¶È
+	float move_speed = 10.0f; // ç§»åŠ¨é€Ÿåº¦
 
     if (event->key() == Qt::Key_A) {
-        // ´¦Àí E ¼üÏà¹ØÂß¼­£¬±ÈÈç¸üĞÂ×´Ì¬À¸ÏûÏ¢
+        // å¤„ç† E é”®ç›¸å…³é€»è¾‘ï¼Œæ¯”å¦‚æ›´æ–°çŠ¶æ€æ æ¶ˆæ¯
         user_x -= move_speed;
         
     }
 	else if (event->key() == Qt::Key_D) {
-		// ´¦Àí E ¼üÏà¹ØÂß¼­£¬±ÈÈç¸üĞÂ×´Ì¬À¸ÏûÏ¢
+		// å¤„ç† E é”®ç›¸å…³é€»è¾‘ï¼Œæ¯”å¦‚æ›´æ–°çŠ¶æ€æ æ¶ˆæ¯
 		user_x += move_speed;
 
 	}
 	else if (event->key() == Qt::Key_W) {
-		// ´¦Àí E ¼üÏà¹ØÂß¼­£¬±ÈÈç¸üĞÂ×´Ì¬À¸ÏûÏ¢
+		// å¤„ç† E é”®ç›¸å…³é€»è¾‘ï¼Œæ¯”å¦‚æ›´æ–°çŠ¶æ€æ æ¶ˆæ¯
 		user_y -= move_speed;
 
 	}
 	else if (event->key() == Qt::Key_S) {
-		// ´¦Àí E ¼üÏà¹ØÂß¼­£¬±ÈÈç¸üĞÂ×´Ì¬À¸ÏûÏ¢
+		// å¤„ç† E é”®ç›¸å…³é€»è¾‘ï¼Œæ¯”å¦‚æ›´æ–°çŠ¶æ€æ æ¶ˆæ¯
 		user_y += move_speed;
 
 	}

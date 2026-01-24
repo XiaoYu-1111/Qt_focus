@@ -1,4 +1,4 @@
-// Copyright (C) 2023 The Qt Company Ltd.
+ï»¿// Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #ifndef XYSERIESIODEVICE_H
@@ -40,7 +40,7 @@ private:
     QFile* m_audioFile=nullptr;
 
 public:
-    QByteArray readAudioData(); // È·±£Õâ¸öº¯ÊıÊÇ public
+    QByteArray readAudioData(); // ç¡®ä¿è¿™ä¸ªå‡½æ•°æ˜¯ public
 
 };
 #endif // XYSERIESIODEVICE_H

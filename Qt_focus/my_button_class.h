@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 #include <QPushButton>
-//×Ô¶¨Òå°´Å¥ÀàÐÍ
+//è‡ªå®šä¹‰æŒ‰é’®ç±»åž‹
 
 class MyQPushButton : public QPushButton {
     Q_OBJECT

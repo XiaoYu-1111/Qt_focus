@@ -1,4 +1,4 @@
-#ifndef CAMERABACKEND_H
+ï»¿#ifndef CAMERABACKEND_H
 #define CAMERABACKEND_H
 
 #include <QObject>
@@ -14,30 +14,30 @@ class CameraBackend : public QObject
     Q_OBJECT
 public:
     explicit CameraBackend(QObject* parent = nullptr) : QObject(parent) {
-        // ³õÊ¼»¯ÉãÏñÍ·ºÍÍ¼Ïñ²¶»ñ¶ÔÏó
+        // åˆå§‹åŒ–æ‘„åƒå¤´å’Œå›¾åƒæ•èŽ·å¯¹è±¡
         camera = new QCamera();
         imageCapture = new QImageCapture();
-        videoWidget = new QVideoWidget;//ÊÓÆµ´°¿Ú
-        captureSession = new QMediaCaptureSession();//Ã½Ìå²¶»ñ»á»°
-        captureSession->setImageCapture(imageCapture);//ÉèÖÃÍ¼Ïñ²¶»ñ
+        videoWidget = new QVideoWidget;//è§†é¢‘çª—å£
+        captureSession = new QMediaCaptureSession();//åª’ä½“æ•èŽ·ä¼šè¯
+        captureSession->setImageCapture(imageCapture);//è®¾ç½®å›¾åƒæ•èŽ·
 
     }
     Q_INVOKABLE void openCamera() {
-        camera->start(); // Æô¶¯ÉãÏñÍ·
-        captureImage(); // ÅÄÕÕ
+        camera->start(); // å¯åŠ¨æ‘„åƒå¤´
+        captureImage(); // æ‹ç…§
     }
     void captureImage() {
         captureSession->setCamera(camera);
-        imageCapture->capture(); // ÅÄÕÕ
+        imageCapture->capture(); // æ‹ç…§
         int captureId = imageCapture->capture();
         qDebug() << "Capture ID:" << captureId;
     }
 
 private:
-    QCamera* camera;          // ÉãÏñÍ·¶ÔÏó
-    QImageCapture* imageCapture; // Í¼Ïñ²¶»ñ¶ÔÏó
+    QCamera* camera;          // æ‘„åƒå¤´å¯¹è±¡
+    QImageCapture* imageCapture; // å›¾åƒæ•èŽ·å¯¹è±¡
     QVideoWidget* videoWidget;
-	QMediaCaptureSession* captureSession;// Ã½Ìå²¶»ñ»á»°
+	QMediaCaptureSession* captureSession;// åª’ä½“æ•èŽ·ä¼šè¯
 };
 
 #endif // CAMERABACKEND_H

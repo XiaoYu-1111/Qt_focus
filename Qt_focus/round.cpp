@@ -1,4 +1,4 @@
-#include "roundprogressbar.h"
+﻿#include "roundprogressbar.h"
 #include <QPainter>
 #include <QTransform>
 

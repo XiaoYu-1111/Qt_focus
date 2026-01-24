@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QStatusBar>
@@ -13,7 +13,7 @@ class MySubWindow : public QWidget {
 
 public:
     MySubWindow(QWidget* parent = nullptr);
-    float user_x = 100; // ÓÃ»§×Ô¶¨Òå×ø±ê
+    float user_x = 100; // ç”¨æˆ·è‡ªå®šä¹‰åæ ‡
     float user_y = 100;
 
 private:
@@ -21,8 +21,8 @@ private:
 protected:
     void closeEvent(QCloseEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
-    void mouseDoubleClickEvent(QMouseEvent* event) override; // ÖØĞ´Êó±êË«»÷ÊÂ¼ş
-    void mouseMoveEvent(QMouseEvent* event) override;// ÖØĞ´Êó±êÒÆ¶¯ÊÂ¼ş
+    void mouseDoubleClickEvent(QMouseEvent* event) override; // é‡å†™é¼ æ ‡åŒå‡»äº‹ä»¶
+    void mouseMoveEvent(QMouseEvent* event) override;// é‡å†™é¼ æ ‡ç§»åŠ¨äº‹ä»¶
 
     void keyPressEvent(QKeyEvent* event) override;
 
@@ -36,7 +36,7 @@ private:
 
     void painter_user(QPainter& painter);
 
-    QPoint doubleClickPosition;  // ±£´æË«»÷Î»ÖÃ
-    bool drawCircle=false;              // ¿ØÖÆÊÇ·ñ»æÖÆÔ²È¦
+    QPoint doubleClickPosition;  // ä¿å­˜åŒå‡»ä½ç½®
+    bool drawCircle=false;              // æ§åˆ¶æ˜¯å¦ç»˜åˆ¶åœ†åœˆ
 };
 

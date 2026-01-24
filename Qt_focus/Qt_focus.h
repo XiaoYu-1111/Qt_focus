@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
 #include <QtWidgets/QMainWindow>
 #include "ui_Qt_focus.h"
-/// ×Ô¶¨ÒåÍ·ÎÄ¼ş
+/// è‡ªå®šä¹‰å¤´æ–‡ä»¶
 #include "my_button_class.h"
 #include"mywindows_class.h"
 #include"xyseriesiodevice.h"
@@ -31,7 +31,7 @@
 #include <qspinbox.h>
 #include <QToolBox>
 #include <QProgressBar>
-#include <QTabBar> // Ìí¼ÓÕâÒ»ĞĞ
+#include <QTabBar> // æ·»åŠ è¿™ä¸€è¡Œ
 #include <QMouseEvent>
 #include <QRandomGenerator>
 #include <QPainterPath>
@@ -48,7 +48,7 @@
 #include<qprogressdialog.h>
 #include <QPrintPreviewDialog>
 
-#include <QTimer>  // Ìí¼ÓÕâÒ»ĞĞ
+#include <QTimer>  // æ·»åŠ è¿™ä¸€è¡Œ
 #include <QString>
 
 //QT-audio
@@ -86,7 +86,7 @@ private:
 private:
     QFont fontAwesomeFont;
 protected:
-    //¹Ø±Õ´°¿ÚÌáÊ¾£¡
+    //å…³é—­çª—å£æç¤ºï¼
     void closeEvent(QCloseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
@@ -95,7 +95,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
-    // ²Ëµ¥ÊÂ¼ş
+    // èœå•äº‹ä»¶
     void contextMenuEvent(QContextMenuEvent* event) override;
     void Main_page_Rmenu();
     void color_select_RMenu();
@@ -104,12 +104,12 @@ private:
     QSize initialSize;
     QMenu* Rclick_Menu = nullptr;
     QMenu* my_Menu_color = nullptr;
-    // Ìí¼ÓÎö¹¹º¯Êı
-    QSet<int> pressedKeys;  // ÉùÃ÷ pressedKeys
+    // æ·»åŠ ææ„å‡½æ•°
+    QSet<int> pressedKeys;  // å£°æ˜ pressedKeys
 
     int GLOBAL_STATE = 0;
-    bool isDragging = false;  // ÍÏ¶¯×´Ì¬
-    QPoint dragStartPosition;  // Êó±êµã»÷Î»ÖÃ
+    bool isDragging = false;  // æ‹–åŠ¨çŠ¶æ€
+    QPoint dragStartPosition;  // é¼ æ ‡ç‚¹å‡»ä½ç½®
 
 public:
 
@@ -119,7 +119,7 @@ public:
     QGridLayout* widget_mid_layout;
 
     QWidget* Widget_page_home;
-    QWidget* Widget_page0;//Ò³Ãæ³ÉÔ±ÉùÃ÷
+    QWidget* Widget_page0;//é¡µé¢æˆå‘˜å£°æ˜
     QWidget* Widget_page1;
     QWidget* Widget_page2;
     QWidget* Widget_page3;
@@ -129,12 +129,12 @@ public:
     QWidget* widget_settime;
     bool widget_settime_show = true;
 
-    QGridLayout* page0_layout_grid;//Ò³Ãæ0
-    QVBoxLayout* page1_layout_grid;//Ò³Ãæ1
-    QVBoxLayout* page2_layout_grid;//Ò³Ãæ2
-    QVBoxLayout* page3_layout_grid;//Ò³Ãæ3
-    QVBoxLayout* page4_layout_grid;//Ò³Ãæ4
-    QVBoxLayout* page5_layout_grid;//Ò³Ãæ5
+    QGridLayout* page0_layout_grid;//é¡µé¢0
+    QVBoxLayout* page1_layout_grid;//é¡µé¢1
+    QVBoxLayout* page2_layout_grid;//é¡µé¢2
+    QVBoxLayout* page3_layout_grid;//é¡µé¢3
+    QVBoxLayout* page4_layout_grid;//é¡µé¢4
+    QVBoxLayout* page5_layout_grid;//é¡µé¢5
 
     QList<QLabel*> label_tab;
     QList<QLabel*> labels;
@@ -146,9 +146,9 @@ public:
     QProgressBar* progress_bar;
     int Focus_time;
     int Focus_time2;
-    int remainingTime;      // Ê£ÓàÊ±¼ä£¬ÒÔÃëÎªµ¥Î»
+    int remainingTime;      // å‰©ä½™æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½
     int progress_Value;
-    QTimer* timer=nullptr;          // ÉùÃ÷Ò»¸ö QTimer Ö¸Õë
+    QTimer* timer=nullptr;          // å£°æ˜ä¸€ä¸ª QTimer æŒ‡é’ˆ
 
     QPushButton* button_set_focus;
     QPushButton* button_focus_reset;
@@ -162,14 +162,14 @@ public:
     QTextEdit* QtextEdit_tasks;
     int taskCount = 0;
 
-    //ÎŞ±ß¿ò²¿·Ö
+    //æ— è¾¹æ¡†éƒ¨åˆ†
     QPushButton* button_max;
     QPushButton* button_min;
     QPushButton* button_close;
 
-    //ÒôÆµ²¿·Ö
+    //éŸ³é¢‘éƒ¨åˆ†
     QPushButton* pauseButton;
-    XYSeriesIODevice* m_device;//ÒôÆµ²¿·Ö
+    XYSeriesIODevice* m_device;//éŸ³é¢‘éƒ¨åˆ†
     QChart* m_chart;
     QLineSeries* m_series;
     QAudioInput* m_audioInput;
@@ -180,7 +180,7 @@ public:
     bool audio_isPause = false;
     bool widget_bool = false;
 
-    QProcess process_exe1;//exe½ø³Ì
+    QProcess process_exe1;//exeè¿›ç¨‹
 
     bool isFrontCamera = false;
 
@@ -188,7 +188,7 @@ public:
 
 public slots:
 
-    // ×Ô¶¨Òåº¯Êı
+    // è‡ªå®šä¹‰å‡½æ•°
     void maximizeRestore();
     bool eventFilter(QObject* obj, QEvent* event);
     void widget_customMove(int x, int y);
@@ -199,11 +199,11 @@ void set_lable_time();
 void start_lable_time();
 void reset_lable_time();
 void Pause_focus_time();
-void updateCountdown();  // ĞÂÔö²Ûº¯Êı
+void updateCountdown();  // æ–°å¢æ§½å‡½æ•°
 
 QString randonColor();
 void hexToRGB(const std::string& hex, double& r, double& g, double& b);
-//ÒôÆµÏÔÊ¾audioÇúÏß
+//éŸ³é¢‘æ˜¾ç¤ºaudioæ›²çº¿
 void Draw_audio_sensor();
 void initializeAudioFile();
 void writeAudioData();
@@ -212,7 +212,7 @@ void closeAudioFile();
 void pauseAudio();
 void resumeAudio();
 
-//Æô¶¯Íâ²¿exe
+//å¯åŠ¨å¤–éƒ¨exe
 void run_exe(QString& program);
 void setAllWindowIcons(const QIcon& icon);
 void Creat_fontawesomewin();

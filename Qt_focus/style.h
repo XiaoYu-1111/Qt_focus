@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 #include<QString>
 
-class stylesheet_QT {//ÑùÊ½Àà,µ¼ÈëhÎÄ¼ş£¬ÊµÀı»¯ºó£¬¼´¿ÉÊ¹ÓÃ~
+class stylesheet_QT {//æ ·å¼ç±»,å¯¼å…¥hæ–‡ä»¶ï¼Œå®ä¾‹åŒ–åï¼Œå³å¯ä½¿ç”¨~
 
 public:
     /// <ok
@@ -27,54 +27,54 @@ public:
                                 QPushButton:hover{background-color:#71c4ef;}
                                 QPushButton:pressed{padding-top:3px;padding-left:3px;})";
     QString label_title = R"(QLabel{color:#cee8ff;font-size:20px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:#b6ccd8;})";//Ö÷±êÇ©
+                            QLabel:hover{color:#b6ccd8;})";//ä¸»æ ‡ç­¾
 
     QString widget_upper = R"(QWidget{color:#3D5A80;background-color:#374357;font-size:20px;font-style: normal; font-weight: bold;}
-                            QWidget:hover{color:#b6ccd8;})";//Ö÷±êÇ©
+                            QWidget:hover{color:#b6ccd8;})";//ä¸»æ ‡ç­¾
 
     QString label_main = R"(QLabel{color:#cee8ff;font-size:80px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:#e0e0e0;})";//Ö÷±êÇ©
+                            QLabel:hover{color:#e0e0e0;})";//ä¸»æ ‡ç­¾
 
     QString label_main2 = R"(QLabel{color:#71c4ef;font-size:30px;font-style: italic; font-weight: bold;}
-                            QLabel:hover{color:#b6ccd8;})";//Ö÷±êÇ©
+                            QLabel:hover{color:#b6ccd8;})";//ä¸»æ ‡ç­¾
 
     QString task_test = R"(QTextEdit{color:#cee8ff;font-size:30px;font-style: italic; font-weight: bold;
                             background-color:#374357;border-radius:5px;}
-                           QTextEdit:hover{color:#b6ccd8;})";//Ö÷±êÇ©
+                           QTextEdit:hover{color:#b6ccd8;})";//ä¸»æ ‡ç­¾
 
-    QString style_spinbox = "font-size: 25px; color: black; font-weight: bold; background-color: #71c4ef;";//Ö÷±êÇ©
-    /// ´°¿ÚÑÕÉ«
+    QString style_spinbox = "font-size: 25px; color: black; font-weight: bold; background-color: #71c4ef;";//ä¸»æ ‡ç­¾
+    /// çª—å£é¢œè‰²
 
-    QString widget_gray1 = "background-color: #1e293b;color:#cee8ff;";//ÉîÉ«
+    QString widget_gray1 = "background-color: #1e293b;color:#cee8ff;";//æ·±è‰²
     QString widget_uicenter =
         "background-color: #1e293b;"
         "color: #cee8ff;"
         "border-top-left-radius: 5px;"
         "border-top-right-radius: 5px;"
         "border-bottom-left-radius: 0px;"
-        "border-bottom-right-radius: 0px;";; // ÉîÉ«ÕûÀí
+        "border-bottom-right-radius: 0px;";; // æ·±è‰²æ•´ç†
 
     QString widget_statusbar ="font-size: 25px;background-color:#374357;"
         "color: #cee8ff;"
         "border-top-left-radius: 0px;"
         "border-top-right-radius: 0px;"
         "border-bottom-left-radius: 5px;"
-        "border-bottom-right-radius:5px;"; // ÉîÉ«ÕûÀí
+        "border-bottom-right-radius:5px;"; // æ·±è‰²æ•´ç†
     //QString dock_widget = "background-color:#1e293b;color:#cbd5e1;QDockWidget{ border: 20px; }";
     /// <ok
     QString dock_widget = "QDockWidget { background-color:#3c556d; border: 5px; }"
-        "QDockWidget::title { background-color: #374357; color: #0F1C2E; }" // ÉèÖÃ±êÌâÀ¸±³¾°É«ºÍÎÄ×ÖÑÕÉ«
-        "QDockWidget::title:hover { background-color: #cee8ff; }" // ĞüÍ£Ê±±³¾°É«
-        "QDockWidget::close-button { image:url(float_icon.png); }" // ×Ô¶¨Òå¹Ø±Õ°´Å¥Í¼±ê
-        "QDockWidget::float-button { image: url(float_icon.png); }"; // ×Ô¶¨Òå¸¡¶¯°´Å¥Í¼±ê
+        "QDockWidget::title { background-color: #374357; color: #0F1C2E; }" // è®¾ç½®æ ‡é¢˜æ èƒŒæ™¯è‰²å’Œæ–‡å­—é¢œè‰²
+        "QDockWidget::title:hover { background-color: #cee8ff; }" // æ‚¬åœæ—¶èƒŒæ™¯è‰²
+        "QDockWidget::close-button { image:url(float_icon.png); }" // è‡ªå®šä¹‰å…³é—­æŒ‰é’®å›¾æ ‡
+        "QDockWidget::float-button { image: url(float_icon.png); }"; // è‡ªå®šä¹‰æµ®åŠ¨æŒ‰é’®å›¾æ ‡
 
     /// <ok
-    QString Tab_widget = "QTabWidget::pane { border: 0 solid #ccc; }" // ±êÇ©Ò³Ãæ°åµÄ±ß¿ò
-        "QTabBar::tab { background: lightgray; padding: 8px;font-size: 20px;margin: 0px;border-radius:5px;}" // ±êÇ©µÄ±³¾°, ÄÚ±ß¾àºÍÍâ±ß¾à
-        "QTabBar::tab:selected { background: none; color: white; }" // Ñ¡ÖĞ±êÇ©µÄ±³¾°ºÍ×ÖÌåÑÕÉ«
-        "QTabBar::tab:hover { background: rgba(255, 255, 255, 0.2); }" // Êó±êĞüÍ£Ê±±êÇ©µÄ±³¾°ÑÕÉ«
+    QString Tab_widget = "QTabWidget::pane { border: 0 solid #ccc; }" // æ ‡ç­¾é¡µé¢æ¿çš„è¾¹æ¡†
+        "QTabBar::tab { background: lightgray; padding: 8px;font-size: 20px;margin: 0px;border-radius:5px;}" // æ ‡ç­¾çš„èƒŒæ™¯, å†…è¾¹è·å’Œå¤–è¾¹è·
+        "QTabBar::tab:selected { background: none; color: white; }" // é€‰ä¸­æ ‡ç­¾çš„èƒŒæ™¯å’Œå­—ä½“é¢œè‰²
+        "QTabBar::tab:hover { background: rgba(255, 255, 255, 0.2); }" // é¼ æ ‡æ‚¬åœæ—¶æ ‡ç­¾çš„èƒŒæ™¯é¢œè‰²
         //"QTabBar::tab:selected{background - color: rgb(252, 239, 235);border - bottom - color: rgb(226, 95, 50);}"
-        "QTabBar::tab:!selected { background: none; color: black; }"; // Î´Ñ¡ÖĞ±êÇ©µÄ±³¾°ºÍ×ÖÌåÑÕÉ«
+        "QTabBar::tab:!selected { background: none; color: black; }"; // æœªé€‰ä¸­æ ‡ç­¾çš„èƒŒæ™¯å’Œå­—ä½“é¢œè‰²
 
     /// <ok
     QString dock_textEdit = "color:#cbd5e1;background-color: #1e293b;font-size:15px;border: 2px solid #1e293b;";
@@ -89,13 +89,13 @@ public:
         "QProgressBar::chunk {"
         "background-color: #71c4ef;"
         "border-radius: 10px;"
-        "width: 1px;" // ÉèÖÃ½ø¶ÈÌõ¿éµÄ¿í¶È
+        "width: 1px;" // è®¾ç½®è¿›åº¦æ¡å—çš„å®½åº¦
         "}";
 
     QString label_dot = R"(QLabel{color:rgb(255, 128, 0);font-size:80px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:#e6fbe3;})";//Ö÷±êÇ©
+                            QLabel:hover{color:#e6fbe3;})";//ä¸»æ ‡ç­¾
     QString label_tab = R"(QLabel{color:#cee8ff;font-size:25px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:rgb(255, 128, 0);})";//Ö÷±êÇ©
+                            QLabel:hover{color:rgb(255, 128, 0);})";//ä¸»æ ‡ç­¾
 
     QString label_fontawesome = R"(QLabel{color:#cee8ff;font-size:30px;font-style: normal; font-weight: bold;}
                             QLabel:hover{color:rgb(255, 128, 0);})";//fontawesomeicons.h

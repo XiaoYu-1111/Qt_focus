@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef ROUNDPROGRESSBAR_H
 #define ROUNDPROGRESSBAR_H
 
@@ -13,15 +13,15 @@ public:
     explicit RoundProgressBar(QWidget* parent = 0);
     ~RoundProgressBar();
 
-    //½ø¶ÈÌõÏÔÊ¾ÀàĞÍ
+    //è¿›åº¦æ¡æ˜¾ç¤ºç±»å‹
     enum BarStyle
     {
-        StyleDonut,//Ô²»·
-        StylePie,//±ı×´
-        StyleLine,//ÏßÌõ
+        StyleDonut,//åœ†ç¯
+        StylePie,//é¥¼çŠ¶
+        StyleLine,//çº¿æ¡
     };
 
-    //ÆğÊ¼½Ç¶È
+    //èµ·å§‹è§’åº¦
     static const int PositionLeft = 180;
     static const int PositionTop = 90;
     static const int PositionRight = 0;
@@ -62,24 +62,24 @@ protected:
     void rebuildDataBrushIfNeeded();
 
 private:
-    double m_min, m_max;//×îĞ¡Öµ,×î´óÖµ
-    double m_value;//µ±Ç°Öµ
-    double m_startAngle;//ÆğÊ¼½Ç¶È
-    BarStyle m_barStyle;//ÏÔÊ¾ÀàĞÍ
-    double m_outlinePenWidth, m_dataPenWidth;//ÍâÔ²»­±Ê¿í¶È,Êı¾İÔ²»­±Ê¿í¶È(Ö÷ÒªÓÃÔÚÏßÌõÏÔÊ¾ÀàĞÍ)
-    QGradientStops m_gradientData;//½¥±äÑÕÉ«(Ö÷ÒªÓÃÔÚÔ²»·ºÍ±ı×´ÏÔÊ¾ÀàĞÍ)
+    double m_min, m_max;//æœ€å°å€¼,æœ€å¤§å€¼
+    double m_value;//å½“å‰å€¼
+    double m_startAngle;//èµ·å§‹è§’åº¦
+    BarStyle m_barStyle;//æ˜¾ç¤ºç±»å‹
+    double m_outlinePenWidth, m_dataPenWidth;//å¤–åœ†ç”»ç¬”å®½åº¦,æ•°æ®åœ†ç”»ç¬”å®½åº¦(ä¸»è¦ç”¨åœ¨çº¿æ¡æ˜¾ç¤ºç±»å‹)
+    QGradientStops m_gradientData;//æ¸å˜é¢œè‰²(ä¸»è¦ç”¨åœ¨åœ†ç¯å’Œé¥¼çŠ¶æ˜¾ç¤ºç±»å‹)
     bool m_rebuildBrush;
-    QString m_format;//ÎÄ±¾ÏÔÊ¾¸ñÊ½
-    int m_decimals;//Ğ¡ÊıµãÎ»Êı
-    bool m_clockwise;//Ë³Ê±Õë
-    bool m_baseCircleVisible;//ÏÔÊ¾ÍâÔ²
-    bool m_dataCircleVisible;//ÏÔÊ¾Êı¾İÔ²
-    bool m_centerCircleVisible;//ÏÔÊ¾ÄÚÔ²
-    bool m_textVisible;//ÏÔÊ¾ÎÄ×Ö
+    QString m_format;//æ–‡æœ¬æ˜¾ç¤ºæ ¼å¼
+    int m_decimals;//å°æ•°ç‚¹ä½æ•°
+    bool m_clockwise;//é¡ºæ—¶é’ˆ
+    bool m_baseCircleVisible;//æ˜¾ç¤ºå¤–åœ†
+    bool m_dataCircleVisible;//æ˜¾ç¤ºæ•°æ®åœ†
+    bool m_centerCircleVisible;//æ˜¾ç¤ºå†…åœ†
+    bool m_textVisible;//æ˜¾ç¤ºæ–‡å­—
 
-    static const int UF_VALUE = 1;//ÎÄ±¾¸ñÊ½-µ±Ç°Öµ
-    static const int UF_PERCENT = 2;//ÎÄ±¾¸ñÊ½-µ±Ç°Öµ°Ù·Ö±È
-    static const int UF_MAX = 4;//ÎÄ±¾¸ñÊ½-×î´óÖµ
+    static const int UF_VALUE = 1;//æ–‡æœ¬æ ¼å¼-å½“å‰å€¼
+    static const int UF_PERCENT = 2;//æ–‡æœ¬æ ¼å¼-å½“å‰å€¼ç™¾åˆ†æ¯”
+    static const int UF_MAX = 4;//æ–‡æœ¬æ ¼å¼-æœ€å¤§å€¼
     int m_updateFlags;
 };
 

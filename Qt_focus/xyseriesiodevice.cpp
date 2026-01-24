@@ -1,4 +1,4 @@
-// Copyright (C) 2023 The Qt Company Ltd.
+ï»¿// Copyright (C) 2023 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #include "xyseriesiodevice.h"
@@ -26,9 +26,9 @@ qint64 XYSeriesIODevice::writeData(const char* data, qint64 maxSize)
         for (int i = 0; i < sampleCount; ++i)
             m_buffer.append(QPointF(i, 0));
     }
-    //Èç¹û¿ÉÓÃµÄÑù±¾ÊıÁ¿Ğ¡ÓÚ sampleCount
-    // ½«»º³åÇøÖĞÇ°ÃæµÄÑù±¾ Y Öµ¸üĞÂÎªºóÃæµÄÑù±¾Öµ
-    // ÒÔ±£³Ö»º³åÇøÓòµÄÆ½»¬ĞÔ¡£
+    //å¦‚æœå¯ç”¨çš„æ ·æœ¬æ•°é‡å°äº sampleCount
+    // å°†ç¼“å†²åŒºä¸­å‰é¢çš„æ ·æœ¬ Y å€¼æ›´æ–°ä¸ºåé¢çš„æ ·æœ¬å€¼
+    // ä»¥ä¿æŒç¼“å†²åŒºåŸŸçš„å¹³æ»‘æ€§ã€‚
     int start = 0;
     const int availableSamples = int(maxSize) / resolution;
     if (availableSamples < sampleCount) {
@@ -36,12 +36,12 @@ qint64 XYSeriesIODevice::writeData(const char* data, qint64 maxSize)
         for (int s = 0; s < start; ++s)
             m_buffer[s].setY(m_buffer.at(s + availableSamples).y());
     }
-    //½«Êı¾İĞ´Èë»º³åÇø
+    //å°†æ•°æ®å†™å…¥ç¼“å†²åŒº
     for (int s = start; s < sampleCount; ++s, data += resolution)
         m_buffer[s].setY(qreal(uchar(*data) - 128) / qreal(128));
-    //½«»º³åÇøÖĞµÄÊı¾İ¸üĞÂµ½ QXYSeries ÖĞ
+    //å°†ç¼“å†²åŒºä¸­çš„æ•°æ®æ›´æ–°åˆ° QXYSeries ä¸­
     m_series->replace(m_buffer);
-            // Êä³ö×îĞÂ£¨×îºóÒ»¸ö£©ÊıÖµ
+            // è¾“å‡ºæœ€æ–°ï¼ˆæœ€åä¸€ä¸ªï¼‰æ•°å€¼
             /*if (!m_buffer.isEmpty()) {
                 qDebug() << "Latest value:" << m_buffer.last().y();
             }*/
@@ -50,17 +50,17 @@ qint64 XYSeriesIODevice::writeData(const char* data, qint64 maxSize)
 
 QByteArray XYSeriesIODevice::readAudioData() {
     QByteArray audioData;
-    qDebug() << "Buffer size:" << m_buffer.size(); // Êä³ö»º³åÇøµÄ´óĞ¡
-    // ¼ÙÉèÄãµÄÊı¾İ´æ´¢ÔÚÄ³¸ö»º³åÇøÖĞ£¬ÕâÀïÄã¿ÉÒÔ½«Êı¾İ×ª»¯Îª QByteArray
-    // ÕâÀïµÄÊ¾ÀıĞèÒª¸ù¾İÄãµÄÊı¾İÀ´Ô´½øĞĞµ÷Õû
+    qDebug() << "Buffer size:" << m_buffer.size(); // è¾“å‡ºç¼“å†²åŒºçš„å¤§å°
+    // å‡è®¾ä½ çš„æ•°æ®å­˜å‚¨åœ¨æŸä¸ªç¼“å†²åŒºä¸­ï¼Œè¿™é‡Œä½ å¯ä»¥å°†æ•°æ®è½¬åŒ–ä¸º QByteArray
+    // è¿™é‡Œçš„ç¤ºä¾‹éœ€è¦æ ¹æ®ä½ çš„æ•°æ®æ¥æºè¿›è¡Œè°ƒæ•´
     if (m_buffer.isEmpty()) { // first write
         m_buffer.reserve(sampleCount);
         for (int i = 0; i < sampleCount; ++i)
-            m_buffer.append(QPointF(i, 0)); // ÕâÀïÈ·±£Ìî³äÓĞĞ§Êı¾İ
+            m_buffer.append(QPointF(i, 0)); // è¿™é‡Œç¡®ä¿å¡«å……æœ‰æ•ˆæ•°æ®
     }
 
     for (const auto& point : m_buffer) {
-        audioData.append(static_cast<char>(point.y() * 128 + 128)); // Ê¾Àı×ª»»
+        audioData.append(static_cast<char>(point.y() * 128 + 128)); // ç¤ºä¾‹è½¬æ¢
     }
     return audioData;
 }

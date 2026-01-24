@@ -1,4 +1,4 @@
-#include "fontawesomeicons.h"
+﻿#include "fontawesomeicons.h"
 #include <QFontDatabase>
 #include<qstringlist.h>
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef SANDSIMULATOR_H
 #define SANDSIMULATOR_H
@@ -8,30 +8,30 @@
 #include <QTimer>
 #include <vector>
 #include <cmath>
-#include <QRandomGenerator> // ĞèÒª°üº¬Õâ¸öÍ·ÎÄ¼ş
+#include <QRandomGenerator> // éœ€è¦åŒ…å«è¿™ä¸ªå¤´æ–‡ä»¶
 #include <QVector2D>
 #include <QMouseEvent>
 
-// ±íÊ¾É³Á£µÄÀà
+// è¡¨ç¤ºæ²™ç²’çš„ç±»
 class SandParticle {
 public:
-    // Á£×ÓµÄÎ»ÖÃ
+    // ç²’å­çš„ä½ç½®
     float position_x, position_y;
-    // Á£×ÓµÄËÙ¶È
+    // ç²’å­çš„é€Ÿåº¦
     float velocityX, velocityY;
 
-    float mass; // ÖÊÁ¿
-    QColor color; // ĞÂÔöÑÕÉ«ÊôĞÔ
-    float radius; // ĞÂÔö°ë¾¶ÊôĞÔ
-    float accelerationX; // ĞÂÔö¼ÓËÙ¶ÈÊôĞÔ
-    float accelerationY; // ĞÂÔö¼ÓËÙ¶ÈÊôĞÔ
+    float mass; // è´¨é‡
+    QColor color; // æ–°å¢é¢œè‰²å±æ€§
+    float radius; // æ–°å¢åŠå¾„å±æ€§
+    float accelerationX; // æ–°å¢åŠ é€Ÿåº¦å±æ€§
+    float accelerationY; // æ–°å¢åŠ é€Ÿåº¦å±æ€§
     SandParticle(float x, float y,float m=1.0f, float radius =50.0f) :
         position_x(x), position_y(y), 
         velocityX(0.0f), velocityY(0.0f),
         mass(m),radius(radius),
-        accelerationX(0.0f), accelerationY(0.0f)  // Îª¼ÓËÙ¶È³õÊ¼»¯
+        accelerationX(0.0f), accelerationY(0.0f)  // ä¸ºåŠ é€Ÿåº¦åˆå§‹åŒ–
     {
-        // ÎªÁ£×ÓËæ»úÉú³ÉÑÕÉ«
+        // ä¸ºç²’å­éšæœºç”Ÿæˆé¢œè‰²
         int lowerBound = 100;
         color.setRgb(QRandomGenerator::global()->bounded(lowerBound,256),
             QRandomGenerator::global()->bounded(lowerBound,256),
@@ -39,30 +39,30 @@ public:
     }
 };
 
-// É³×ÓÄ£ÄâÆ÷Àà
+// æ²™å­æ¨¡æ‹Ÿå™¨ç±»
 class SandSimulator : public QWidget {
     Q_OBJECT
 
 public:
-    // ¹¹Ôìº¯Êı
+    // æ„é€ å‡½æ•°
     explicit SandSimulator(QWidget* parent = nullptr);
 
 public:
-    const float GRAVITY = 1.0f; // ÖØÁ¦¼ÓËÙ¶È
-    const float DRAG = 0.01f; // Ä¦²ÁÁ¦ÏµÊı
-    const float MAX_SPEED = 10.0f; // ×î´óËÙ¶È
-    const float pi = 3.1415926; // Ô²ÖÜÂÊ
-    int border_width = 50; // ±ß½ç¿í¶È
+    const float GRAVITY = 1.0f; // é‡åŠ›åŠ é€Ÿåº¦
+    const float DRAG = 0.01f; // æ‘©æ“¦åŠ›ç³»æ•°
+    const float MAX_SPEED = 10.0f; // æœ€å¤§é€Ÿåº¦
+    const float pi = 3.1415926; // åœ†å‘¨ç‡
+    int border_width = 50; // è¾¹ç•Œå®½åº¦
 
-    int particleCount = 200; // Á£×ÓÊıÁ¿
-    int paricleRadius = 10; // Á£×Ó°ë¾¶
+    int particleCount = 200; // ç²’å­æ•°é‡
+    int paricleRadius = 10; // ç²’å­åŠå¾„
 
-    int FPS = 50;  // Ö¡ÂÊ
-    int frameTime = 1000 / FPS;  // ¼ä¸ôÊ±¼ä
-	int deltaTime = 0; // ÉÏ´Î¸üĞÂÊ±¼ä
+    int FPS = 50;  // å¸§ç‡
+    int frameTime = 1000 / FPS;  // é—´éš”æ—¶é—´
+	int deltaTime = 0; // ä¸Šæ¬¡æ›´æ–°æ—¶é—´
 
 protected:
-    // »æÍ¼ÊÂ¼ş´¦Àí
+    // ç»˜å›¾äº‹ä»¶å¤„ç†
     void paintEvent(QPaintEvent* event) override;
     void showEvent(QShowEvent* event)override;
     void mouseDoubleClickEvent(QMouseEvent* event)override;
@@ -72,10 +72,10 @@ protected:
 private:
     QStatusBar* Sand_statusBar;
 private:
-    std::vector<SandParticle> particles; // ´æ´¢É³Á£
-    QTimer* timer; // ¶¨Ê±Æ÷
-    void updateParticles(); // ¸üĞÂÁ£×Ó×´Ì¬
-    void applyGravityAndDrag(SandParticle& particle); // Ó¦ÓÃÖØÁ¦ºÍ×èÁ¦
+    std::vector<SandParticle> particles; // å­˜å‚¨æ²™ç²’
+    QTimer* timer; // å®šæ—¶å™¨
+    void updateParticles(); // æ›´æ–°ç²’å­çŠ¶æ€
+    void applyGravityAndDrag(SandParticle& particle); // åº”ç”¨é‡åŠ›å’Œé˜»åŠ›
     
     void generateParticles();
     void applyBoundaryCollision(SandParticle& particle, int border);
@@ -88,7 +88,7 @@ private:
 
     void clearParticles() {
         particles.clear(); update();
-	} // Çå³ıËùÓĞÁ£×Ó
+	} // æ¸…é™¤æ‰€æœ‰ç²’å­
 
 };
 

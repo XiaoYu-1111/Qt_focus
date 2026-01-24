@@ -1,4 +1,4 @@
-#include "Qt_focus.h"
+﻿#include "Qt_focus.h"
 
 #include <QtWidgets/QApplication>
 
