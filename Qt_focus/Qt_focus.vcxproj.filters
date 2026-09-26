@@ -40,16 +40,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mywindows_class.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="round.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SandSimulator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="xyseriesiodevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="fontawesomeicons.cpp">
@@ -60,29 +51,14 @@
     <QtMoc Include="my_button_class.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="mywindows_class.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="roundprogressbar.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="SandSimulator.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="xyseriesiodevice.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="tabhover.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="CameraBackend.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="style.h">
       <Filter>Header Files</Filter>
     </ClInclude>

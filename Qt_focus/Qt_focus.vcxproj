@@ -101,12 +101,9 @@
   <ItemGroup>
     <ClCompile Include="fontawesomeicons.cpp" />
     <ClCompile Include="round.cpp" />
-    <ClCompile Include="SandSimulator.cpp" />
-    <ClCompile Include="xyseriesiodevice.cpp" />
     <QtRcc Include="Qt_focus.qrc" />
     <QtUic Include="Qt_focus.ui" />
     <QtMoc Include="Qt_focus.h" />
-    <ClCompile Include="mywindows_class.cpp" />
     <ClCompile Include="Qt_focus.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -114,16 +111,9 @@
     <QtMoc Include="my_button_class.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="mywindows_class.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="CameraBackend.h" />
     <ClInclude Include="fontawesomeicons.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="style.h" />
     <QtMoc Include="tabhover.h" />
-    <QtMoc Include="xyseriesiodevice.h" />
-    <QtMoc Include="SandSimulator.h" />
     <QtMoc Include="roundprogressbar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,221 +1,152 @@
 ﻿#pragma once
 
-#include <QtWidgets/QMainWindow>
-#include "ui_Qt_focus.h"
-/// 自定义头文件
-#include "my_button_class.h"
-#include"mywindows_class.h"
-#include"xyseriesiodevice.h"
-#include "roundprogressbar.h"
-#include"SandSimulator.h"//
-#include"tabhover.h"
-#include"CameraBackend.h"
-
-#include"fontawesomeicons.h"
-
-///QT-header
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQuickWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <qgridlayout.h>
-#include <QPushButton>
-#include <QSplitter>
-#include <qfiledialog.h>
-#include <QTextEdit>
-#include <QDockWidget>
-#include <qdialog.h>
-#include <QLabel>
-#include <qmessagebox.h>
-#include <qspinbox.h>
-#include <QToolBox>
-#include <QProgressBar>
-#include <QTabBar> // 添加这一行
-#include <QMouseEvent>
-#include <QRandomGenerator>
-#include <QPainterPath>
-#include <QDesktopServices>
-#include <QKeyEvent>
-#include <QSet>
-#include <QProcess>
-#include<QLCDNumber>
-#include <QSlider>
-
-//QT-widgets
-#include<qcolordialog.h>
-#include<qinputdialog.h>
-#include<qprogressdialog.h>
-#include <QPrintPreviewDialog>
-
-#include <QTimer>  // 添加这一行
-#include <QString>
-
-//QT-audio
-
-#include <QtCharts/QChartView>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QXYSeries>
-#include <QtCharts/QSplineSeries>
-#include <QtCharts/QValueAxis>
-
+#include <QMainWindow>
 #include <QFont>
+#include <QPoint>
+#include <QProcess>
+#include <QSet>
+#include <QSize>
+#include <QIcon>
+#include <QColor>
 
-#include <QAudioDevice>
-#include<qmediadevices.h>
+#include "style.h"
+#include "fontawesomeicons.h"
 
-#include <QAudioInput>
-#include <QAudioSource>
-#include<QAudioSink>
-#include <QAudioFormat>
+namespace Ui {
+    class Qt_focusClass;
+}
 
-#include <sstream>
+// 前置声明
+class QCloseEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QContextMenuEvent;
+class QWidget;
+class QLabel;
+class QPushButton;
+class QTextEdit;
+class QLineEdit;
+class QProgressBar;
+class QTabWidget;
+class QTimer;
+class QGridLayout;
+class QVBoxLayout;
+class QMenu;
+class QStatusBar;
 
 class Qt_focus : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    Qt_focus(QWidget *parent = nullptr);
+    explicit Qt_focus(QWidget* parent = nullptr);
+    ~Qt_focus() override;
 
-    ~Qt_focus();
+    // 核心工具：纯代码矢量图标生成器（无需任何 png 图片）
+    static QIcon createFontIcon(FontAwesomeIcons::IconIdentity id, const QColor& color, int size = 28);
 
-private:
-    Ui::Qt_focusClass ui;
-
-private:
-    QFont fontAwesomeFont;
 protected:
-    //关闭窗口提示！
     void closeEvent(QCloseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
-
-private:
-    // 菜单事件
     void contextMenuEvent(QContextMenuEvent* event) override;
-    void Main_page_Rmenu();
-    void color_select_RMenu();
+    bool eventFilter(QObject* obj, QEvent* event) override;
+
+private slots:
+    void maximizeRestore();
+    void widgetCustomMove(int x, int y);
+    void toggleTheme();
+    void applyTheme(stylesheet_QT::ThemeMode mode);
+
+    void setLabelTime();
+    void startLabelTime();
+    void resetLabelTime();
+    void pauseFocusTime();
+    void updateCountdown();
+
+    void createFontAwesomeWindow();
+    void openLabelUrl();
 
 private:
-    QSize initialSize;
-    QMenu* Rclick_Menu = nullptr;
-    QMenu* my_Menu_color = nullptr;
-    // 添加析构函数
-    QSet<int> pressedKeys;  // 声明 pressedKeys
+    void initMainPageRightMenu();
+    void initColorSelectRightMenu();
+    static QString getSystemTime();
+    static QString getRandomColor();
 
-    int GLOBAL_STATE = 0;
-    bool isDragging = false;  // 拖动状态
-    QPoint dragStartPosition;  // 鼠标点击位置
+private:
+    Ui::Qt_focusClass* ui = nullptr;
 
-public:
+    stylesheet_QT m_style;
+    stylesheet_QT::ThemeMode m_currentTheme = stylesheet_QT::ThemeMode::LightSage;
 
-    QWidget* widget_upper;
-    QTextEdit* textEdit_history;
-    QTabWidget* TabWidget_Main;
-    QGridLayout* widget_mid_layout;
+    QSize m_initialSize;
+    QPoint m_dragStartPosition;
+    bool m_isDragging = false;
+    int m_globalState = 0;
+    QSet<int> m_pressedKeys;
 
-    QWidget* Widget_page_home;
-    QWidget* Widget_page0;//页面成员声明
-    QWidget* Widget_page1;
-    QWidget* Widget_page2;
-    QWidget* Widget_page3;
-    QWidget* Widget_page4;
-    QWidget* Widget_page5;
+    QMenu* m_rightClickMenu = nullptr;
+    QMenu* m_colorMenu = nullptr;
 
-    QWidget* widget_settime;
-    bool widget_settime_show = true;
+    // 标题栏组件
+    QWidget* m_widgetUpper = nullptr;
+    QLabel* m_labelTitle = nullptr;
+    QPushButton* m_btnMax = nullptr;
+    QPushButton* m_btnMin = nullptr;
+    QPushButton* m_btnClose = nullptr;
 
-    QGridLayout* page0_layout_grid;//页面0
-    QVBoxLayout* page1_layout_grid;//页面1
-    QVBoxLayout* page2_layout_grid;//页面2
-    QVBoxLayout* page3_layout_grid;//页面3
-    QVBoxLayout* page4_layout_grid;//页面4
-    QVBoxLayout* page5_layout_grid;//页面5
+    // Tab 导航
+    QTabWidget* m_tabWidgetMain = nullptr;
+    QList<QLabel*> m_tabLabels;
 
-    QList<QLabel*> label_tab;
-    QList<QLabel*> labels;
-    private:
-        QTimer* timer_dot = nullptr;
+    // 页面
+    QWidget* m_widgetPageHome = nullptr;
+    QWidget* m_widgetPage0 = nullptr;
+    QWidget* m_widgetPage1 = nullptr;
+    QWidget* m_widgetPage2 = nullptr;
 
-    QLabel* label_text_time;
-    bool label_main_text_only = false;
-    QProgressBar* progress_bar;
-    int Focus_time;
-    int Focus_time2;
-    int remainingTime;      // 剩余时间，以秒为单位
-    int progress_Value;
-    QTimer* timer=nullptr;          // 声明一个 QTimer 指针
+    QVBoxLayout* m_page3LayoutGrid = nullptr;
+    QGridLayout* m_page0LayoutGrid = nullptr;
+    QVBoxLayout* m_page1LayoutGrid = nullptr;
+    QVBoxLayout* m_page2LayoutGrid = nullptr;
 
-    QPushButton* button_set_focus;
-    QPushButton* button_focus_reset;
-    QPushButton* button_focus_pause;
+    // Page Home
+    QLabel* m_labelHomeMain = nullptr;
 
-    bool is_focus_start=false;
-    bool is_focus_pause=false;
+    // Page 0: 专注倒计时
+    QWidget* m_widgetSetTime = nullptr;
+    bool m_isWidgetSetTimeShow = true;
+    QTimer* m_timerCountdown = nullptr;
+    QLabel* m_labelTime = nullptr;
+    bool m_isLabelMainTextOnly = false;
+    QProgressBar* m_progressBar = nullptr;
 
-    //page2
-    QLabel* label_task_title;
-    QTextEdit* QtextEdit_tasks;
-    int taskCount = 0;
+    int m_focusTime = 0;
+    int m_remainingTime = 0;
+    int m_progressValue = 0;
 
-    //无边框部分
-    QPushButton* button_max;
-    QPushButton* button_min;
-    QPushButton* button_close;
+    QPushButton* m_btnSetFocus = nullptr;
+    QPushButton* m_btnFocusReset = nullptr;
+    QPushButton* m_btnFocusPause = nullptr;
 
-    //音频部分
-    QPushButton* pauseButton;
-    XYSeriesIODevice* m_device;//音频部分
-    QChart* m_chart;
-    QLineSeries* m_series;
-    QAudioInput* m_audioInput;
-    QAudioSource* m_audioSource;
+    bool m_isFocusStart = false;
+    bool m_isFocusPause = false;
 
-    QWidget* widget_audio;
-    bool m_isRecording=false;
-    bool audio_isPause = false;
-    bool widget_bool = false;
+    // Page 1: 任务清单
+    QLabel* m_labelTaskTitle = nullptr;
+    QWidget* m_taskContainer = nullptr;
+    QTextEdit* m_textEditTasks = nullptr;
+    QPushButton* m_btnAddTask = nullptr;
+    QPushButton* m_btnClearTask = nullptr;
+    int m_taskCount = 0;
 
-    QProcess process_exe1;//exe进程
-
-    bool isFrontCamera = false;
-
-    QStatusBar* My_statusBar;
-
-public slots:
-
-    // 自定义函数
-    void maximizeRestore();
-    bool eventFilter(QObject* obj, QEvent* event);
-    void widget_customMove(int x, int y);
-
-QString getSystemTime();
-
-void set_lable_time();
-void start_lable_time();
-void reset_lable_time();
-void Pause_focus_time();
-void updateCountdown();  // 新增槽函数
-
-QString randonColor();
-void hexToRGB(const std::string& hex, double& r, double& g, double& b);
-//音频显示audio曲线
-void Draw_audio_sensor();
-void initializeAudioFile();
-void writeAudioData();
-void closeAudioFile();
-
-void pauseAudio();
-void resumeAudio();
-
-//启动外部exe
-void run_exe(QString& program);
-void setAllWindowIcons(const QIcon& icon);
-void Creat_fontawesomewin();
-void win_label_url();
-
+    // Page 2: 外链与搜索 (搜索框已升级为 QLineEdit)
+    QLabel* m_labelLinkTitle = nullptr;
+    QPushButton* m_btnLink1 = nullptr;
+    QPushButton* m_btnLink2 = nullptr;
+    QLineEdit* m_textEditSearch = nullptr;
+    QPushButton* m_btnSearch = nullptr;
 };

@@ -1,128 +1,321 @@
 ﻿#pragma once
-#include<QString>
+#include <QString>
 
-class stylesheet_QT {//样式类,导入h文件，实例化后，即可使用~
+// ==================== 1. 设计令牌 (Design Tokens) ====================
+struct ThemeColors {
+    QString bgApp;          // 应用主背景色
+    QString bgCard;         // 卡片容器背景色
+    QString bgCardHover;    // 卡片悬停色
+    QString bgHeader;       // 顶部/边框背景色
+    QString borderSubtle;   // 极细边框线颜色
+    QString borderFocus;    // 聚焦/高亮边框线颜色
 
+    QString textPrimary;    // 主标题文字
+    QString textSecondary;  // 副标题/说明文字
+    QString textMuted;      // 弱化占位文字
+
+    QString brandPrimary;   // 品牌主色 (用于主按钮、核心图标、时钟等)
+    QString brandAccent;    // 点缀/副高亮色
+    QString brandText;      // 按钮文字色
+
+    QString statusSuccess;  // 成功色
+    QString statusWarning;  // 警告色
+    QString statusDanger;   // 危险色
+};
+
+// ==================== 2. 现代样式管理类 ====================
+class stylesheet_QT {
 public:
-    /// <ok
-    QString Menu = "color:#cee8ff;background-color:#1f2b3e;font-size:20px;";
+    enum class ThemeMode {
+        LightSage,     // 🌿 清爽米绿 (Light Sage)
+        Lavender,      // 🪻 优雅薰衣草 (Lavender)
+        NordicBlue,    // 🌊 冰川静蓝 (Nordic Blue)
+        SummerMeadow,  // 🌻 夏日草甸 (Summer Meadow)
+        DarkSlate      // 🌙 极客暗黑 (Dark Slate)
+    };
 
-    QString button_style_0 = R"(QPushButton{font-size:20px;color:#0F1C2E;
-                                background-color:#cee8ff;border-radius:5px;}
-                                QPushButton:hover{background-color:#e0e0e0;}
-                                QPushButton:pressed{padding-top:3px;padding-left:3px;})";
-    //GREEN
-    QString button_style_max = R"(QPushButton{font-size:10px;color: rgb(0, 255, 0);
-                                background-color: rgb(0, 255, 0);border-radius:10px;}
-                                QPushButton:hover{background-color:#71c4ef;}
-                                QPushButton:pressed{padding-top:3px;padding-left:3px;})";
-    //YELLOW
-    QString button_style_min = R"(QPushButton{font-size:10px;color:rgb(255, 128, 0);
-                                background-color:rgb(255, 128, 0);border-radius:10px;}
-                                QPushButton:hover{background-color:#71c4ef;}
-                                QPushButton:pressed{padding-top:3px;padding-left:3px;})";
-    //RED
-    QString button_style_close = R"(QPushButton{font-size:10px;color:rgb(255, 0, 0);
-                                background-color:rgb(255, 0, 0);border-radius:10px;}
-                                QPushButton:hover{background-color:#71c4ef;}
-                                QPushButton:pressed{padding-top:3px;padding-left:3px;})";
-    QString label_title = R"(QLabel{color:#cee8ff;font-size:20px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:#b6ccd8;})";//主标签
-
-    QString widget_upper = R"(QWidget{color:#3D5A80;background-color:#374357;font-size:20px;font-style: normal; font-weight: bold;}
-                            QWidget:hover{color:#b6ccd8;})";//主标签
-
-    QString label_main = R"(QLabel{color:#cee8ff;font-size:80px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:#e0e0e0;})";//主标签
-
-    QString label_main2 = R"(QLabel{color:#71c4ef;font-size:30px;font-style: italic; font-weight: bold;}
-                            QLabel:hover{color:#b6ccd8;})";//主标签
-
-    QString task_test = R"(QTextEdit{color:#cee8ff;font-size:30px;font-style: italic; font-weight: bold;
-                            background-color:#374357;border-radius:5px;}
-                           QTextEdit:hover{color:#b6ccd8;})";//主标签
-
-    QString style_spinbox = "font-size: 25px; color: black; font-weight: bold; background-color: #71c4ef;";//主标签
-    /// 窗口颜色
-
-    QString widget_gray1 = "background-color: #1e293b;color:#cee8ff;";//深色
-    QString widget_uicenter =
-        "background-color: #1e293b;"
-        "color: #cee8ff;"
-        "border-top-left-radius: 5px;"
-        "border-top-right-radius: 5px;"
-        "border-bottom-left-radius: 0px;"
-        "border-bottom-right-radius: 0px;";; // 深色整理
-
-    QString widget_statusbar ="font-size: 25px;background-color:#374357;"
-        "color: #cee8ff;"
-        "border-top-left-radius: 0px;"
-        "border-top-right-radius: 0px;"
-        "border-bottom-left-radius: 5px;"
-        "border-bottom-right-radius:5px;"; // 深色整理
-    //QString dock_widget = "background-color:#1e293b;color:#cbd5e1;QDockWidget{ border: 20px; }";
-    /// <ok
-    QString dock_widget = "QDockWidget { background-color:#3c556d; border: 5px; }"
-        "QDockWidget::title { background-color: #374357; color: #0F1C2E; }" // 设置标题栏背景色和文字颜色
-        "QDockWidget::title:hover { background-color: #cee8ff; }" // 悬停时背景色
-        "QDockWidget::close-button { image:url(float_icon.png); }" // 自定义关闭按钮图标
-        "QDockWidget::float-button { image: url(float_icon.png); }"; // 自定义浮动按钮图标
-
-    /// <ok
-    QString Tab_widget = "QTabWidget::pane { border: 0 solid #ccc; }" // 标签页面板的边框
-        "QTabBar::tab { background: lightgray; padding: 8px;font-size: 20px;margin: 0px;border-radius:5px;}" // 标签的背景, 内边距和外边距
-        "QTabBar::tab:selected { background: none; color: white; }" // 选中标签的背景和字体颜色
-        "QTabBar::tab:hover { background: rgba(255, 255, 255, 0.2); }" // 鼠标悬停时标签的背景颜色
-        //"QTabBar::tab:selected{background - color: rgb(252, 239, 235);border - bottom - color: rgb(226, 95, 50);}"
-        "QTabBar::tab:!selected { background: none; color: black; }"; // 未选中标签的背景和字体颜色
-
-    /// <ok
-    QString dock_textEdit = "color:#cbd5e1;background-color: #1e293b;font-size:15px;border: 2px solid #1e293b;";
-
-    QString style_bar = "QProgressBar {"
-        "border: 2px solid #1e293b;"
-        "border-radius: 10px;"
-        "text-align: center;"
-        "font:30px;"
-        "background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #334155, stop:1 #71c4ef);"
-        "}"
-        "QProgressBar::chunk {"
-        "background-color: #71c4ef;"
-        "border-radius: 10px;"
-        "width: 1px;" // 设置进度条块的宽度
-        "}";
-
-    QString label_dot = R"(QLabel{color:rgb(255, 128, 0);font-size:80px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:#e6fbe3;})";//主标签
-    QString label_tab = R"(QLabel{color:#cee8ff;font-size:25px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:rgb(255, 128, 0);})";//主标签
-
-    QString label_fontawesome = R"(QLabel{color:#cee8ff;font-size:30px;font-style: normal; font-weight: bold;}
-                            QLabel:hover{color:rgb(255, 128, 0);})";//fontawesomeicons.h
-
-    QString button_fontawesome = R"(QPushButton{font-size:30px;color:#cee8ff;
-                                background-color:#0F1C2E;border-radius:5px;}
-                                QPushButton:hover{background-color:#e0e0e0;}
-                                QPushButton:pressed{padding-top:3px;padding-left:3px;})";
-
-        QString sliderStyle = R"(
-    QSlider::groove:horizontal {
-        background: #334155;
-        height: 8px;
-        border-radius: 4px;
+    explicit stylesheet_QT(ThemeMode mode = ThemeMode::LightSage) {
+        setTheme(mode);
     }
-    QSlider::handle:horizontal {
-        background: white;
-        width: 18px;
-        height: 18px;
-        margin: -5px 0;
-        border-radius: 9px;
-    }
-    QSlider::sub-page:horizontal {
-        background: #60A5FA;
-        height: 8px;
-        border-radius: 4px;
-    }
-    )";
 
+    const ThemeColors& colors() const { return m_c; }
+
+    static QString getThemeName(ThemeMode mode) {
+        switch (mode) {
+        case ThemeMode::LightSage:    return "清爽米绿 (Light Sage)";
+        case ThemeMode::Lavender:     return "优雅薰衣草 (Lavender)";
+        case ThemeMode::NordicBlue:   return "冰川静蓝 (Nordic Blue)";
+        case ThemeMode::SummerMeadow: return "夏日草甸 (Summer Meadow)";
+        case ThemeMode::DarkSlate:    return "极客暗黑 (Dark Slate)";
+        default:                      return "默认主题";
+        }
+    }
+
+    void setTheme(ThemeMode mode) {
+        switch (mode) {
+        case ThemeMode::LightSage:
+            // 🌿 护眼淡绿背景 + 森林绿胶囊
+            m_c = {
+                "#eef3eb", "#ffffff", "#f7faf5", "#e5ede2", "#d8e3d3", "#3a5a40",
+                "#1a2e1d", "#52796f", "#84a98c",
+                "#344e41", "#588157", "#ffffff",
+                "#52b788", "#e09f3e", "#d90429"
+            };
+            break;
+
+        case ThemeMode::Lavender:
+            // 🪻 图1：莫兰迪薰衣草紫调 (灰白底 + 柔和紫)
+            m_c = {
+                "#f5f3f8", "#ffffff", "#faf8fc", "#ece7f2", "#dfd5ea", "#6b3ba7",
+                "#2a183d", "#6e5d80", "#9f90b3",
+                "#6b3ba7", "#9568af", "#ffffff",
+                "#48bb78", "#e09f3e", "#d90429"
+            };
+            break;
+
+        case ThemeMode::NordicBlue:
+            // 🌊 图2：冰川微冷蓝调 (淡冷灰蓝底 + 海洋深蓝)
+            m_c = {
+                "#edf4f8", "#ffffff", "#f5f9fc", "#e1edf5", "#cde1ee", "#026896",
+                "#0e2938", "#476b80", "#7f9fb3",
+                "#026896", "#38a3d8", "#ffffff",
+                "#38b2ac", "#dd6b20", "#e53e3e"
+            };
+            break;
+
+        case ThemeMode::SummerMeadow:
+            // 🌻 图3：夏日草甸 (奶白暖米色 + 暖阳橙 + 森林叶绿)
+            m_c = {
+                "#faf7ee", "#ffffff", "#fdfcf7", "#f3edd8", "#e8dfc5", "#467a57",
+                "#2a241b", "#695f51", "#9e9383",
+                "#467a57", "#f28e00", "#ffffff",
+                "#467a57", "#f28e00", "#c0392b"
+            };
+            break;
+
+        case ThemeMode::DarkSlate:
+        default:
+            // 🌙 极客深色风格
+            m_c = {
+                "#0f172a", "#1e293b", "#334155", "#111827", "#334155", "#38bdf8",
+                "#f8fafc", "#94a3b8", "#64748b",
+                "#38bdf8", "#0284c7", "#0f172a",
+                "#34d399", "#fbbf24", "#f87171"
+            };
+            break;
+        }
+        buildStylesheets();
+    }
+
+    // ==================== 暴露的 QSS 属性 ====================
+    QString widget_uicenter;
+    QString widget_gray1;
+    QString widget_upper;
+    QString widget_statusbar;
+
+    QString label_title;
+    QString label_main;
+    QString label_main2;
+    QString label_tab;
+    QString label_dot;
+    QString label_fontawesome;
+
+    QString button_style_0;
+    QString button_style_max;
+    QString button_style_min;
+    QString button_style_close;
+    QString button_fontawesome;
+
+    QString Tab_widget;
+    QString task_test;
+    QString style_spinbox;
+    QString style_bar;
+    QString sliderStyle;
+
+private:
+    ThemeColors m_c;
+
+    void buildStylesheets() {
+        // 主背景
+        widget_uicenter = QString(R"(
+            QWidget {
+                background-color: %1;
+                color: %2;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            }
+        )").arg(m_c.bgApp, m_c.textPrimary);
+
+        // 卡片级容器背景
+        widget_gray1 = QString(R"(
+            QWidget {
+                background-color: %1;
+                border: 1px solid %2;
+                border-radius: 14px;
+                color: %3;
+            }
+        )").arg(m_c.bgCard, m_c.borderSubtle, m_c.textPrimary);
+
+        // 顶部操作区
+        widget_upper = QString(R"(
+            QWidget {
+                background-color: %1;
+                border-bottom: 1px solid %2;
+            }
+        )").arg(m_c.bgHeader, m_c.borderSubtle);
+
+        // 状态栏
+        widget_statusbar = QString(R"(
+            QStatusBar {
+                background-color: %1;
+                color: %2;
+                font-size: 12px;
+                border-top: 1px solid %3;
+                padding-left: 10px;
+            }
+            QStatusBar::item { border: none; }
+        )").arg(m_c.bgCard, m_c.textSecondary, m_c.borderSubtle);
+
+        // 标题与文字
+        label_title = QString(R"(
+            QLabel {
+                color: %1;
+                font-size: 13px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+            }
+        )").arg(m_c.brandPrimary);
+
+        label_main = QString(R"(
+            QLabel {
+                color: %1;
+                font-weight: 800;
+                letter-spacing: -2px;
+            }
+        )").arg(m_c.brandPrimary);
+
+        label_main2 = QString(R"(
+            QLabel {
+                color: %1;
+                font-size: 16px;
+                font-weight: 700;
+            }
+        )").arg(m_c.brandPrimary);
+
+        // 现代化主按钮
+        button_style_0 = QString(R"(
+            QPushButton {
+                background-color: %1;
+                color: %2;
+                font-size: 13px;
+                font-weight: 600;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                padding: 6px 14px;
+            }
+            QPushButton:hover {
+                background-color: %3;
+            }
+            QPushButton:pressed {
+                padding-top: 7px;
+                padding-left: 15px;
+            }
+        )").arg(m_c.brandPrimary, m_c.brandText, m_c.brandAccent);
+
+        // 交通灯控制按钮
+       // 彻底解决裁切问题：border: none; padding: 0px; margin: 0px; 配合 14px 纯圆
+        button_style_close = "QPushButton { background-color: #ef4444; border: none; border-radius: 7px; padding: 0px; margin: 0px; } QPushButton:hover { background-color: #dc2626; }";
+        button_style_min = "QPushButton { background-color: #f59e0b; border: none; border-radius: 7px; padding: 0px; margin: 0px; } QPushButton:hover { background-color: #d97706; }";
+        button_style_max = "QPushButton { background-color: #10b981; border: none; border-radius: 7px; padding: 0px; margin: 0px; } QPushButton:hover { background-color: #059669; }";
+        // Tab 导航栏
+        Tab_widget = QString(R"(
+            QTabWidget::pane {
+                border: none;
+                background: transparent;
+            }
+            QTabBar {
+                background-color: transparent;
+                qproperty-drawBase: 0;
+            }
+            QTabBar::tab {
+                background-color: transparent;
+                color: %1;
+                font-size: 13px;
+                font-weight: 600;
+                padding: 8px 18px;
+                margin: 0px 8px 0px 0px; /* 只向右侧增加间距，左侧不悬空缩进 */
+                border-radius: 10px;
+                border: 1px solid transparent;
+            }
+            QTabBar::tab:hover {
+                background-color: %2;
+                color: %3;
+            }
+            QTabBar::tab:selected {
+                background-color: %4;
+                color: %5;
+                border: 1px solid %6;
+            }
+        )").arg(m_c.textSecondary, m_c.bgCardHover, m_c.textPrimary,
+    m_c.bgCard, m_c.brandPrimary, m_c.borderSubtle);
+
+        // 任务输入框
+        task_test = QString(R"(
+            QTextEdit {
+                background-color: %1;
+                color: %2;
+                font-size: 14px;
+                border: 1px solid %3;
+                border-radius: 8px;
+                padding: 8px 12px;
+            }
+            QTextEdit:focus {
+                border: 1.5px solid %4;
+                background-color: %5;
+            }
+        )").arg(m_c.bgCard, m_c.textPrimary, m_c.borderSubtle, m_c.borderFocus, m_c.bgApp);
+
+        // 微调选择器
+        style_spinbox = QString(R"(
+            QSpinBox, QDoubleSpinBox {
+                background-color: %1;
+                color: %2;
+                font-size: 14px;
+                font-weight: 600;
+                border: 1px solid %3;
+                border-radius: 8px;
+                padding: 4px 8px;
+            }
+            QSpinBox:focus, QDoubleSpinBox:focus {
+                border: 1.5px solid %4;
+            }
+        )").arg(m_c.bgCard, m_c.textPrimary, m_c.borderSubtle, m_c.borderFocus);
+
+        // 进度条
+        style_bar = QString(R"(
+            QProgressBar {
+                background-color: %1;
+                border: 1px solid %2;
+                border-radius: 4px;
+                height: 8px;
+                text-align: center;
+                color: transparent;
+            }
+            QProgressBar::chunk {
+                background-color: %3;
+                border-radius: 4px;
+            }
+        )").arg(m_c.bgCard, m_c.borderSubtle, m_c.brandPrimary);
+
+        label_tab = QString(R"(
+            QLabel { color: %1; font-size: 14px; }
+            QLabel:hover { color: %2; }
+        )").arg(m_c.textMuted, m_c.brandPrimary);
+
+        label_dot = QString(R"(QLabel { color: %1; font-size: 32px; font-weight: bold; })").arg(m_c.brandAccent);
+        label_fontawesome = QString(R"(QLabel { color: %1; font-size: 18px; } QLabel:hover { color: %2; })").arg(m_c.textSecondary, m_c.brandPrimary);
+        button_fontawesome = QString(R"(
+            QPushButton { background-color: %1; color: %2; border: 1px solid %3; border-radius: 8px; }
+            QPushButton:hover { background-color: %4; color: %5; }
+        )").arg(m_c.bgCard, m_c.textPrimary, m_c.borderSubtle, m_c.brandPrimary, m_c.brandText);
+    }
 };
