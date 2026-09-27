@@ -48,13 +48,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="my_button_class.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="roundprogressbar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="tabhover.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="my_button_class.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

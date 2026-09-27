@@ -108,10 +108,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="my_button_class.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="fontawesomeicons.h" />
+    <QtMoc Include="my_button_class.h" />
     <ClInclude Include="style.h" />
     <QtMoc Include="tabhover.h" />
     <QtMoc Include="roundprogressbar.h" />

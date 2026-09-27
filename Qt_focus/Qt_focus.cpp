@@ -101,7 +101,6 @@ Qt_focus::Qt_focus(QWidget* parent)
     mainLayout->setSpacing(0);
 
     // ==================== 2. 现代顶部导航条 ====================
-    // ==================== 2. 现代顶部导航条 ====================
     m_widgetUpper = new QWidget(this);
     m_widgetUpper->installEventFilter(this);
     ui->statusBar->installEventFilter(this);
@@ -187,108 +186,125 @@ Qt_focus::Qt_focus(QWidget* parent)
     mainLayout->addWidget(widgetBottom);
 
     // ==================== 5. Page Home (便当网格 Bento Dashboard) ====================
+// ==================== 5. Page Home (增强型 Bento Grid 生产力工作台) ====================
     m_page3LayoutGrid = new QVBoxLayout(m_widgetPageHome);
-    m_page3LayoutGrid->setContentsMargins(28, 12, 28, 20);
-    m_page3LayoutGrid->setSpacing(14);
+    m_page3LayoutGrid->setContentsMargins(28, 10, 28, 16);
+    m_page3LayoutGrid->setSpacing(12);
 
-    // 顶部认证胶囊标头
+    // ----------------- [Bento 1] 顶部微状态条 -----------------
     QFrame* bannerFrame = new QFrame(m_widgetPageHome);
     bannerFrame->setStyleSheet(R"(
         QFrame {
             background-color: #e5ede2;
             border: 1px solid #d8e3d3;
             border-radius: 10px;
-            padding: 4px 12px;
+            padding: 2px 10px;
         }
     )");
     QHBoxLayout* bannerLayout = new QHBoxLayout(bannerFrame);
     bannerLayout->setContentsMargins(10, 4, 10, 4);
 
-    QLabel* bannerDot = new QLabel("●  FLOW WORKSTATION ACTIVE · 深度创作心流就绪", bannerFrame);
+    QLabel* bannerDot = new QLabel("●  FLOW ENGINE ACTIVE · 深度创作工作台已就绪", bannerFrame);
     bannerDot->setStyleSheet("color: #344e41; font-size: 12px; font-weight: 700; border: none; background: transparent;");
     bannerLayout->addWidget(bannerDot);
     bannerLayout->addStretch();
 
-    QLabel* bannerSub = new QLabel("Pure Code Rendered · Modern C++", bannerFrame);
+    QLabel* bannerSub = new QLabel("Focus & Create · 消除干扰", bannerFrame);
     bannerSub->setStyleSheet("color: #52796f; font-size: 11px; font-weight: 500; border: none; background: transparent;");
     bannerLayout->addWidget(bannerSub);
     m_page3LayoutGrid->addWidget(bannerFrame);
 
-    // Bento 核心分栏
-    QHBoxLayout* bentoRowLayout = new QHBoxLayout();
-    bentoRowLayout->setSpacing(14);
+    // ----------------- [Bento 2] 第一层网格：时钟看板 + 指标与环境音 -----------------
+    QHBoxLayout* row1Layout = new QHBoxLayout();
+    row1Layout->setSpacing(12);
 
-    // --- 左侧：大时钟卡片 ---
+    // 【卡片 1】左侧主时钟看板 + 快捷预设启动
     QFrame* clockCard = new QFrame(m_widgetPageHome);
     clockCard->setStyleSheet(R"(
         QFrame {
             background-color: #ffffff;
             border: 1px solid #d8e3d3;
-            border-radius: 16px;
+            border-radius: 14px;
         }
     )");
     QVBoxLayout* clockCardLayout = new QVBoxLayout(clockCard);
-    clockCardLayout->setContentsMargins(24, 20, 24, 20);
-    clockCardLayout->setSpacing(10);
+    clockCardLayout->setContentsMargins(22, 16, 22, 16);
+    clockCardLayout->setSpacing(8);
 
     QLabel* lblClockTitle = new QLabel("当前系统心流时间", clockCard);
-    lblClockTitle->setStyleSheet("color: #52796f; font-size: 13px; font-weight: 600; border: none;");
+    lblClockTitle->setStyleSheet("color: #52796f; font-size: 12px; font-weight: 600; border: none;");
     clockCardLayout->addWidget(lblClockTitle);
 
     QLabel* lblBigClock = new QLabel("12:00:00", clockCard);
     lblBigClock->setAlignment(Qt::AlignCenter);
-    lblBigClock->setStyleSheet("color: #1a2e1d; font-size: 54px; font-weight: 700; letter-spacing: -2px; border: none;");
+    lblBigClock->setStyleSheet("color: #1a2e1d; font-size: 48px; font-weight: 700; letter-spacing: -2px; border: none;");
     clockCardLayout->addWidget(lblBigClock);
 
     QLabel* lblDateStatus = new QLabel(clockCard);
     lblDateStatus->setAlignment(Qt::AlignCenter);
-    lblDateStatus->setStyleSheet("color: #84a98c; font-size: 13px; font-weight: 500; border: none;");
+    lblDateStatus->setStyleSheet("color: #84a98c; font-size: 12px; font-weight: 500; border: none;");
     clockCardLayout->addWidget(lblDateStatus);
 
-    QPushButton* btnQuickFocus = new QPushButton("⚡ 立即启动 25min 专注", clockCard);
-    btnQuickFocus->setCursor(Qt::PointingHandCursor);
-    btnQuickFocus->setFixedHeight(40);
-    btnQuickFocus->setStyleSheet(R"(
-        QPushButton {
-            background-color: #344e41;
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 600;
-            border-radius: 8px;
-            border: none;
-        }
-        QPushButton:hover { background-color: #588157; }
-        QPushButton:pressed { padding-top: 2px; }
-    )");
-    connect(btnQuickFocus, &QPushButton::clicked, this, [this]() {
-        m_tabWidgetMain->setCurrentIndex(1);
-        resetLabelTime();
-        });
-    clockCardLayout->addWidget(btnQuickFocus);
+    // 3 个时长预设胶囊 (点击直接写入时长并跳至专注页启动)
+    QHBoxLayout* presetRow = new QHBoxLayout();
+    presetRow->setSpacing(8);
 
-    bentoRowLayout->addWidget(clockCard, 6);
+    auto addPresetBtn = [this, presetRow](const QString& text, int minutes) {
+        QPushButton* btn = new QPushButton(text);
+        btn->setFixedHeight(34);
+        btn->setCursor(Qt::PointingHandCursor);
+        btn->setStyleSheet(R"(
+            QPushButton {
+                background-color: #f7faf5;
+                color: #344e41;
+                font-size: 12px;
+                font-weight: 600;
+                border: 1px solid #d8e3d3;
+                border-radius: 8px;
+            }
+            QPushButton:hover {
+                background-color: #344e41;
+                color: #ffffff;
+                border-color: #344e41;
+            }
+        )");
+        connect(btn, &QPushButton::clicked, this, [this, minutes]() {
+            m_focusTime = minutes * 60;
+            m_tabWidgetMain->setCurrentIndex(1); // 自动切换至专注页
+            resetLabelTime();                    // 立即进入大字倒计时
+            });
+        presetRow->addWidget(btn);
+        };
 
-    // --- 右侧：指标卡片 + 快捷入口 ---
+    addPresetBtn("⚡ 15m 快速攻坚", 15);
+    addPresetBtn("🍅 25m 标准番茄", 25);
+    addPresetBtn("🚀 50m 深度沉浸", 50);
+    clockCardLayout->addLayout(presetRow);
+
+    row1Layout->addWidget(clockCard, 6);
+
+    // 右侧分栏（指标卡片 + 沉浸白噪音伴奏卡片）
     QVBoxLayout* rightColLayout = new QVBoxLayout();
-    rightColLayout->setSpacing(14);
+    rightColLayout->setSpacing(12);
 
+    // 【卡片 2】指标概览卡片
     QFrame* metricCard = new QFrame(m_widgetPageHome);
     metricCard->setStyleSheet(R"(
         QFrame {
             background-color: #ffffff;
             border: 1px solid #d8e3d3;
-            border-radius: 16px;
+            border-radius: 14px;
         }
     )");
     QHBoxLayout* metricLayout = new QHBoxLayout(metricCard);
-    metricLayout->setContentsMargins(16, 16, 16, 16);
+    metricLayout->setContentsMargins(14, 12, 14, 12);
 
     auto addMetricItem = [](QHBoxLayout* layout, const QString& num, const QString& title) {
         QVBoxLayout* v = new QVBoxLayout();
         v->setSpacing(2);
         QLabel* lNum = new QLabel(num);
         lNum->setAlignment(Qt::AlignCenter);
-        lNum->setStyleSheet("color: #344e41; font-size: 26px; font-weight: 700; border: none;");
+        lNum->setStyleSheet("color: #344e41; font-size: 24px; font-weight: 700; border: none;");
         QLabel* lTitle = new QLabel(title);
         lTitle->setAlignment(Qt::AlignCenter);
         lTitle->setStyleSheet("color: #84a98c; font-size: 11px; font-weight: 600; border: none;");
@@ -300,99 +316,184 @@ Qt_focus::Qt_focus(QWidget* parent)
     auto addSeparator = [](QHBoxLayout* layout) {
         QLabel* sep = new QLabel("|");
         sep->setAlignment(Qt::AlignCenter);
-        sep->setStyleSheet("color: #d8e3d3; border: none; font-size: 16px;");
+        sep->setStyleSheet("color: #d8e3d3; border: none; font-size: 14px;");
         layout->addWidget(sep);
         };
 
-    addMetricItem(metricLayout, "25m", "专注周期");
+    addMetricItem(metricLayout, "25m", "单次心流");
     addSeparator(metricLayout);
-    addMetricItem(metricLayout, "0/8", "今日任务");
+    addMetricItem(metricLayout, "3 轮", "今日完成");
     addSeparator(metricLayout);
     addMetricItem(metricLayout, "100%", "精神精力");
     rightColLayout->addWidget(metricCard);
 
-    // 快捷方式工具卡片（纯代码矢量图）
-    QFrame* toolsCard = new QFrame(m_widgetPageHome);
-    toolsCard->setStyleSheet(R"(
+    // 【卡片 3】白噪音沉浸伴奏胶囊（RAIN Focus 专属）
+    QFrame* soundCard = new QFrame(m_widgetPageHome);
+    soundCard->setStyleSheet(R"(
         QFrame {
             background-color: #ffffff;
             border: 1px solid #d8e3d3;
-            border-radius: 16px;
+            border-radius: 14px;
         }
     )");
-    QVBoxLayout* toolsCardLayout = new QVBoxLayout(toolsCard);
-    toolsCardLayout->setContentsMargins(16, 14, 16, 14);
-    toolsCardLayout->setSpacing(10);
+    QVBoxLayout* soundCardLayout = new QVBoxLayout(soundCard);
+    soundCardLayout->setContentsMargins(16, 12, 16, 12);
+    soundCardLayout->setSpacing(8);
 
-    QLabel* lblTools = new QLabel("快捷生产力入口", toolsCard);
-    lblTools->setStyleSheet("color: #52796f; font-size: 12px; font-weight: 600; border: none;");
-    toolsCardLayout->addWidget(lblTools);
+    QLabel* lblSoundTitle = new QLabel("沉浸氛围声态 (Focus Soundscapes)", soundCard);
+    lblSoundTitle->setStyleSheet("color: #52796f; font-size: 12px; font-weight: 600; border: none;");
+    soundCardLayout->addWidget(lblSoundTitle);
 
-    QHBoxLayout* iconRowLayout = new QHBoxLayout();
-    iconRowLayout->setSpacing(10);
+    QHBoxLayout* soundBtnRow = new QHBoxLayout();
+    soundBtnRow->setSpacing(8);
 
-    FontAwesomeIcons& fontIcon = FontAwesomeIcons::Instance();
-    const QString faFamily = fontIcon.getFont().family();
-
-    auto createBentoToolBtn = [this, &fontIcon, &faFamily](FontAwesomeIcons::IconIdentity id, const QString& tip, const QString& url) {
-        QPushButton* btn = new QPushButton();
-        btn->setFixedHeight(40);
+    auto addSoundPill = [this, soundBtnRow](const QString& iconText, const QString& soundName) {
+        QPushButton* btn = new QPushButton(iconText);
+        btn->setCheckable(true);
+        btn->setFixedHeight(32);
         btn->setCursor(Qt::PointingHandCursor);
-        btn->setToolTip(tip);
-        btn->setText(QString(fontIcon.getIconChar(id)));
-        btn->setStyleSheet(QString(R"(
+        btn->setStyleSheet(R"(
             QPushButton {
-                font-family: "%1";
-                font-size: 18px;
-                color: #344e41;
                 background-color: #f7faf5;
+                color: #344e41;
+                font-size: 12px;
+                font-weight: 600;
                 border: 1px solid #d8e3d3;
                 border-radius: 8px;
             }
             QPushButton:hover {
+                background-color: #e5ede2;
+            }
+            QPushButton:checked {
                 background-color: #344e41;
                 color: #ffffff;
                 border-color: #344e41;
             }
-        )").arg(faFamily));
-
-        connect(btn, &QPushButton::clicked, this, [this, url, tip]() {
-            if (!url.isEmpty()) QDesktopServices::openUrl(QUrl(url));
-            ui->statusBar->showMessage(QString("触发: %1").arg(tip), 2000);
+        )");
+        connect(btn, &QPushButton::toggled, this, [this, btn, soundName](bool checked) {
+            ui->statusBar->showMessage(QString("氛围音效: %1 - %2")
+                .arg(soundName)
+                .arg(checked ? "▶ 播放中" : "⏹ 已暂停"), 2000);
             });
-        return btn;
+        soundBtnRow->addWidget(btn);
         };
 
-    iconRowLayout->addWidget(createBentoToolBtn(FontAwesomeIcons::IconIdentity::icon_envelope_alt, "邮件反馈", "mailto:feedback@example.com"));
-    iconRowLayout->addWidget(createBentoToolBtn(FontAwesomeIcons::IconIdentity::icon_heart, "添加收藏", ""));
-    iconRowLayout->addWidget(createBentoToolBtn(FontAwesomeIcons::IconIdentity::icon_github, "访问仓库", "https://github.com/XiaoYu-1111/Qt_focus"));
+    addSoundPill("🌧️ 细雨", "白噪音·冥想细雨");
+    addSoundPill("🌲 林海", "自然风·深山古松");
+    addSoundPill("☕ 咖啡", "环境声·街角咖啡");
+    addSoundPill("🌊 潮汐", "舒缓浪·纯净海岸");
+    soundCardLayout->addLayout(soundBtnRow);
 
-    toolsCardLayout->addLayout(iconRowLayout);
-    rightColLayout->addWidget(toolsCard);
+    rightColLayout->addWidget(soundCard);
+    row1Layout->addLayout(rightColLayout, 4);
+    m_page3LayoutGrid->addLayout(row1Layout);
 
-    bentoRowLayout->addLayout(rightColLayout, 4);
-    m_page3LayoutGrid->addLayout(bentoRowLayout);
+    // ----------------- [Bento 3] 第二层网格：灵感箴言卡片 + 闪念便签卡片 -----------------
+    QHBoxLayout* row2Layout = new QHBoxLayout();
+    row2Layout->setSpacing(12);
+
+    // 【卡片 4】每日心流法则与灵感箴言
+    QFrame* quoteCard = new QFrame(m_widgetPageHome);
+    quoteCard->setStyleSheet(R"(
+        QFrame {
+            background-color: #ffffff;
+            border: 1px solid #d8e3d3;
+            border-radius: 14px;
+        }
+    )");
+    QVBoxLayout* quoteLayout = new QVBoxLayout(quoteCard);
+    quoteLayout->setContentsMargins(18, 14, 18, 14);
+    quoteLayout->setSpacing(6);
+
+    QHBoxLayout* quoteHeader = new QHBoxLayout();
+    QLabel* lblQuoteTitle = new QLabel("💡 深度心流手记 (Daily Insight)", quoteCard);
+    lblQuoteTitle->setStyleSheet("color: #52796f; font-size: 12px; font-weight: 600; border: none;");
+    QPushButton* btnRefreshQuote = new QPushButton("换一条 ↻", quoteCard);
+    btnRefreshQuote->setCursor(Qt::PointingHandCursor);
+    btnRefreshQuote->setStyleSheet("color: #84a98c; font-size: 11px; border: none; background: transparent; font-weight: 600;");
+
+    quoteHeader->addWidget(lblQuoteTitle);
+    quoteHeader->addStretch();
+    quoteHeader->addWidget(btnRefreshQuote);
+    quoteLayout->addLayout(quoteHeader);
+
+    QLabel* lblQuoteContent = new QLabel("“把注意力投向当下最重要的单一目标，其余的一切皆可等待。”", quoteCard);
+    lblQuoteContent->setWordWrap(true);
+    lblQuoteContent->setStyleSheet("color: #1a2e1d; font-size: 13px; font-weight: 600; line-height: 1.4; border: none;");
+    quoteLayout->addWidget(lblQuoteContent);
+
+    // 动态换箴言词库
+    QStringList quotes = {
+        "“把注意力投向当下最重要的单一目标，其余的一切皆可等待。”",
+        "“在注意力涣散的时代，深度工作能力正变得愈加稀缺与珍贵。”",
+        "“心流的本质，是挑战与个人技能高度匹配时的浑然忘我。”",
+        "“限制多任务切换，单一目标是最高效的生产力策略。”",
+        "“不要等待灵感降临才开始，开启专注之后，灵感自会随之而来。”"
+    };
+    connect(btnRefreshQuote, &QPushButton::clicked, this, [lblQuoteContent, quotes]() {
+        static int qIndex = 0;
+        qIndex = (qIndex + 1) % quotes.size();
+        lblQuoteContent->setText(quotes[qIndex]);
+        });
+    row2Layout->addWidget(quoteCard, 5);
+
+    // 【卡片 5】极速杂念便签 (Quick Scratchpad)
+    QFrame* memoCard = new QFrame(m_widgetPageHome);
+    memoCard->setStyleSheet(R"(
+        QFrame {
+            background-color: #ffffff;
+            border: 1px solid #d8e3d3;
+            border-radius: 14px;
+        }
+    )");
+    QVBoxLayout* memoLayout = new QVBoxLayout(memoCard);
+    memoLayout->setContentsMargins(18, 14, 18, 14);
+    memoLayout->setSpacing(6);
+
+    QHBoxLayout* memoHeader = new QHBoxLayout();
+    QLabel* lblMemoTitle = new QLabel("📝 闪念便签 (随时记下杂念，保持专注)", memoCard);
+    lblMemoTitle->setStyleSheet("color: #52796f; font-size: 12px; font-weight: 600; border: none;");
+    QPushButton* btnClearMemo = new QPushButton("清空 ✕", memoCard);
+    btnClearMemo->setCursor(Qt::PointingHandCursor);
+    btnClearMemo->setStyleSheet("color: #84a98c; font-size: 11px; border: none; background: transparent; font-weight: 600;");
+
+    memoHeader->addWidget(lblMemoTitle);
+    memoHeader->addStretch();
+    memoHeader->addWidget(btnClearMemo);
+    memoLayout->addLayout(memoHeader);
+
+    QLineEdit* memoInput = new QLineEdit(memoCard);
+    memoInput->setFixedHeight(36);
+    memoInput->setPlaceholderText("记下刚才脑中闪过的琐事，专注结束后再处理...");
+    memoInput->setStyleSheet(R"(
+        QLineEdit {
+            background-color: #f7faf5;
+            color: #1a2e1d;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid #d8e3d3;
+            border-radius: 8px;
+            padding-left: 10px;
+        }
+        QLineEdit:focus {
+            border: 1.5px solid #344e41;
+            background-color: #ffffff;
+        }
+    )");
+    connect(btnClearMemo, &QPushButton::clicked, memoInput, &QLineEdit::clear);
+    memoLayout->addWidget(memoInput);
+
+    row2Layout->addWidget(memoCard, 5);
+    m_page3LayoutGrid->addLayout(row2Layout);
     m_page3LayoutGrid->addStretch();
 
-    // 时钟定时器
+    // 时钟定时刷新 (包含安全的格式化)
     QTimer* clockTimer = new QTimer(this);
     connect(clockTimer, &QTimer::timeout, this, [this, lblBigClock, lblDateStatus]() {
         const QDateTime now = QDateTime::currentDateTime();
         lblBigClock->setText(now.toString("hh:mm:ss"));
-        // 时钟定时器 (使用 QString::arg，彻底解决英文字符串被误解析的 Bug)
-        QTimer* clockTimer = new QTimer(this);
-        connect(clockTimer, &QTimer::timeout, this, [this, lblBigClock, lblDateStatus]() {
-            const QDateTime now = QDateTime::currentDateTime();
-            lblBigClock->setText(now.toString("hh:mm:ss"));
-
-            // 正确写法：日期用 format 格式化，其余文字通过 %1 拼接
-            lblDateStatus->setText(QString("%1 · 深度心流专注中 (Flow State)")
-                .arg(now.toString("yyyy年MM月dd日 dddd")));
-
-            ui->statusBar->showMessage(QString("系统实时状态: %1")
-                .arg(now.toString("yyyy-MM-dd hh:mm:ss")));
-            });
-        clockTimer->start(1000);
+        lblDateStatus->setText(QString("%1 · 深度心流准备完成")
+            .arg(now.toString("yyyy年MM月dd日 dddd")));
         ui->statusBar->showMessage(QString("系统实时状态: %1").arg(now.toString("yyyy-MM-dd hh:mm:ss")));
         });
     clockTimer->start(1000);

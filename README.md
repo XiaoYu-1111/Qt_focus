@@ -26,7 +26,7 @@
 ![界面1](Qt_focus/pro_image/main.png)
 | 界面1|界面2| 界面3 |
 | :---: | :---: | :---: |
-| ![界面1](Qt_focus/pro_image/main.png) | ![界面2](Qt_focus/pro_image/main.png) | ![界面3](Qt_focus/pro_image/page3.png) |
+| ![界面1](Qt_focus/pro_image/page1.png) | ![界面2](Qt_focus/pro_image/page2.png) | ![界面3](Qt_focus/pro_image/page3.png) |
 
 ## ✨ 核心亮点 (Highlights)
 
